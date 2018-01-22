@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */; };
+		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
+		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
 		23BEA5872016302B000ECFE5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* ViewController.m */; };
-		23BEA58A2016302B000ECFE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA5882016302B000ECFE5 /* Main.storyboard */; };
 		23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */; };
 		23BEA58F2016302B000ECFE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA58E2016302B000ECFE5 /* Assets.xcassets */; };
 		23BEA5922016302B000ECFE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */; };
 		23BEA5952016302C000ECFE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5942016302C000ECFE5 /* main.m */; };
 		23BEA59F2016302C000ECFE5 /* LegionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA59E2016302C000ECFE5 /* LegionTests.m */; };
 		23BEA5AA2016302C000ECFE5 /* LegionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5A92016302C000ECFE5 /* LegionUITests.m */; };
+		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,12 +39,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5822016302B000ECFE5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		23BEA5832016302B000ECFE5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		23BEA5852016302B000ECFE5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		23BEA5862016302B000ECFE5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		23BEA5892016302B000ECFE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		23BEA58C2016302B000ECFE5 /* Legion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Legion.xcdatamodel; sourceTree = "<group>"; };
 		23BEA58E2016302B000ECFE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23BEA5912016302B000ECFE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +57,14 @@
 		23BEA5A52016302C000ECFE5 /* LegionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LegionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5A92016302C000ECFE5 /* LegionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegionUITests.m; sourceTree = "<group>"; };
 		23BEA5AB2016302C000ECFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3912D243E638C9C75441C0EB /* libPods-LegionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.release.xcconfig"; sourceTree = "<group>"; };
+		98F0F6400CB3A8D9674E42E4 /* Pods-LegionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B67E6EC37313C39D84185F24 /* Pods-Legion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legion.release.xcconfig"; path = "Pods/Target Support Files/Pods-Legion/Pods-Legion.release.xcconfig"; sourceTree = "<group>"; };
+		CAA200C28F700D0E78740D34 /* Pods-Legion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legion.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Legion/Pods-Legion.debug.xcconfig"; sourceTree = "<group>"; };
+		E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F06017E82CF3D563961069EC /* libPods-Legion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Legion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,12 +88,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FE9D96B0CBCF89ECFCC1AFF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CAA200C28F700D0E78740D34 /* Pods-Legion.debug.xcconfig */,
+				B67E6EC37313C39D84185F24 /* Pods-Legion.release.xcconfig */,
+				98F0F6400CB3A8D9674E42E4 /* Pods-LegionTests.debug.xcconfig */,
+				4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */,
+				044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */,
+				38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		23BEA5762016302B000ECFE5 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +115,8 @@
 				23BEA59D2016302C000ECFE5 /* LegionTests */,
 				23BEA5A82016302C000ECFE5 /* LegionUITests */,
 				23BEA5802016302B000ECFE5 /* Products */,
+				1FE9D96B0CBCF89ECFCC1AFF /* Pods */,
+				BEB9C2E1A44675CDEC9212B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,10 +137,10 @@
 				23BEA5832016302B000ECFE5 /* AppDelegate.m */,
 				23BEA5852016302B000ECFE5 /* ViewController.h */,
 				23BEA5862016302B000ECFE5 /* ViewController.m */,
-				23BEA5882016302B000ECFE5 /* Main.storyboard */,
 				23BEA58E2016302B000ECFE5 /* Assets.xcassets */,
 				23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */,
 				23BEA5932016302B000ECFE5 /* Info.plist */,
+				239D696520168F2300672DC0 /* GoogleService-Info.plist */,
 				23BEA5942016302C000ECFE5 /* main.m */,
 				23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */,
 			);
@@ -135,6 +165,16 @@
 			path = LegionUITests;
 			sourceTree = "<group>";
 		};
+		BEB9C2E1A44675CDEC9212B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F06017E82CF3D563961069EC /* libPods-Legion.a */,
+				3912D243E638C9C75441C0EB /* libPods-LegionTests.a */,
+				E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,9 +182,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23BEA5AE2016302C000ECFE5 /* Build configuration list for PBXNativeTarget "Legion" */;
 			buildPhases = (
+				9C462D36997BAACB19EC337A /* [CP] Check Pods Manifest.lock */,
 				23BEA57B2016302B000ECFE5 /* Sources */,
 				23BEA57C2016302B000ECFE5 /* Frameworks */,
 				23BEA57D2016302B000ECFE5 /* Resources */,
+				EF5D41AE7E37849E02E2B209 /* [CP] Embed Pods Frameworks */,
+				6B9516ACCA32399EA08E0BA7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -159,9 +202,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23BEA5B12016302C000ECFE5 /* Build configuration list for PBXNativeTarget "LegionTests" */;
 			buildPhases = (
+				FF2E148CA96501C10065E1A0 /* [CP] Check Pods Manifest.lock */,
 				23BEA5962016302C000ECFE5 /* Sources */,
 				23BEA5972016302C000ECFE5 /* Frameworks */,
 				23BEA5982016302C000ECFE5 /* Resources */,
+				29D0DE04E3B60B8E0642CD49 /* [CP] Embed Pods Frameworks */,
+				2A0F0837E565301B795CD4C7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -177,9 +223,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23BEA5B42016302C000ECFE5 /* Build configuration list for PBXNativeTarget "LegionUITests" */;
 			buildPhases = (
+				D8268100188F45CB6A89A693 /* [CP] Check Pods Manifest.lock */,
 				23BEA5A12016302C000ECFE5 /* Sources */,
 				23BEA5A22016302C000ECFE5 /* Frameworks */,
 				23BEA5A32016302C000ECFE5 /* Resources */,
+				BCFFB17D1F551933FF83114A /* [CP] Embed Pods Frameworks */,
+				74AC53C0BF51618AE970DF39 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -243,7 +292,7 @@
 			files = (
 				23BEA5922016302B000ECFE5 /* LaunchScreen.storyboard in Resources */,
 				23BEA58F2016302B000ECFE5 /* Assets.xcassets in Resources */,
-				23BEA58A2016302B000ECFE5 /* Main.storyboard in Resources */,
+				239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +311,153 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29D0DE04E3B60B8E0642CD49 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A0F0837E565301B795CD4C7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B9516ACCA32399EA08E0BA7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Legion/Pods-Legion-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74AC53C0BF51618AE970DF39 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C462D36997BAACB19EC337A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Legion-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCFFB17D1F551933FF83114A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8268100188F45CB6A89A693 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LegionUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF5D41AE7E37849E02E2B209 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Legion/Pods-Legion-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF2E148CA96501C10065E1A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LegionTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		23BEA57B2016302B000ECFE5 /* Sources */ = {
@@ -307,14 +503,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		23BEA5882016302B000ECFE5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				23BEA5892016302B000ECFE5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -432,11 +620,13 @@
 		};
 		23BEA5AF2016302C000ECFE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CAA200C28F700D0E78740D34 /* Pods-Legion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J59EP59PB8;
 				INFOPLIST_FILE = Legion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sbertech.learner.Legion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -446,11 +636,13 @@
 		};
 		23BEA5B02016302C000ECFE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B67E6EC37313C39D84185F24 /* Pods-Legion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J59EP59PB8;
 				INFOPLIST_FILE = Legion/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sbertech.learner.Legion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -460,6 +652,7 @@
 		};
 		23BEA5B22016302C000ECFE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98F0F6400CB3A8D9674E42E4 /* Pods-LegionTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -475,6 +668,7 @@
 		};
 		23BEA5B32016302C000ECFE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -490,6 +684,7 @@
 		};
 		23BEA5B52016302C000ECFE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J59EP59PB8;
@@ -504,6 +699,7 @@
 		};
 		23BEA5B62016302C000ECFE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J59EP59PB8;
