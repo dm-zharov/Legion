@@ -10,7 +10,7 @@
 #import "DAZMediatorAuthorizationService.h"
 
 #import "DAZAuthorizationViewController.h"
-#import "ViewController.h"
+#import "DAZPartiesTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -42,7 +42,7 @@
         self.authorizationViewController = (DAZAuthorizationViewController *)navigationController.topViewController;
         return navigationController;
     } else {
-        return [[ViewController alloc] init];
+        return [[DAZPartiesTableViewController alloc] init];
     }
 }
 

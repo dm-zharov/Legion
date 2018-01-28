@@ -9,6 +9,8 @@
 #import "DAZAuthorizationViewController.h"
 #import "DAZMediatorAuthorizationService.h"
 
+#import "DAZPartiesTableViewController.h"
+
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, weak) UIButton *signInButton;
@@ -89,9 +91,18 @@
     self.authorizationService.delegate = self;
 }
 
-#pragma mark - DAZAuthServiceDelegate
+#pragma mark - DAZAuthotizationServiceDelegate
 
-- (void)foo {
+- (void)authorizationDidFinishWithResult:(id)result {
+    
+    DAZPartiesTableViewController *partiesTableViewController = [[DAZPartiesTableViewController alloc] init];    
+    [self presentViewController:partiesTableViewController animated:YES completion:nil];
+    
+}
+- (void)authorizationDidFinishWithError:(NSError *)error {
+    
+}
+- (void)authorizationDidFinishSignOutProcess {
     
 }
 @end

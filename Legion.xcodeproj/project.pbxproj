@@ -15,7 +15,7 @@
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
-		23BEA5872016302B000ECFE5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* ViewController.m */; };
+		23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */; };
 		23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */; };
 		23BEA58F2016302B000ECFE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA58E2016302B000ECFE5 /* Assets.xcassets */; };
 		23BEA5922016302B000ECFE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */; };
@@ -58,8 +58,8 @@
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5822016302B000ECFE5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		23BEA5832016302B000ECFE5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		23BEA5852016302B000ECFE5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		23BEA5862016302B000ECFE5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		23BEA5852016302B000ECFE5 /* DAZPartiesTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartiesTableViewController.h; sourceTree = "<group>"; };
+		23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartiesTableViewController.m; sourceTree = "<group>"; };
 		23BEA58C2016302B000ECFE5 /* Legion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Legion.xcdatamodel; sourceTree = "<group>"; };
 		23BEA58E2016302B000ECFE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23BEA5912016302B000ECFE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -124,13 +124,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2346B732201E66E40039DF3F /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
+				2346B726201E02340039DF3F /* DAZMediatorAuthorizationService.h */,
+				2346B727201E02340039DF3F /* DAZMediatorAuthorizationService.m */,
+				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
+				2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */,
+				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
+				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */,
 				23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */,
-				23BEA5852016302B000ECFE5 /* ViewController.h */,
-				23BEA5862016302B000ECFE5 /* ViewController.m */,
+				23BEA5852016302B000ECFE5 /* DAZPartiesTableViewController.h */,
+				23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -168,13 +182,7 @@
 		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
-				2346B726201E02340039DF3F /* DAZMediatorAuthorizationService.h */,
-				2346B727201E02340039DF3F /* DAZMediatorAuthorizationService.m */,
-				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
-				2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */,
-				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
-				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
+				2346B732201E66E40039DF3F /* Authorization */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -544,7 +552,7 @@
 			files = (
 				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
 				2346B728201E02340039DF3F /* DAZMediatorAuthorizationService.m in Sources */,
-				23BEA5872016302B000ECFE5 /* ViewController.m in Sources */,
+				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
 				2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */,

@@ -10,6 +10,9 @@
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 
+#import "VKAccessToken.h"
+#import <Firebase.h>
+
 @interface DAZMediatorAuthorizationService ()
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
@@ -65,11 +68,15 @@
 }
 
 - (void)signOut {
-    
 }
 
 - (void)authorizationDidFinishWithResult:(id)result {
-    
+    if ([result isKindOfClass:[VKAccessToken class]]) {
+        VKAccessToken *accessToken = (VKAccessToken *)result;
+        [self.firebaseAuthorizationService signInWithUserID:accessToken.userId];
+    } else if ([result isKindOfClass:[FIRUser class]]) {
+        [self.delegate authorizationDidFinishWithResult:result];
+    }
 }
 
 - (void)authorizationDidFinishWithError:(NSError *)error {

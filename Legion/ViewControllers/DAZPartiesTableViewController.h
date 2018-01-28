@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  DAZPartiesTableViewController.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 22.01.2018.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface DAZPartiesTableViewController : UIViewController
 
 @end
