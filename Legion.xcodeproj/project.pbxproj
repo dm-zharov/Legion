@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */; };
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
+		2346B728201E02340039DF3F /* DAZMediatorAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZMediatorAuthorizationService.m */; };
+		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
+		2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
-		23AFB4F6201C892600260C11 /* DAZAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthViewController.m */; };
+		23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
 		23BEA5872016302B000ECFE5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* ViewController.m */; };
 		23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */; };
@@ -42,14 +45,16 @@
 
 /* Begin PBXFileReference section */
 		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
+		2346B726201E02340039DF3F /* DAZMediatorAuthorizationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZMediatorAuthorizationService.h; sourceTree = "<group>"; };
+		2346B727201E02340039DF3F /* DAZMediatorAuthorizationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZMediatorAuthorizationService.m; sourceTree = "<group>"; };
+		2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZVkontakteAuthorizationService.h; sourceTree = "<group>"; };
+		2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZVkontakteAuthorizationService.m; sourceTree = "<group>"; };
+		2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZFirebaseAuthorizationService.h; sourceTree = "<group>"; };
+		2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZFirebaseAuthorizationService.m; sourceTree = "<group>"; };
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		23AFB4DD201C7B3300260C11 /* DAZFirebaseNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAZFirebaseNetworkService.m; sourceTree = "<group>"; };
-		23AFB4DE201C7B3400260C11 /* DAZVkontakteNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZVkontakteNetworking.h; sourceTree = "<group>"; };
-		23AFB4DF201C7B3400260C11 /* DAZFirebaseNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZFirebaseNetworkService.h; sourceTree = "<group>"; };
-		23AFB4E0201C7B3400260C11 /* DAZVkontakteNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAZVkontakteNetworking.m; sourceTree = "<group>"; };
-		23AFB4E1201C7B3500260C11 /* DAZNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZNetworkServiceProtocol.h; sourceTree = "<group>"; };
-		23AFB4F4201C892600260C11 /* DAZAuthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthViewController.h; sourceTree = "<group>"; };
-		23AFB4F5201C892600260C11 /* DAZAuthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthViewController.m; sourceTree = "<group>"; };
+		23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationViewController.h; sourceTree = "<group>"; };
+		23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationViewController.m; sourceTree = "<group>"; };
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5822016302B000ECFE5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		23BEA5832016302B000ECFE5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -122,8 +127,8 @@
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				23AFB4F4201C892600260C11 /* DAZAuthViewController.h */,
-				23AFB4F5201C892600260C11 /* DAZAuthViewController.m */,
+				23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */,
+				23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */,
 				23BEA5852016302B000ECFE5 /* ViewController.h */,
 				23BEA5862016302B000ECFE5 /* ViewController.m */,
 			);
@@ -163,11 +168,13 @@
 		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				23AFB4E1201C7B3500260C11 /* DAZNetworkServiceProtocol.h */,
-				23AFB4DF201C7B3400260C11 /* DAZFirebaseNetworkService.h */,
-				23AFB4DD201C7B3300260C11 /* DAZFirebaseNetworkService.m */,
-				23AFB4DE201C7B3400260C11 /* DAZVkontakteNetworking.h */,
-				23AFB4E0201C7B3400260C11 /* DAZVkontakteNetworking.m */,
+				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
+				2346B726201E02340039DF3F /* DAZMediatorAuthorizationService.h */,
+				2346B727201E02340039DF3F /* DAZMediatorAuthorizationService.m */,
+				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
+				2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */,
+				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
+				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -536,11 +543,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
+				2346B728201E02340039DF3F /* DAZMediatorAuthorizationService.m in Sources */,
 				23BEA5872016302B000ECFE5 /* ViewController.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
-				23AFB4F6201C892600260C11 /* DAZAuthViewController.m in Sources */,
+				2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */,
+				23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */,
 				23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */,
+				2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
