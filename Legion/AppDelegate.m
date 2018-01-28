@@ -6,30 +6,52 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import <Firebase.h>
+
 #import "AppDelegate.h"
+
+#import "DAZAuthViewController.h"
 #import "ViewController.h"
 
-@import Firebase;
+#import "VKAccessToken.h"
 
 @interface AppDelegate ()
+
+//@property (nonatomic, strong) DAZAuthService *authService;
 
 @end
 
 @implementation AppDelegate
 
+#pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [FIRApp configure];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [ViewController new];
+    self.window.rootViewController = [self rootViewController];
     
     [self.window makeKeyAndVisible];
     
     // Override point for customization after application launch.
+    return YES;
+}
+
+- (UIViewController *)rootViewController {
+    if (_persistentContainer == nil) {
+        return [[UINavigationController alloc] initWithRootViewController:[[DAZAuthViewController alloc] init]];
+    } else {
+        return [[ViewController alloc] init];
+    }
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    //[VKSdk processOpenURL:url fromApplication:sourceApplication];
+    
+    NSLog(@"%@", url.absoluteString);
+    
     return YES;
 }
 
@@ -62,6 +84,100 @@
     [self saveContext];
 }
 
+#pragma mark - VK Authorization
+
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+//{
+//    //[VKSdk processOpenURL:url fromApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]];
+//
+//    return YES;
+//}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    
+    [self processURL:url];
+    
+    return YES;
+}
+
+- (BOOL)processURL:(NSURL *)passedURL // +
+{
+    if ([passedURL.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
+    {
+        NSString *urlString = [passedURL absoluteString];
+        NSRange rangeOfHash = [urlString rangeOfString:@"#"];
+
+        if (rangeOfHash.location == NSNotFound) {
+            return NO;
+        }
+        
+        NSString *parametersString = [urlString substringFromIndex:rangeOfHash.location + 1];
+        if (parametersString.length == 0) {
+            return NO;
+        }
+        
+        NSDictionary *parametersDict = [self explodeQueryString:parametersString];
+        
+        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"]) {
+            return NO;
+        }
+        
+        if (parametersDict[@"access_token"])
+        {
+            VKAccessToken *token = [[VKAccessToken alloc] initTokenWithDictionary:parametersDict];
+            // [self setAccessToken:token];
+            NSLog(@"%@", token.userId);
+        } else {
+            return NO;
+        }
+        
+        return YES;
+    }
+
+    return NO;
+}
+
+- (NSDictionary *)explodeQueryString:(NSString *)queryString { //+
+    NSArray *keyValuePairs = [queryString componentsSeparatedByString:@"&"];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    for (NSString *keyValueString in keyValuePairs) {
+        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
+        parameters[keyValueArray[0]] = keyValueArray[1];
+    }
+    return parameters;
+}
+
+//- (void)setAccessToken:(VKAccessToken *)token { // +
+//    [token saveTokenToDefaults:VK_ACCESS_TOKEN_DEFAULTS_KEY];
+//
+//    id oldToken = vkSdkInstance.accessToken;
+//    if (!token && oldToken) {
+//        [VKAccessToken delete:VK_ACCESS_TOKEN_DEFAULTS_KEY];
+//    }
+//
+//    vkSdkInstance.authState = token ? VKAuthorizationAuthorized : VKAuthorizationInitialized;
+//    vkSdkInstance.accessToken = token;
+//}
+
+//+ (VKAccessToken *)accessToken {
+//    return vkSdkInstance.accessToken;
+//}
+
+//+ (BOOL)isLoggedIn {
+//    if (vkSdkInstance.accessToken && ![vkSdkInstance.accessToken isExpired]) return true;
+//    return false;
+//}
+
+//- (void)setAccessToken:(VKAccessToken *)accessToken {
+//    VKAccessToken *old = _accessToken;
+//    _accessToken = accessToken;
+//
+//    for (VKWeakDelegate *del in [self.sdkDelegates copy]) {
+//        if ([del respondsToSelector:@selector(vkSdkAccessTokenUpdated:oldToken:)]) {
+//            [del performSelector:@selector(vkSdkAccessTokenUpdated:oldToken:) withObject:self.accessToken withObject:old];
+//        }
+//    }
+//}
 
 #pragma mark - Core Data stack
 

@@ -7,7 +7,9 @@ target 'Legion' do
 
   # Pods for Legion
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
   pod 'Masonry'
+  pod 'OCMock'
 
   target 'LegionTests' do
     inherit! :search_paths

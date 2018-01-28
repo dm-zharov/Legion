@@ -10,6 +10,7 @@
 		11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */; };
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
+		23AFB4F6201C892600260C11 /* DAZAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthViewController.m */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
 		23BEA5872016302B000ECFE5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* ViewController.m */; };
 		23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */; };
@@ -18,6 +19,7 @@
 		23BEA5952016302C000ECFE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5942016302C000ECFE5 /* main.m */; };
 		23BEA59F2016302C000ECFE5 /* LegionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA59E2016302C000ECFE5 /* LegionTests.m */; };
 		23BEA5AA2016302C000ECFE5 /* LegionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5A92016302C000ECFE5 /* LegionUITests.m */; };
+		23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D526AE201CDFAB002DC411 /* VKAccessToken.m */; };
 		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,13 @@
 /* Begin PBXFileReference section */
 		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		23AFB4DD201C7B3300260C11 /* DAZFirebaseNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAZFirebaseNetworkService.m; sourceTree = "<group>"; };
+		23AFB4DE201C7B3400260C11 /* DAZVkontakteNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZVkontakteNetworking.h; sourceTree = "<group>"; };
+		23AFB4DF201C7B3400260C11 /* DAZFirebaseNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZFirebaseNetworkService.h; sourceTree = "<group>"; };
+		23AFB4E0201C7B3400260C11 /* DAZVkontakteNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAZVkontakteNetworking.m; sourceTree = "<group>"; };
+		23AFB4E1201C7B3500260C11 /* DAZNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZNetworkServiceProtocol.h; sourceTree = "<group>"; };
+		23AFB4F4201C892600260C11 /* DAZAuthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthViewController.h; sourceTree = "<group>"; };
+		23AFB4F5201C892600260C11 /* DAZAuthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthViewController.m; sourceTree = "<group>"; };
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5822016302B000ECFE5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		23BEA5832016302B000ECFE5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -57,6 +66,8 @@
 		23BEA5A52016302C000ECFE5 /* LegionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LegionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5A92016302C000ECFE5 /* LegionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegionUITests.m; sourceTree = "<group>"; };
 		23BEA5AB2016302C000ECFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23D526AD201CDFAB002DC411 /* VKAccessToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VKAccessToken.h; sourceTree = "<group>"; };
+		23D526AE201CDFAB002DC411 /* VKAccessToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKAccessToken.m; sourceTree = "<group>"; };
 		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3912D243E638C9C75441C0EB /* libPods-LegionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +119,59 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				23AFB4F4201C892600260C11 /* DAZAuthViewController.h */,
+				23AFB4F5201C892600260C11 /* DAZAuthViewController.m */,
+				23BEA5852016302B000ECFE5 /* ViewController.h */,
+				23BEA5862016302B000ECFE5 /* ViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		23AFB4C1201B47FC00260C11 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		23AFB4C5201B493D00260C11 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		23AFB4CC201BA25000260C11 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				23D526AD201CDFAB002DC411 /* VKAccessToken.h */,
+				23D526AE201CDFAB002DC411 /* VKAccessToken.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		23AFB4CD201BA26C00260C11 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				23AFB4E1201C7B3500260C11 /* DAZNetworkServiceProtocol.h */,
+				23AFB4DF201C7B3400260C11 /* DAZFirebaseNetworkService.h */,
+				23AFB4DD201C7B3300260C11 /* DAZFirebaseNetworkService.m */,
+				23AFB4DE201C7B3400260C11 /* DAZVkontakteNetworking.h */,
+				23AFB4E0201C7B3400260C11 /* DAZVkontakteNetworking.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		23BEA5762016302B000ECFE5 = {
 			isa = PBXGroup;
 			children = (
@@ -135,12 +199,16 @@
 			children = (
 				23BEA5822016302B000ECFE5 /* AppDelegate.h */,
 				23BEA5832016302B000ECFE5 /* AppDelegate.m */,
-				23BEA5852016302B000ECFE5 /* ViewController.h */,
-				23BEA5862016302B000ECFE5 /* ViewController.m */,
+				23AFB4B7201B35C400260C11 /* ViewControllers */,
+				23AFB4CE201BA3FD00260C11 /* Controllers */,
+				23AFB4C5201B493D00260C11 /* Categories */,
+				23AFB4C1201B47FC00260C11 /* Views */,
+				23AFB4CC201BA25000260C11 /* Models */,
+				23AFB4CD201BA26C00260C11 /* TableViewCells */,
 				23BEA58E2016302B000ECFE5 /* Assets.xcassets */,
-				23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */,
-				23BEA5932016302B000ECFE5 /* Info.plist */,
 				239D696520168F2300672DC0 /* GoogleService-Info.plist */,
+				23BEA5932016302B000ECFE5 /* Info.plist */,
+				23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */,
 				23BEA5942016302C000ECFE5 /* main.m */,
 				23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */,
 			);
@@ -349,9 +417,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Legion/Pods-Legion-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/VK-ios-sdk/VKSdkResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/VKSdkResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -464,9 +535,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
 				23BEA5872016302B000ECFE5 /* ViewController.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
+				23AFB4F6201C892600260C11 /* DAZAuthViewController.m in Sources */,
 				23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
