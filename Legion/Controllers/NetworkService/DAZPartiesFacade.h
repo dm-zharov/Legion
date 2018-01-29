@@ -8,16 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-@class PartyMO;
+@class PartyMO, ClaimMO;
+
+@protocol DAZPartiesFacadeDelegate <NSObject>
+
+@optional
+- (void)partiesFacadeDidFinishUpdateParties:(NSArray<PartyMO *> *)parties;;
+- (void)partiesFacadeDidFinishUpdateClaims:(NSArray<ClaimMO *> *)claims;
+
+@end
 
 @interface DAZPartiesFacade : NSObject
 
-- (NSArray<PartyMO *> *)getParties;
+@property (nonatomic, weak) id <DAZPartiesFacadeDelegate> delegate;
 
-- (void)createParty:(PartyMO *)party;
-- (void)editParty:(PartyMO *)party;
-- (void)openParty:(PartyMO *)party;
-- (void)closeParty:(PartyMO *)party;
+- (NSArray<PartyMO *> *)getParties;
+- (void)saveParty:(PartyMO *)party;
 - (void)deleteParty:(PartyMO *)party;
+
+- (NSArray<ClaimMO *> *)getClaims;
+- (void)saveClaim:(ClaimMO *)claim;
+- (void)deleteClaim:(ClaimMO *)claim;
 
 @end

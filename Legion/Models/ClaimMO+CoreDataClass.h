@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ClaimMO : NSManagedObject
 
++ (NSString *)entityName;
+
 @end
 
 NS_ASSUME_NONNULL_END

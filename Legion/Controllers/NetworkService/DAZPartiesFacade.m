@@ -12,56 +12,76 @@
 
 #import "PartyMO+CoreDataClass.h"
 
-@interface DAZPartiesFacade ()
+@interface DAZPartiesFacade () <DAZNetworkServiceDelegate>
 
-@property (nonatomic, strong) DAZCoreDataManager *coreDataService;
+@property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
 
 @end
 
 @implementation DAZPartiesFacade
 
+#pragma mark - Lifecycle
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _coreDataService = [[DAZCoreDataManager alloc] init];
+        _coreDataManager = [[DAZCoreDataManager alloc] init];
         _networkService = [[DAZNetworkService alloc] init];
+        _networkService.delegate = self;
     }
     return self;
 }
 
-- (NSArray *)getParties
+#pragma mark - Parties
+
+- (NSArray<PartyMO *> *)getParties
 {
-    NSArray *posts = [NSArray new];
-    posts = [self.coreDataService fetchParties];
+    NSArray *parties = [NSArray new];
+    parties = [self.coreDataManager fetchParties];
+    [self.networkService downloadParties];
     
-    if (posts.count == 0)
-    {
-        posts = [self.networkService downloadParties];
-        [self.coreDataService saveParties:posts];
-    }
-    
-    return posts;
+    return parties;
 }
 
-- (void)createParty:(PartyMO *)party {
-    
-}
-
-- (void)editParty:(PartyMO *)party {
-    
-}
-
-- (void)openParty:(PartyMO *)party {
-    
-}
-
-- (void)closeParty:(PartyMO *)party {
-    
+- (void)saveParty:(PartyMO *)party {
+    [self.coreDataManager saveParty:party];
+    [self.networkService uploadParty:party];
 }
 
 - (void)deleteParty:(PartyMO *)party {
+    
+}
+
+#pragma mark - Claims
+
+- (NSArray<ClaimMO *> *)getClaims
+{
+    NSArray *claims = [NSArray new];
+    claims = [self.coreDataManager fetchClaims];
+    [self.networkService downloadClaims];
+    
+    return claims;
+}
+
+- (void)saveClaim:(ClaimMO *)claim
+{
+    [self.coreDataManager saveClaim:claim];
+    [self.networkService uploadClaim:claim];
+}
+
+- (void)removeClaim:(ClaimMO *)claim {
+    [self.coreDataManager deleteClaim:claim];
+    [self.networkService deleteClaim:claim];
+}
+
+- (void)networkServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties {
+    [self.coreDataManager saveParties:parties];
+    //[self.delegate respondsToSelector:<#(SEL)#>]
+}
+
+- (void)networkServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims {
     
 }
 

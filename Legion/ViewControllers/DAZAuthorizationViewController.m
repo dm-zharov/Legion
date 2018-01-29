@@ -86,23 +86,54 @@
 
 #pragma mark - DAZAuthorizationService
 
-- (void)setupAuthorizationService {
+- (void)setupAuthorizationService
+{
     self.authorizationService = [[DAZAuthorizationMediator alloc] init];
     self.authorizationService.delegate = self;
 }
 
 #pragma mark - DAZAuthotizationServiceDelegate
 
-- (void)authorizationDidFinishWithResult:(id)result {
+- (void)authorizationDidFinishWithResult:(id)result
+{
     
-    DAZPartiesTableViewController *partiesTableViewController = [[DAZPartiesTableViewController alloc] init];    
-    [self presentViewController:partiesTableViewController animated:YES completion:nil];
+    DAZPartiesTableViewController *partiesTableViewController = [[DAZPartiesTableViewController alloc] init];
+    //[UIApplication sharedApplication].keyWindow.rootViewController = partiesTableViewController;
+    //[self presentViewController:partiesTableViewController animated:YES completion:nil];
+    
+    self.navigationController.view.backgroundColor = [UIColor redColor];
+    
+    [UIView transitionWithView:self.navigationController.view
+                      duration:0.75
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        [self.navigationController pushViewController:partiesTableViewController animated:NO];
+                    }
+                    completion:nil];
     
 }
-- (void)authorizationDidFinishWithError:(NSError *)error {
+
+- (void)authorizationDidFinishWithError:(NSError *)error
+{
+    
+    static NSString *alertTitle = @"Ошибка сети";
+    static NSString *alertMessage = @"Произошла ошибка подключения, проверьте"
+                                     "соединение с интернетом либо попробуйте позже.";
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                   message:alertMessage
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleDefault handler:nil];
+    
+    [alert addAction:agreeAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
-- (void)authorizationDidFinishSignOutProcess {
+
+- (void)authorizationDidFinishSignOutProcess
+{
     
 }
 @end

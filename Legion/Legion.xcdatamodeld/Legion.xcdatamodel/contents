@@ -7,9 +7,15 @@
         <relationship name="uid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="claims" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Party" representedClassName="PartyMO" syncable="YES">
+        <attribute name="adress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="apartment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="closed" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="published" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="left" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="members" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="status" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="claim" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Claim" inverseName="party" inverseEntity="Claim" syncable="YES"/>
@@ -21,7 +27,7 @@
     </entity>
     <elements>
         <element name="Claim" positionX="-29" positionY="171" width="128" height="105"/>
-        <element name="Party" positionX="198" positionY="245" width="128" height="135"/>
+        <element name="Party" positionX="198" positionY="245" width="128" height="225"/>
         <element name="User" positionX="196" positionY="81" width="128" height="90"/>
     </elements>
 </model>

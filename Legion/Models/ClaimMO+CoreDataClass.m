@@ -10,4 +10,11 @@
 
 @implementation ClaimMO
 
+#pragma mark - Static Properties
+
++ (NSString *)entityName
+{
+    return @"Party";
+}
+
 @end

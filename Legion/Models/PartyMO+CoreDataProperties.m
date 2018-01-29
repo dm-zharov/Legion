@@ -14,11 +14,15 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Party"];
 }
 
-@dynamic uid;
 @dynamic date;
-@dynamic published;
+@dynamic created;
 @dynamic status;
 @dynamic title;
+@dynamic uid;
+@dynamic closed;
+@dynamic desc;
+@dynamic members;
+@dynamic left;
 @dynamic claim;
 
 @end

@@ -157,10 +157,7 @@
 				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
 				2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */,
 				2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */,
-				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
-				2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */,
-				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
-				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
+				2354FA00201FA3E6000A97C8 /* Mediated Authorizaton Services */,
 			);
 			path = AuthorizationService;
 			sourceTree = "<group>";
@@ -170,12 +167,31 @@
 			children = (
 				2346B734201E742C0039DF3F /* DAZPartiesFacade.h */,
 				2346B735201E742C0039DF3F /* DAZPartiesFacade.m */,
+				2354FA01201FA448000A97C8 /* Facade Core Services */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		2354FA00201FA3E6000A97C8 /* Mediated Authorizaton Services */ = {
+			isa = PBXGroup;
+			children = (
+				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
+				2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */,
+				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
+				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
+			);
+			path = "Mediated Authorizaton Services";
+			sourceTree = "<group>";
+		};
+		2354FA01201FA448000A97C8 /* Facade Core Services */ = {
+			isa = PBXGroup;
+			children = (
 				2346B73A201E75090039DF3F /* DAZCoreDataManager.h */,
 				2346B73B201E75090039DF3F /* DAZCoreDataManager.m */,
 				2346B737201E74F50039DF3F /* DAZNetworkService.h */,
 				2346B738201E74F50039DF3F /* DAZNetworkService.m */,
 			);
-			path = NetworkService;
+			path = "Facade Core Services";
 			sourceTree = "<group>";
 		};
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {

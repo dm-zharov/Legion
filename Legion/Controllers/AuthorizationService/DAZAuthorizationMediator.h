@@ -12,7 +12,7 @@
 typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
     /// Authorize with "Vkontakte"
     DAZAuthorizationVkontakte,
-    /// Authorize with "Firebase"
+    /// Authorize anonymously with "Firebase"
     DAZAuthorizationAnonymously
 };
 

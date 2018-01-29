@@ -24,6 +24,7 @@
 - (void)authorizationDidFinishWithResult:(id)result;
 - (void)authorizationDidFinishWithError:(NSError *)error;
 - (void)authorizationDidFinishSignOutProcess;
+- (void)authorizationStatusDidChange;
 
 @end
 #endif /* DAZAuthorizationServiceProtocol_h */

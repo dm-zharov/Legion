@@ -36,7 +36,7 @@
 }
 
 - (UIViewController *)rootViewController {
-    if (_persistentContainer == nil) {
+    if (YES) {
         UINavigationController *navigationController =
             [[UINavigationController alloc] initWithRootViewController:[[DAZAuthorizationViewController alloc] init]];
         self.authorizationViewController = (DAZAuthorizationViewController *)navigationController.topViewController;
