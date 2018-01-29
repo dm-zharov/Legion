@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DAZMediatorAuthorizationService.h"
+#import "DAZAuthorizationMediator.h"
 
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
@@ -24,7 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [DAZMediatorAuthorizationService configureService];
+    [DAZAuthorizationMediator configureService];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];

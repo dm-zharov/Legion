@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DAZMediatorAuthorizationService.h"
+#import "DAZAuthorizationMediator.h"
 
 @interface DAZAuthorizationViewController : UIViewController
 
-@property (nonatomic, strong) DAZMediatorAuthorizationService *authorizationService;
+@property (nonatomic, strong) DAZAuthorizationMediator *authorizationService;
 
 @end

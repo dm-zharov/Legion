@@ -1,26 +1,26 @@
 //
-//  DAZMediatorAuthorizationService.m
+//  DAZAuthorizationMediator.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import "DAZMediatorAuthorizationService.h"
+#import "DAZAuthorizationMediator.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 
 #import "VKAccessToken.h"
 #import <Firebase.h>
 
-@interface DAZMediatorAuthorizationService ()
+@interface DAZAuthorizationMediator ()
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
 
 @end
 
-@implementation DAZMediatorAuthorizationService
+@implementation DAZAuthorizationMediator
 
 + (void)configureService {
     [DAZFirebaseAuthorizationService configureService];

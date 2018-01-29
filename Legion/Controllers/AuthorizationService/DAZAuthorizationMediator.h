@@ -1,5 +1,5 @@
 //
-//  DAZMediatorAuthorizationService.h
+//  DAZAuthorizationMediator.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
     DAZAuthorizationAnonymously
 };
 
-@interface DAZMediatorAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
+@interface DAZAuthorizationMediator : NSObject <DAZAuthorizationServiceProtocol>
 
 @property (nonatomic, strong) id <DAZAuthorizationServiceDelegate> delegate;
 

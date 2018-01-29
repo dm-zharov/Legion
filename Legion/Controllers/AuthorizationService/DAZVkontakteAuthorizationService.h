@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
-#import "DAZMediatorAuthorizationService.h"
+#import "DAZAuthorizationMediator.h"
 #import "VKAccessToken.h"
 
 @interface DAZVkontakteAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>

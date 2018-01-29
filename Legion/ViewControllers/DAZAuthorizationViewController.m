@@ -7,7 +7,7 @@
 //
 
 #import "DAZAuthorizationViewController.h"
-#import "DAZMediatorAuthorizationService.h"
+#import "DAZAuthorizationMediator.h"
 
 #import "DAZPartiesTableViewController.h"
 
@@ -87,7 +87,7 @@
 #pragma mark - DAZAuthorizationService
 
 - (void)setupAuthorizationService {
-    self.authorizationService = [[DAZMediatorAuthorizationService alloc] init];
+    self.authorizationService = [[DAZAuthorizationMediator alloc] init];
     self.authorizationService.delegate = self;
 }
 
