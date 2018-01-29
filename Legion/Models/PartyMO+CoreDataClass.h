@@ -11,9 +11,19 @@
 
 @class ClaimMO;
 
+typedef NS_ENUM(NSUInteger, DAZPartyStatus) {
+    DAZPartyStatusOpen,
+    DAZPartyStatusClosed
+};
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PartyMO : NSManagedObject
+
++ (NSString *)stringFromStatus:(DAZPartyStatus)status;
+
+- (DAZPartyStatus)partyStatus;
+- (void)setPartyStatus:(DAZPartyStatus)status;
 
 @end
 

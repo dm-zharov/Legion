@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *uid;
 @property (nullable, nonatomic, copy) NSDate *date;
 @property (nullable, nonatomic, copy) NSDate *published;
-@property (nonatomic) BOOL status;
+@property (nullable, nonatomic, copy) NSString *status;
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nullable, nonatomic, retain) ClaimMO *claim;
 
