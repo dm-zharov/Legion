@@ -8,23 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
-#import "DAZAuthorizationMediator.h"
 #import "VKAccessToken.h"
+
 
 @interface DAZVkontakteAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
 
+@property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-
-+ (void)setAccessToken:(VKAccessToken *)token;
+// Instance methods
 + (VKAccessToken *)accessToken;
++ (void)setAccessToken:(VKAccessToken *)token;
 
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
 
-- (BOOL)processURL:(NSURL *)url;
-
-- (void)signIn;
-+ (BOOL)isLoggedIn;
+- (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signOut;
+
+- (BOOL)processURL:(NSURL *)url;
 
 @end

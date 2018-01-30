@@ -71,10 +71,12 @@
     [self.networkService uploadClaim:claim];
 }
 
-- (void)removeClaim:(ClaimMO *)claim {
+- (void)deleteClaim:(ClaimMO *)claim {
     [self.coreDataManager deleteClaim:claim];
     [self.networkService deleteClaim:claim];
 }
+
+#pragma mark - DAZAuthorizationServiceDelegate
 
 - (void)networkServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties {
     [self.coreDataManager saveParties:parties];

@@ -11,6 +11,6 @@
 
 @interface DAZAuthorizationViewController : UIViewController
 
-@property (nonatomic, strong) DAZAuthorizationMediator *authorizationService;
+@property (nonatomic, strong) DAZAuthorizationMediator *authorizationMediator;
 
 @end

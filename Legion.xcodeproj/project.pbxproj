@@ -68,16 +68,16 @@
 		2346B73A201E75090039DF3F /* DAZCoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZCoreDataManager.h; sourceTree = "<group>"; };
 		2346B73B201E75090039DF3F /* DAZCoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZCoreDataManager.m; sourceTree = "<group>"; };
 		2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PartyMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
-		2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
+		2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/Claim/ClaimMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
 		2351BECE201F371D0065C1C1 /* UserMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UserMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/UserMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
 		2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PartyMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
-		2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
+		2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/Claim/ClaimMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
 		2351BED1201F371E0065C1C1 /* UserMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UserMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/UserMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
 		2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PartyMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
 		2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PartyMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
 		2351BEDC201F37D60065C1C1 /* UserMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UserMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/UserMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
-		2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
-		2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
+		2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/Claim/ClaimMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
+		2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/Claim/ClaimMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
 		2351BEDF201F37D60065C1C1 /* UserMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UserMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/UserMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationViewController.h; sourceTree = "<group>"; };
@@ -151,28 +151,61 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		2346B732201E66E40039DF3F /* AuthorizationService */ = {
+		2346B732201E66E40039DF3F /* Authorization Service */ = {
 			isa = PBXGroup;
 			children = (
 				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
 				2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */,
 				2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */,
-				2354FA00201FA3E6000A97C8 /* Mediated Authorizaton Services */,
+				2354FA092020CBB9000A97C8 /* Mediated Authorization Services */,
 			);
-			path = AuthorizationService;
+			path = "Authorization Service";
 			sourceTree = "<group>";
 		};
-		2346B733201E730F0039DF3F /* NetworkService */ = {
+		2346B733201E730F0039DF3F /* Network Service */ = {
 			isa = PBXGroup;
 			children = (
 				2346B734201E742C0039DF3F /* DAZPartiesFacade.h */,
 				2346B735201E742C0039DF3F /* DAZPartiesFacade.m */,
-				2354FA01201FA448000A97C8 /* Facade Core Services */,
+				2354FA0A2020CBD8000A97C8 /* Facaded Services */,
 			);
-			path = NetworkService;
+			path = "Network Service";
 			sourceTree = "<group>";
 		};
-		2354FA00201FA3E6000A97C8 /* Mediated Authorizaton Services */ = {
+		2354FA052020CB5C000A97C8 /* Party */ = {
+			isa = PBXGroup;
+			children = (
+				2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */,
+				2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */,
+				2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */,
+				2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */,
+			);
+			name = Party;
+			sourceTree = "<group>";
+		};
+		2354FA062020CB6D000A97C8 /* Claim */ = {
+			isa = PBXGroup;
+			children = (
+				2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */,
+				2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */,
+				2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */,
+				2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */,
+			);
+			path = Claim;
+			sourceTree = "<group>";
+		};
+		2354FA072020CB78000A97C8 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				2351BEDC201F37D60065C1C1 /* UserMO+CoreDataProperties.h */,
+				2351BEDF201F37D60065C1C1 /* UserMO+CoreDataProperties.m */,
+				2351BED1201F371E0065C1C1 /* UserMO+CoreDataClass.h */,
+				2351BECE201F371D0065C1C1 /* UserMO+CoreDataClass.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		2354FA092020CBB9000A97C8 /* Mediated Authorization Services */ = {
 			isa = PBXGroup;
 			children = (
 				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
@@ -180,10 +213,10 @@
 				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
 				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
 			);
-			path = "Mediated Authorizaton Services";
+			name = "Mediated Authorization Services";
 			sourceTree = "<group>";
 		};
-		2354FA01201FA448000A97C8 /* Facade Core Services */ = {
+		2354FA0A2020CBD8000A97C8 /* Facaded Services */ = {
 			isa = PBXGroup;
 			children = (
 				2346B73A201E75090039DF3F /* DAZCoreDataManager.h */,
@@ -191,7 +224,7 @@
 				2346B737201E74F50039DF3F /* DAZNetworkService.h */,
 				2346B738201E74F50039DF3F /* DAZNetworkService.m */,
 			);
-			path = "Facade Core Services";
+			name = "Facaded Services";
 			sourceTree = "<group>";
 		};
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
@@ -222,18 +255,9 @@
 		23AFB4CC201BA25000260C11 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */,
-				2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */,
-				2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */,
-				2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */,
-				2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */,
-				2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */,
-				2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */,
-				2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */,
-				2351BEDC201F37D60065C1C1 /* UserMO+CoreDataProperties.h */,
-				2351BEDF201F37D60065C1C1 /* UserMO+CoreDataProperties.m */,
-				2351BED1201F371E0065C1C1 /* UserMO+CoreDataClass.h */,
-				2351BECE201F371D0065C1C1 /* UserMO+CoreDataClass.m */,
+				2354FA052020CB5C000A97C8 /* Party */,
+				2354FA062020CB6D000A97C8 /* Claim */,
+				2354FA072020CB78000A97C8 /* User */,
 				23D526AD201CDFAB002DC411 /* VKAccessToken.h */,
 				23D526AE201CDFAB002DC411 /* VKAccessToken.m */,
 			);
@@ -250,8 +274,8 @@
 		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2346B732201E66E40039DF3F /* AuthorizationService */,
-				2346B733201E730F0039DF3F /* NetworkService */,
+				2346B732201E66E40039DF3F /* Authorization Service */,
+				2346B733201E730F0039DF3F /* Network Service */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

@@ -6,10 +6,12 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "DAZCoreDataManager.h"
 #import "PartyMO+CoreDataClass.h"
 #import "UserMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
+
 
 @interface DAZCoreDataManager ()
 
@@ -17,27 +19,15 @@
 
 @implementation DAZCoreDataManager
 
-#pragma mark - Lifecycle
+#pragma mark - Accessors
 
-- (instancetype)init
+- (NSManagedObjectContext*)coreDataContext
 {
-    self = [super init];
-    if(self)
-    {
-        _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"Legion"];
-        [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *description, NSError *error) {
-            if (error != nil)
-            {
-                NSLog(@"Failed to load Core Data stack: %@", error);
-                abort();
-            }
-            else
-            {
-                _managedObjectContext = _persistentContainer.viewContext;
-            }
-        }];
-    }
-    return self;
+    UIApplication *application = [UIApplication sharedApplication];
+    AppDelegate *appDelegate =  (AppDelegate*)application.delegate;
+    
+    NSPersistentContainer *container = appDelegate.persistentContainer;
+    return container.viewContext;
 }
 
 #pragma mark - Parties
@@ -52,11 +42,13 @@
     [self saveObjects:parties];
 }
 
-- (void)saveParty:(PartyMO *)party {
+- (void)saveParty:(PartyMO *)party
+{
     [self saveObject:party];
 }
 
-- (void)deleteParty:(PartyMO *)party {
+- (void)deleteParty:(PartyMO *)party
+{
     [self deleteObject:party];
 }
 
@@ -70,11 +62,13 @@
     [self saveObjects:claims];
 }
 
-- (void)saveClaim:(ClaimMO *)claim {
-    [self saveObject:claim];
+- (void)saveClaim:(ClaimMO *)claim
+{
+    [self updateCoreData];
 }
 
-- (void)deleteClaim:(ClaimMO *)claim {
+- (void)deleteClaim:(ClaimMO *)claim
+{
     [self deleteObject:claim];
 }
 
@@ -90,37 +84,37 @@
     //NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
     //[fetchRequest setSortDescriptors:@[sort]];
     
-    [self.managedObjectContext performBlockAndWait:^{
-        NSError *error;
-        results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSError *error;
+        results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];
         NSLog(@"Fetching error: %@", error);
-    }];
-    
-    NSLog(@"Object count: %ld", results.count);
     
     return results;
 }
 
-- (void)saveObjects:(NSArray *)objects {
+- (void)saveObjects:(NSArray *)objects
+{
     for (id object in objects) {
-        [self.managedObjectContext insertObject:object];
+        [self.coreDataContext insertObject:object];
     }
     [self updateCoreData];
 }
 
-- (void)saveObject:(id)object {
-    [self.managedObjectContext insertObject:object];
+- (void)saveObject:(id)object
+{
+    [self.coreDataContext insertObject:object];
+    [self updateCoreData];
 }
 
-- (void)deleteObject:(id)object {
-    [self.managedObjectContext deleteObject:object];
+- (void)deleteObject:(id)object
+{
+    [self.coreDataContext deleteObject:object];
     [self updateCoreData];
 }
 
 - (BOOL)updateCoreData
 {
     NSError *error;
-    if (![self.managedObjectContext save:&error])
+    if ([self.coreDataContext hasChanges] && ![self.coreDataContext save:&error])
     {
         return NO;
     }

@@ -15,8 +15,7 @@
 
 @interface DAZCoreDataManager : NSObject
 
-@property (readonly, strong) NSPersistentContainer *persistentContainer;
-@property (readonly, weak) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, readonly) NSManagedObjectContext *coreDataContext;
 
 - (NSArray<PartyMO*> *)fetchParties;
 - (void)saveParties:(NSArray<PartyMO *> *)parties;

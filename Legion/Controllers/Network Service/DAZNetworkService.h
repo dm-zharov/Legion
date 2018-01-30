@@ -21,8 +21,6 @@
 
 @property (nonatomic, weak) id <DAZNetworkServiceDelegate> delegate;
 
-- (instancetype)initWithCoreDataManager:(DAZCoreDataManager *)manager;
-
 - (void)downloadParties;
 - (void)uploadParty:(PartyMO *)party;
 - (void)deleteParty:(PartyMO *)party;
