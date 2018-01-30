@@ -11,17 +11,19 @@
 
 @interface DAZFirebaseAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
 
+@property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
+// Configure Firebase SDK
 + (void)configureService;
 
+// Init
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
 
-// Will be introduced in future releases
-- (void)signIn NS_UNAVAILABLE;
-
+- (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signInWithUserID:(NSString *)uid;
-- (void)signInWithCustomToken:(NSString *)token;
-- (void)signInAnonymously;
+
+- (void)signOut;
 
 @end

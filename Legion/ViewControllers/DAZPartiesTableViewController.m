@@ -6,13 +6,17 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "DAZPartiesTableViewController.h"
 
-static NSString *const reuseIdentifier = @"Party Cell";
+
+static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
+
 
 @interface DAZPartiesTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, nullable, copy) NSArray *partiesArray;
 
 @end
 
@@ -20,22 +24,31 @@ static NSString *const reuseIdentifier = @"Party Cell";
 
 #pragma mark - Lifecycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
+    [self setupNavigationBar];
     [self setupTableView];
-    
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)setupNavigationBar
+{
+    self.navigationItem.title = @"Тусовки";
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
+    
+    self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
 }
 
 - (void)setupTableView
 {
-    UITableView *tableView = [[UITableView alloc] init];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     
@@ -44,12 +57,19 @@ static NSString *const reuseIdentifier = @"Party Cell";
     self.tableView = tableView;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return 50;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [[UITableViewCell alloc]
+        initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DAZPartiesTableViewCellReuseIdentifier];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
     
     return cell;
 }

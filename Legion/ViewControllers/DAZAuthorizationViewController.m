@@ -6,10 +6,11 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "DAZAuthorizationViewController.h"
-#import "DAZMediatorAuthorizationService.h"
-
 #import "DAZPartiesTableViewController.h"
+#import "DAZAuthorizationMediator.h"
+
 
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
@@ -19,6 +20,7 @@
 @end
 
 @implementation DAZAuthorizationViewController
+
 
 #pragma mark - Lifecycle
 
@@ -37,15 +39,16 @@
     [super didReceiveMemoryWarning];
 }
 
+
 #pragma mark - Setup UI
 
 - (void)setupSignInButton
 {
     UIEdgeInsetsMake(0, 16, 0, 16);
-    UIButton *signInButton = [[UIButton alloc] initWithFrame:
-                                CGRectMake(16, 539, CGRectGetWidth(self.view.bounds) - 32, 48)];
+    UIButton *signInButton = [[UIButton alloc]
+        initWithFrame:CGRectMake(16, 539, CGRectGetWidth(self.view.bounds) - 32, 48)];
     
-    [signInButton setBackgroundColor:[UIColor blueColor]];
+    signInButton.backgroundColor = [UIColor blueColor];
     signInButton.layer.cornerRadius = 5;
     [signInButton setTitle:@"Авторизоваться через ВК" forState:UIControlStateNormal];
     [signInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -59,8 +62,8 @@
 - (void)setupAnonymousInButton
 {
     
-    UIButton *anonymousInButton = [[UIButton alloc] initWithFrame:
-                                     CGRectMake(16, 539 + 48 + 8, CGRectGetWidth(self.view.bounds) - 32, 48)];;
+    UIButton *anonymousInButton = [[UIButton alloc]
+        initWithFrame:CGRectMake(16, 539 + 48 + 8, CGRectGetWidth(self.view.bounds) - 32, 48)];;
     
     [anonymousInButton setTitle:@"Продолжить без авторизации" forState:UIControlStateNormal];
     [anonymousInButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -76,33 +79,50 @@
 
 - (void)actionSignIn:(id)sender
 {
-    [self.authorizationService signInWithAuthType:DAZAuthorizationVkontakte];
+    [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationVkontakte];
 }
 
 - (void)actionAnonymousIn:(id)sender
 {
-    [self.authorizationService signInWithAuthType:DAZAuthorizationAnonymously];
+    [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
 }
 
 #pragma mark - DAZAuthorizationService
 
-- (void)setupAuthorizationService {
-    self.authorizationService = [[DAZMediatorAuthorizationService alloc] init];
-    self.authorizationService.delegate = self;
+- (void)setupAuthorizationService
+{
+    self.authorizationMediator = [[DAZAuthorizationMediator alloc] init];
+    self.authorizationMediator.delegate = self;
 }
 
 #pragma mark - DAZAuthotizationServiceDelegate
 
-- (void)authorizationDidFinishWithResult:(id)result {
-    
-    DAZPartiesTableViewController *partiesTableViewController = [[DAZPartiesTableViewController alloc] init];    
-    [self presentViewController:partiesTableViewController animated:YES completion:nil];
-    
+- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error
+{
+    if (result)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenReceivedNotification object:nil];
+    }
+    else
+    {
+        static NSString *alertTitle = @"Ошибка сети";
+        static NSString *alertMessage = @"Произошла ошибка подключения, проверьте "
+        "соединение с интернетом либо попробуйте позже.";
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                                       message:alertMessage
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleDefault handler:nil];
+        
+        [alert addAction:agreeAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
-- (void)authorizationDidFinishWithError:(NSError *)error {
-    
-}
-- (void)authorizationDidFinishSignOutProcess {
-    
+
+- (void)authorizationServiceDidFinishSignOut
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
 }
 @end
