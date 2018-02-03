@@ -12,13 +12,11 @@
 @interface DAZAuthorizationMediator : NSObject <DAZAuthorizationServiceProtocol>
 
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
-@property (nonatomic, strong) id <DAZAuthorizationServiceDelegate> delegate;
+@property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-+ (void)configureService;
+- (void)openURL:(NSURL *)url;
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signOut;
-
-- (BOOL)openURL:(NSURL *)url;
 
 @end

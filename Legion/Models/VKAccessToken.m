@@ -6,23 +6,41 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "VKAccessToken.h"
+
+@interface VKAccessToken ()
+
+@end
 
 @implementation VKAccessToken
 
-+ (instancetype)tokenFromDictionary:(NSDictionary *)parametersDict
++ (instancetype)tokenWithDictionary:(NSDictionary *)dictionary
 {
-    return [[self alloc] initTokenWithDictionary:parametersDict];
+    return [[self alloc] initWithDictionary:dictionary];
 }
 
-- (instancetype)initTokenWithDictionary:(NSDictionary *)parametersDict
++ (nullable VKAccessToken *)accessToken {
+    return nil;
+    
+}
+
++ (void)setAccessToken:(nonnull VKAccessToken *)accessToken {
+    
+}
+
++ (void)deleteAccessToken {
+    //[[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     self = [super init];
     if (self) {
-        _accessToken = parametersDict[@"access_token"];
-        _email = parametersDict[@"email"];
-        _expiresIn = [parametersDict[@"expires_in"] integerValue];
-        _userId = parametersDict[@"user_id"];
+        _token = dictionary[@"access_token"];
+        _email = dictionary[@"email"];
+        _expiresIn = [dictionary[@"expires_in"] floatValue];
+        _userId = dictionary[@"user_id"];
         _created = [[NSDate new] timeIntervalSince1970];
     }
     return self;
@@ -32,9 +50,10 @@
     return self.expiresIn > 0 && self.expiresIn + self.created < [[NSDate new] timeIntervalSince1970];
 }
 
-- (void)removeToken
+- (void)deleteAccessToken
 {
-    //[someone deletefromcoredata];
+    
+    //[[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
 }
 
 @end

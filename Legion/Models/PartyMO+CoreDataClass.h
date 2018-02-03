@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class ClaimMO;
+
 typedef NS_ENUM(NSUInteger, DAZPartyStatus) {
     DAZPartyStatusOpen,
     DAZPartyStatusClosed
@@ -21,16 +23,26 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)entityName;
 
 // Creation
-+ (PartyMO *)partyWithContext:(NSManagedObjectContext *)managedObjectContext;
++ (instancetype)partyWithContext:(NSManagedObjectContext *)context;
++ (instancetype)partyWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary;
++ (instancetype)partyWithContext:(NSManagedObjectContext *)context data:(NSData *)data;
 
+// Instance Accessors
 + (NSString *)stringFromStatus:(DAZPartyStatus)status;
++ (DAZPartyStatus)statusFromString:(NSString *)status;
 
-
-- (BOOL)saveObject;
-- (BOOL)deleteObject;
-
+// Accessors
 - (DAZPartyStatus)partyStatus;
 - (void)setPartyStatus:(DAZPartyStatus)status;
+
+// Coding
+- (NSDictionary *)dictionaryFromParty;
+- (NSData *)dataFromParty;
+
+// Basic
+- (BOOL)saveParty;
+- (BOOL)deleteParty;
+
 @end
 
 NS_ASSUME_NONNULL_END

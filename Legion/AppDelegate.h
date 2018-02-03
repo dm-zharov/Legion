@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-
-extern NSString *const DAZAuthorizationTokenExpiredNotification;
-extern NSString *const DAZAuthorizationTokenReceivedNotification;
-
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

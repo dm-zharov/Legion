@@ -10,16 +10,24 @@
 
 @interface VKAccessToken : NSObject
 
-@property(nonatomic, readonly, copy) NSString *accessToken;
-@property(nonatomic, readonly, copy) NSString *userId;
-@property(nonatomic, readonly, copy) NSString *email;
-@property(nonatomic, readonly, assign) NSInteger expiresIn;
-@property(nonatomic, readonly, assign) NSTimeInterval created;
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy) NSString *userId;
+@property (nonatomic, copy) NSString *email;
 
-+ (instancetype)tokenFromDictionary:(NSDictionary *)parametersDict;
+@property (nonatomic, assign) NSTimeInterval expiresIn;
+@property (nonatomic, assign) NSTimeInterval created;
 
-- (instancetype)initTokenWithDictionary:(NSDictionary *)parametersDict;
-- (BOOL)isExpired;
-- (void)removeToken;
+@property (nonatomic, getter=isExpired, readonly) BOOL expired;
+
+// Creation
++ (instancetype)tokenWithDictionary:(NSDictionary *)dictionary;
+   
+// Instance Accessors
++ (VKAccessToken *)accessToken;
++ (void)setAccessToken:(VKAccessToken *)accessToken;
++ (void)deleteAccessToken;
+
+// Init
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

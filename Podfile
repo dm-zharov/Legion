@@ -9,11 +9,11 @@ target 'Legion' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Masonry'
-  pod 'OCMock'
 
   target 'LegionTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'OCMock'
   end
 
   target 'LegionUITests' do

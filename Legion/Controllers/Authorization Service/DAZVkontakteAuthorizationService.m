@@ -9,8 +9,7 @@
 #import <SafariServices/SafariServices.h>
 #import "DAZVkontakteAuthorizationService.h"
 
-static NSErrorDomain const DAZVkontakteServiceErrorDomain =
-    @"Ошибка авторизации с помощью \"ВКонтакте\": не удалось обработать полученную URL строку.";
+#import "NSError+Domains.h"
 
 static NSString *const DAZVkontakteServiceRelativeString =
     @"authorize?"
@@ -30,14 +29,71 @@ static NSString *const DAZVkontakteServiceRelativeString =
 
 @implementation DAZVkontakteAuthorizationService
 
+- (BOOL)processURL:(NSURL *)url
+{
+//    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain
+//                                                code:NSURLErrorUnknown
+//                                            userInfo:nil];
+    
+    if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
+    {
+        NSString *absoluteString = [url absoluteString];
+        NSRange rangeOfHash = [absoluteString rangeOfString:@"#"];
+        
+        if (rangeOfHash.location == NSNotFound)
+        {
+            //[self completedSignInWithResult:nil error:error];
+            return NO;
+        }
+        
+        NSString *parametersString = [absoluteString substringFromIndex:rangeOfHash.location + 1];
+        if (parametersString.length == 0)
+        {
+            //[self completedSignInWithResult:nil error:error];
+            return NO;
+        }
+        
+        NSDictionary *parametersDict = [self explodeParametersString:parametersString];
+        
+        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"])
+        {
+            //[self completedSignInWithResult:nil error:error];
+            return NO;
+        }
+        
+        if (!parametersDict[@"access_token"])
+        {
+            //[self completedSignInWithResult:nil error:error];
+            return NO;
+        }
+        
+        VKAccessToken *token = [[VKAccessToken alloc] initWithDictionary:parametersDict];
+        [VKAccessToken setAccessToken:token];
+        [self completedSignInWithResult:token error:nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (NSDictionary *)explodeParametersString:(NSString *)parametersString
+{
+    NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
+    NSMutableDictionary *parametersDict = [[NSMutableDictionary alloc] init];
+    for (NSString *keyValueString in keyValuePairs) {
+        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
+        parametersDict[keyValueArray[0]] = keyValueArray[1];
+    }
+    
+    return parametersDict;
+}
+
 #pragma mark - Lifecycle
 
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
-        
-    }
     return self;
 }
 
@@ -49,23 +105,15 @@ static NSString *const DAZVkontakteServiceRelativeString =
     }
     return self;
 }
-#warning TODO
+
 + (void)setAccessToken:(VKAccessToken *)token
 {
-//    VKAccessToken *old = _accessToken;
-//    _accessToken = accessToken;
-//
-//    for (VKWeakDelegate *del in [self.sdkDelegates copy]) {
-//        if ([del respondsToSelector:@selector(vkSdkAccessTokenUpdated:oldToken:)]) {
-//            [del performSelector:@selector(vkSdkAccessTokenUpdated:oldToken:) withObject:self.accessToken withObject:old];
-//        }
-//    }
+    [VKAccessToken setAccessToken:token];
 }
 
-#warning TODO
 + (VKAccessToken *)accessToken
 {
-    
+    [VKAccessToken accessToken];
     return nil;
 }
 
@@ -81,7 +129,7 @@ static NSString *const DAZVkontakteServiceRelativeString =
     
     BOOL vkApp = [self isVkontakeAppInstalled];
     
-    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteServiceErrorDomain
+    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain
                                                 code:NSURLErrorUnknown
                                             userInfo:nil];
     
@@ -146,68 +194,6 @@ static NSString *const DAZVkontakteServiceRelativeString =
 - (void)signOut
 {
     [self completedSignOut];
-}
-
-
-#pragma mark - Process openURL from UIApplicationDelegate
-
-- (BOOL)processURL:(NSURL *)url
-{
-    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteServiceErrorDomain
-                                                code:NSURLErrorUnknown
-                                            userInfo:nil];
-    
-    if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
-    {
-        NSString *absoluteString = [url absoluteString];
-        NSRange rangeOfHash = [absoluteString rangeOfString:@"#"];
-        
-        if (rangeOfHash.location == NSNotFound)
-        {
-            [self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        NSString *parametersString = [absoluteString substringFromIndex:rangeOfHash.location + 1];
-        if (parametersString.length == 0)
-        {
-            [self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        NSDictionary *parametersDict = [self explodeParametersString:parametersString];
-        
-        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"])
-        {
-            [self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        if (!parametersDict[@"access_token"])
-        {
-            [self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-            
-        VKAccessToken *token = [[VKAccessToken alloc] initTokenWithDictionary:parametersDict];
-        [self completedSignInWithResult:token error:nil];
-        
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (NSDictionary *)explodeParametersString:(NSString *)parametersString
-{
-    NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
-    NSMutableDictionary *parametersDict = [[NSMutableDictionary alloc] init];
-    for (NSString *keyValueString in keyValuePairs) {
-        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
-        parametersDict[keyValueArray[0]] = keyValueArray[1];
-    }
-    
-    return parametersDict;
 }
 
 #pragma mark - Optional messages for DAZAuthorizationServiceDelegate

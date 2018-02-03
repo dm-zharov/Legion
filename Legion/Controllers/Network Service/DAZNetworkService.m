@@ -9,8 +9,7 @@
 #import <Firebase.h>
 #import "AppDelegate.h"
 #import "DAZNetworkService.h"
-#import "PartyMO+CoreDataClass.h"
-#import "ClaimMO+CoreDataClass.h"
+#import "DAZCoreDataManager.h"
 
 
 typedef void (^URLSessionCompletionBlock)(NSData * data, NSURLResponse *response, NSError *error);
@@ -33,21 +32,14 @@ static NSString *const downloadClaims = @"getClaims";
 
 - (void)downloadParties
 {
-#warning TODO - Implement latest party date check
-    NSTimeInterval lastUpdate = 0;
-    NSDictionary *parameters = @{@"lastUpdate" : @(lastUpdate).stringValue};
-    
     [self dataTaskWithFunction:downloadParties
-                    parameters:parameters
+                    dictionary:nil
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
         if (!error) {
-          NSDictionary *responseDictionary = [NSJSONSerialization
-                                              JSONObjectWithData:data
-                                              options:0
-                                              error:&error];
-          NSLog(@"Error occured during parsing - %@", error);
-          #warning TODO - Add to Core Data method for extract Array from NSData
-          [self.delegate networkServiceDidFinishDownloadParties:nil];
+          NSArray *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate networkServiceDidFinishDownloadParties:responseDictionary];
+            });
         }
     }];
 }
@@ -57,15 +49,14 @@ static NSString *const downloadClaims = @"getClaims";
     NSDictionary *parameters = @{};
     
     [self dataTaskWithFunction:uploadParty
-                    parameters:parameters
+                    dictionary:parameters
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
                   if (!error) {
-                      NSDictionary *responseDictionary = [NSJSONSerialization
-                                                          JSONObjectWithData:data
-                                                          options:0
-                                                          error:&error];
+//                      NSDictionary *responseDictionary = [NSJSONSerialization
+//                                                          JSONObjectWithData:data
+//                                                          options:0
+//                                                          error:&error];
                       NSLog(@"Error occured during parsing - %@", error);
-#warning TODO - Add to Core Data method for extract Array from NSData
                       [self.delegate networkServiceDidFinishDownloadParties:nil];
                   }
               }];
@@ -78,37 +69,41 @@ static NSString *const downloadClaims = @"getClaims";
 
 - (void)downloadClaims
 {
-#warning TODO - Implement latest party date check
     NSTimeInterval lastUpdate = 0;
     NSDictionary *parameters = @{@"lastUpdate" : @(lastUpdate).stringValue};
     
     [self dataTaskWithFunction:downloadClaims
-                    parameters:parameters
+                    dictionary:parameters
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
                   if (!error) {
-                      NSDictionary *responseDictionary = [NSJSONSerialization
-                                                          JSONObjectWithData:data
-                                                          options:0
-                                                          error:&error];
+//                      NSDictionary *responseDictionary = [NSJSONSerialization
+//                                                          JSONObjectWithData:data
+//                                                          options:0
+//                                                          error:&error];
                       NSLog(@"Error occured during parsing - %@", error);
-#warning TODO - Add to Core Data method for extract Array from NSData
                       [self.delegate networkServiceDidFinishDownloadClaims:nil];
                   }
               }];
 }
 
+- (void)uploadClaim:(NSDictionary *)claimDictionary {
+    
+}
+
+- (void)deleteClaim:(ClaimMO *)party
+{
+    
+}
+
 - (void)dataTaskWithFunction:(NSString *)function
-                     parameters:(NSDictionary *)parameters
+                     dictionary:(NSDictionary *)parameters
                completionHanler:(URLSessionCompletionBlock)completionHandler
 {
     [[FIRAuth auth].currentUser getIDTokenWithCompletion:^(NSString * _Nullable token, NSError * _Nullable error) {
         
         if (!token) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
         }
-        
-        NSError *dictionaryError;
-        NSData *body = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&dictionaryError];
 
         NSURLSession *session = [NSURLSession sharedSession];
 
@@ -118,13 +113,31 @@ static NSString *const downloadClaims = @"getClaims";
         NSURL *url = [NSURL URLWithString:absoluteURL];
 
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        request.HTTPBody = body;
+        
+        NSString* bearer = [NSString stringWithFormat:@"Bearer %@", token];
+        [request setValue:bearer forHTTPHeaderField:@"Authorization"];
+        
+        if (parameters)
+        {
+            NSError *dictionaryError;
+            NSData *body = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&dictionaryError];
+            request.HTTPBody = body;
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        }
+        
         request.HTTPMethod = @"POST";
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
         NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
         [postDataTask resume];
     }];
+}
+
+- (void)networkServiceDidFinishDownloadParties:(NSDictionary *)partiesDictionary {
+    
+}
+
+- (void)networkServiceDidFinishDownloadClaims:(NSDictionary *)claimsDictionary {
+    
 }
 
 @end

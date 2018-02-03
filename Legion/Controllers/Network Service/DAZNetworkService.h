@@ -8,12 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class DAZCoreDataManager, PartyMO, ClaimMO;
-
 @protocol DAZNetworkServiceDelegate <NSObject>
 
-- (void)networkServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties;
-- (void)networkServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims;
+- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties;
+- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claimsDictionary;
 
 @end
 
@@ -22,11 +20,11 @@
 @property (nonatomic, weak) id <DAZNetworkServiceDelegate> delegate;
 
 - (void)downloadParties;
-- (void)uploadParty:(PartyMO *)party;
-- (void)deleteParty:(PartyMO *)party;
+- (void)uploadParty:(NSDictionary *)partyDictionary;
+- (void)deleteParty:(NSDictionary *)partyDictionary;
 
 - (void)downloadClaims;
-- (void)uploadClaim:(ClaimMO *)claim;
-- (void)deleteClaim:(ClaimMO *)claim;
+- (void)uploadClaim:(NSDictionary *)claimDictionary;
+- (void)deleteClaim:(NSDictionary *)claimDictionary;
 
 @end

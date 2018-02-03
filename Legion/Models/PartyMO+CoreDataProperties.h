@@ -2,13 +2,12 @@
 //  PartyMO+CoreDataProperties.h
 //  
 //
-//  Created by Дмитрий Жаров on 29.01.2018.
+//  Created by Дмитрий Жаров on 01.02.2018.
 //
 //
 
 #import "PartyMO+CoreDataClass.h"
 
-@class ClaimMO;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,15 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<PartyMO *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSDate *date;
+@property (nullable, nonatomic, copy) NSString *address;
+@property (nullable, nonatomic, copy) NSString *apartment;
+@property (nullable, nonatomic, copy) NSDate *closed;
 @property (nullable, nonatomic, copy) NSDate *created;
+@property (nullable, nonatomic, copy) NSDate *date;
+@property (nullable, nonatomic, copy) NSString *desc;
+@property (nonatomic) int32_t members;
 @property (nullable, nonatomic, copy) NSString *status;
 @property (nullable, nonatomic, copy) NSString *title;
+@property (nullable, nonatomic, copy) NSString *author;
 @property (nullable, nonatomic, copy) NSString *uid;
-@property (nullable, nonatomic, copy) NSDate *closed;
-@property (nullable, nonatomic, copy) NSString *desc;
-@property (nullable, nonatomic, copy) NSDecimalNumber *members;
-@property (nullable, nonatomic, copy) NSDecimalNumber *left;
 @property (nullable, nonatomic, retain) ClaimMO *claim;
 
 @end

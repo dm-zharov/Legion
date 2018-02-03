@@ -9,13 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
+
 @interface DAZFirebaseAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
 
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
-
-// Configure Firebase SDK
-+ (void)configureService;
 
 // Init
 - (instancetype)init NS_DESIGNATED_INITIALIZER;

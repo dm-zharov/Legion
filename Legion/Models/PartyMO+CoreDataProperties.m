@@ -2,7 +2,7 @@
 //  PartyMO+CoreDataProperties.m
 //  
 //
-//  Created by Дмитрий Жаров on 29.01.2018.
+//  Created by Дмитрий Жаров on 01.02.2018.
 //
 //
 
@@ -14,15 +14,17 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Party"];
 }
 
-@dynamic date;
-@dynamic created;
-@dynamic status;
-@dynamic title;
-@dynamic uid;
+@dynamic address;
+@dynamic apartment;
 @dynamic closed;
+@dynamic created;
+@dynamic date;
 @dynamic desc;
 @dynamic members;
-@dynamic left;
+@dynamic status;
+@dynamic title;
+@dynamic author;
+@dynamic uid;
 @dynamic claim;
 
 @end

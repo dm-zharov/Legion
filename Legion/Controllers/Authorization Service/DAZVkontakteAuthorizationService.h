@@ -16,7 +16,8 @@
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-// Instance methods
+- (BOOL)processURL:(NSURL *)url;
+
 + (VKAccessToken *)accessToken;
 + (void)setAccessToken:(VKAccessToken *)token;
 
@@ -25,7 +26,5 @@
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signOut;
-
-- (BOOL)processURL:(NSURL *)url;
 
 @end

@@ -15,7 +15,12 @@
 
 @interface DAZCoreDataManager : NSObject
 
-@property (nonatomic, readonly) NSManagedObjectContext *coreDataContext;
+@property (nonatomic, weak) NSManagedObjectContext *coreDataContext;
+
++ (NSManagedObjectContext *)coreDataContext;
+
++ (NSArray<PartyMO *> *)partiesArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)parties;
++ (NSArray<ClaimMO *> *)claimsArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)claimsDictionary;
 
 - (NSArray<PartyMO*> *)fetchParties;
 - (void)saveParties:(NSArray<PartyMO *> *)parties;

@@ -9,28 +9,15 @@
 #import <Firebase.h>
 
 #import "DAZFirebaseAuthorizationService.h"
-
-static NSErrorDomain const DAZFirebaseServiceErrorDomain =
-    @"Ошибка авторизации с помощью \"Firebase\": ошибка сети.";
+#import "NSError+Domains.h"
 
 @implementation DAZFirebaseAuthorizationService
-
-+ (void)configureService {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [FIRApp configure];
-    });
-}
-
 
 #pragma mark - Lifecycle
 
 - (instancetype)init
 {
     self = [super init];
-    if (self) {
-        
-    }
     return self;
 }
 
@@ -78,12 +65,15 @@ static NSErrorDomain const DAZFirebaseServiceErrorDomain =
         if (!error)
         {
             NSString *token = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            
-            [self signInWithCustomToken:token];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self signInWithCustomToken:token];
+            });
         }
         else
         {
-            [self completedSignInWithResult:nil error:error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completedSignInWithResult:nil error:error];
+            });
         }
         
     }];

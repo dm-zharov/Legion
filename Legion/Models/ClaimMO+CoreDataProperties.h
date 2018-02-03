@@ -2,7 +2,7 @@
 //  ClaimMO+CoreDataProperties.h
 //  
 //
-//  Created by Дмитрий Жаров on 29.01.2018.
+//  Created by Дмитрий Жаров on 30.01.2018.
 //
 //
 
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *published;
 @property (nonatomic) BOOL status;
 @property (nullable, nonatomic, retain) PartyMO *party;
+@property (nullable, nonatomic, retain) UserMO *uid;
 
 @end
 

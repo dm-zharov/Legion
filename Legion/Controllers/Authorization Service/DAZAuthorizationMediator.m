@@ -13,7 +13,7 @@
 #import "VKAccessToken.h"
 #import <Firebase.h>
 
-@interface DAZAuthorizationMediator ()
+@interface DAZAuthorizationMediator () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
@@ -22,9 +22,8 @@
 
 @implementation DAZAuthorizationMediator
 
-+ (void)configureService
-{
-    [DAZFirebaseAuthorizationService configureService];
+- (void)openURL:(NSURL *)url {
+    [self.vkontakteAuthorizationService processURL:(NSURL *)url];
 }
 
 - (instancetype)init
@@ -71,16 +70,9 @@
     [self.firebaseAuthorizationService signOut];
 }
 
-- (BOOL)openURL:(NSURL *)url
-{
-    [self.vkontakteAuthorizationService processURL:url];
-    
-    return YES;
-}
-
 #pragma mark - DAZAuthorizationServiceDelegate
 
-- (void)authorizationDidFinishWithResult:(id)result
+- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error
 {
     if ([result isKindOfClass:[VKAccessToken class]])
     {
@@ -88,14 +80,6 @@
         [self.firebaseAuthorizationService signInWithUserID:accessToken.userId];
     }
     else if ([result isKindOfClass:[FIRUser class]]) {
-        [self.delegate authorizationServiceDidFinishSignInWithResult:result error:nil];
-    }
-}
-
-- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error
-{
-    if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithResult:error:)])
-    {
         [self.delegate authorizationServiceDidFinishSignInWithResult:result error:error];
     }
 }

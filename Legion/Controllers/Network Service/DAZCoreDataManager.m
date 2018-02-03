@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
+
 #import "DAZCoreDataManager.h"
 #import "PartyMO+CoreDataClass.h"
-#import "UserMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
 
@@ -19,9 +19,10 @@
 
 @implementation DAZCoreDataManager
 
-#pragma mark - Accessors
 
-- (NSManagedObjectContext*)coreDataContext
+#pragma mark - Instance Accessors
+
++ (NSManagedObjectContext *)coreDataContext
 {
     UIApplication *application = [UIApplication sharedApplication];
     AppDelegate *appDelegate =  (AppDelegate*)application.delegate;
@@ -30,7 +31,59 @@
     return container.viewContext;
 }
 
-#pragma mark - Parties
++ (NSArray<PartyMO *> *)partiesArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)parties
+{
+    
+    NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:[parties count]];
+    for (NSDictionary *party in parties)
+    {
+        PartyMO *item = [PartyMO partyWithContext:[self coreDataContext] dictionary:party];
+        if (!item)
+        {
+            partiesArray = nil;
+        }
+        else
+        {
+            [partiesArray addObject:item];
+        }
+    }
+    
+    return partiesArray;
+}
+
++ (NSArray<ClaimMO *> *)claimsArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)claims
+{
+    
+    NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:[claims count]];
+    for (NSDictionary *claim in claims)
+    {
+        ClaimMO *item = [ClaimMO claimWithContext:[self coreDataContext] dictionary:claim];
+        if (!item)
+        {
+            [claimsArray addObject:item];
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    
+    return claimsArray;
+}
+
+#pragma mark - Lifecycle
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _coreDataContext = [[self class] coreDataContext];
+    }
+    return self;
+}
+
+
+#pragma mark - Parties Interface
 
 - (NSArray<PartyMO *> *)fetchParties
 {
@@ -52,6 +105,8 @@
     [self deleteObject:party];
 }
 
+#pragma mark - Claims Interface
+
 - (NSArray<ClaimMO *> *)fetchClaims
 {
     return [self fetchObjectsWithEntityName:[ClaimMO entityName]];
@@ -72,12 +127,11 @@
     [self deleteObject:claim];
 }
 
-#pragma mark - Objects fetching
+#pragma mark - Accessors
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName
 {
-    __block NSArray *results;
-    
+
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
     //fetchRequest.fetchLimit = 1;
     
@@ -85,8 +139,8 @@
     //[fetchRequest setSortDescriptors:@[sort]];
     
     NSError *error;
-        results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];
-        NSLog(@"Fetching error: %@", error);
+    NSArray *results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];
+    NSLog(@"Fetching error: %@", error);
     
     return results;
 }

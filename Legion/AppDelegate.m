@@ -6,20 +6,17 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import <Firebase.h>
+
 #import "AppDelegate.h"
+#import "DAZViewControllerRouter.h"
 #import "DAZAuthorizationMediator.h"
 #import "DAZAuthorizationViewController.h"
-#import "DAZPartiesTableViewController.h"
-
-
-NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
-NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
-
 
 @interface AppDelegate ()
 
-@property (nonatomic, weak) DAZAuthorizationViewController *authorizationViewController;
-
+@property (nonatomic, strong) DAZViewControllerRouter *viewControllerRouter;
+           
 @end
 
 
@@ -29,17 +26,20 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    [DAZAuthorizationMediator configureService];
+    [FIRApp configure];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [self rootViewController];
+    self.window.tintColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    
+    self.window.layer.cornerRadius = 5;
+    self.window.layer.masksToBounds = YES;
+    
+    self.viewControllerRouter = [[DAZViewControllerRouter alloc] init];
+    self.window.rootViewController = [self.viewControllerRouter rootViewController];
     
     [self.window makeKeyAndVisible];
-    
-    [self setupAuthorizationStateObserving];
-    
+
     return YES;
 }
 
@@ -73,8 +73,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:DAZAuthorizationTokenReceivedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:DAZAuthorizationTokenExpiredNotification object:nil];
     
     [self saveContext];
 }
@@ -87,78 +85,14 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    // Called when received authorization string with included token.
-    if (!self.authorizationViewController)
+    // Передача полученной строки с токеном сервису авторизации.
+    if ([self.window.rootViewController isKindOfClass:[DAZAuthorizationViewController class]])
     {
-        return NO;
+        DAZAuthorizationViewController *viewController = (DAZAuthorizationViewController *)self.window.rootViewController;
+        [viewController.authorizationMediator openURL:url];
     }
-    
-    [self.authorizationViewController.authorizationMediator openURL:url];
     
     return YES;
-}
-
-- (UIViewController *)rootViewController
-{
-    // Вызывается при открытии приложения и последующих изменениях статуса авторизации.
-    
-    BOOL loggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
-    
-    if (!loggedIn)
-    {
-        return [[DAZAuthorizationViewController alloc] init];
-    }
-    else
-    {
-        UINavigationController *navigationController =
-        [[UINavigationController alloc] initWithRootViewController:[[DAZPartiesTableViewController alloc] init]];
-        
-        UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        tabBarController.viewControllers = @[navigationController];
-        
-        return tabBarController;
-    }
-}
-
-- (void)setupAuthorizationStateObserving
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(authorizationTokenReceived)
-                                                 name:DAZAuthorizationTokenReceivedNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(authorizationTokenExpired)
-                                                 name:DAZAuthorizationTokenExpiredNotification
-                                               object:nil];
-}
-
-- (void)authorizationTokenReceived
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-    
-    UIViewController *rootViewController = self.rootViewController;
-    
-    [UIView transitionWithView:self.window
-                      duration:0.75
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-        self.window.rootViewController = rootViewController;
-    } completion:nil];
-}
-
-- (void)authorizationTokenExpired
-{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loggedIn"];
-    
-    UIViewController *rootViewController = self.rootViewController;
-    
-    [UIView transitionWithView:self.window
-                      duration:0.75
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-        self.window.rootViewController = rootViewController;
-     } completion:nil];
 }
 
 #pragma mark - Core Data stack
@@ -167,7 +101,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (NSPersistentContainer *)persistentContainer
 {
-    // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
     @synchronized (self)
     {
         if (_persistentContainer == nil)
@@ -176,17 +109,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
             [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
                 if (error != nil)
                 {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    
-                    /*
-                     Typical reasons for an error here include:
-                     * The parent directory does not exist, cannot be created, or disallows writing.
-                     * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                     * The device is out of space.
-                     * The store could not be migrated to the current model version.
-                     Check the error message to determine what the actual problem was.
-                    */
                     NSLog(@"Unresolved error %@, %@", error, error.userInfo);
                     abort();
                 }
@@ -207,8 +129,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error])
     {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
