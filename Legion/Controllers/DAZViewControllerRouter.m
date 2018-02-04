@@ -80,7 +80,13 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 {
     UINavigationController *navigationController =
         [[UINavigationController alloc] initWithRootViewController:[[DAZPartiesTableViewController alloc] init]];
-
+    
+    navigationController.navigationBar.shadowImage = [UIImage new];
+    navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    navigationController.navigationBar.layer.shadowOpacity = 0.25;
+    navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
+    navigationController.navigationBar.layer.shadowRadius = 2.0;
+    
     navigationController.navigationBar.prefersLargeTitles = YES;
     navigationController.tabBarItem.title = @"Тусовки";
     

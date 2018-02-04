@@ -104,7 +104,7 @@
     UIButton *signInButton = [[UIButton alloc] init];
     
     signInButton.backgroundColor = [UIColor whiteColor];
-    signInButton.layer.cornerRadius = 5;
+    signInButton.layer.cornerRadius = 10;
     [signInButton setTitle:@"Авторизоваться через ВК" forState:UIControlStateNormal];
     [signInButton setTitleColor:[UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0] forState:UIControlStateNormal];
     [signInButton addTarget:self action:@selector(actionSignIn:) forControlEvents:UIControlEventTouchUpInside];

@@ -12,7 +12,10 @@
 
 @interface DAZPartyTableViewCell : UITableViewCell
 
+@property (nonatomic, readonly) UIView *cardView;
 @property (nonatomic, readonly) PartyMO *party;
+
++ (CGFloat)height;
 
 - (void)setWithParty:(PartyMO *)party;
 

@@ -11,7 +11,11 @@
 #import "DAZViewControllerRouter.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZPartyTableViewCell.h"
+#import "DAZPartyCreateViewController.h"
+#import "DAZPartyDetailsViewControllers.h"
 #import "DAZProxyService.h"
+
+#import "CAGradientLayer+Gradients.h"
 
 #import "PartyMO+CoreDataClass.h"
 
@@ -22,9 +26,10 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @interface DAZPartiesTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
+@property (nonatomic, nullable, copy) NSArray<PartyMO *> *partiesArray;
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, nullable, copy) NSArray<PartyMO *> *partiesArray;
+@property (nonatomic, weak) UIRefreshControl *refreshControl;
 
 @end
 
@@ -38,15 +43,13 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     
     [self setupNavigationBar];
     [self setupTableView];
+    [self setupRefreshControl];
     [self setupNetworkService];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //self.tableView.refreshControl = [[UIRefreshControl alloc] init];
-    //[self.tableView.refreshControl beginRefreshing];
-    
     [self.networkService getParties];
 }
 
@@ -55,8 +58,10 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 - (void)setupNavigationBar
 {
     self.navigationItem.title = @"Тусовки";
-    self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                     target:self
+                                                                     action:@selector(actionCreateParty:)];
 }
 
 - (void)setupTableView
@@ -70,11 +75,6 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     tableView.showsVerticalScrollIndicator = NO;
     tableView.showsHorizontalScrollIndicator = NO;
     
-    //tableView.estimatedRowHeight = 200;
-    tableView.rowHeight = UITableViewAutomaticDimension;
-    
-    //tableView.refreshControl = [[UIRefreshControl alloc] init];
-    
     [tableView registerClass:[DAZPartyTableViewCell class] forCellReuseIdentifier:@"DAZPartyTableViewCell"];
     
     [self.view addSubview:tableView];
@@ -86,11 +86,50 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     }];
 }
 
+- (void)setupRefreshControl
+{
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(actionRefreshParties:) forControlEvents:UIControlEventValueChanged];
+    self.tableView.refreshControl = refreshControl;
+}
+
 - (void)setupNetworkService {
     self.networkService  = [[DAZProxyService alloc] init];
     self.networkService.delegate = self;
 }
 
+#pragma mark - Actions
+
+- (void)actionRefreshParties:(id)sender
+{
+    if ([sender isKindOfClass:[UIRefreshControl class]])
+    {
+        [self.tableView.refreshControl beginRefreshing];
+        [self.networkService performSelector:@selector(getParties) withObject:nil afterDelay:0.5];
+    }
+    else
+    {
+        [self.networkService getParties];
+    }
+}
+
+- (void)actionCreateParty:(id)sender
+{
+    DAZPartyCreateViewController *partyCreateViewController = [[DAZPartyCreateViewController alloc] init];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc]
+                                                        initWithRootViewController:partyCreateViewController];
+    navigationController.navigationBar.translucent = NO;
+    
+    navigationController.navigationBar.shadowImage = [UIImage new];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)actionShowParty:(id)sender
+{
+    
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -110,6 +149,64 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [DAZPartyTableViewCell height];
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Получение начального фрейма перехода из ячейки
+    DAZPartyTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    CGRect cellFrame = [self.view convertRect:cell.cardView.bounds fromView:cell.cardView];
+    
+    UIView *purpleView = [[UIView alloc] initWithFrame:cellFrame];
+
+    CAGradientLayer *purpleLayer = [CAGradientLayer purpleGradientLayer];
+    purpleLayer.frame = self.view.bounds;
+    [purpleView.layer addSublayer:purpleLayer];
+    
+    purpleView.layer.cornerRadius = 10;
+    purpleView.layer.masksToBounds = YES;
+    purpleView.userInteractionEnabled = YES;
+    
+    [self.view addSubview:purpleView];
+    
+    DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
+    partyDetailsViewController.view.frame = CGRectInset(self.view.frame, 50, 50);
+    [UIView animateWithDuration:0.35
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+        purpleView.layer.cornerRadius = 5;
+        purpleView.frame = self.view.frame;
+        
+        CGRect navigationBarFrame = self.navigationController.navigationBar.frame;
+        self.navigationController.navigationBar.transform =
+            CGAffineTransformMakeTranslation(0, -(CGRectGetHeight(navigationBarFrame) + 20));
+        
+        CGRect tabBarFrame = self.tabBarController.tabBar.frame;
+        self.tabBarController.tabBar.transform =
+            CGAffineTransformMakeTranslation(0, CGRectGetHeight(tabBarFrame));
+     } completion:^(BOOL finished) {
+         self.navigationController.navigationBarHidden = YES;
+         [self presentViewController:partyDetailsViewController animated:YES completion:nil];
+     }];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle {
+    if ([self.navigationController isNavigationBarHidden])
+    {
+        return UIStatusBarStyleDefault;
+    }
+    else
+    {
+        return UIStatusBarStyleLightContent;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 //    cell.layer.opacity = 0;
 //    [UIView animateWithDuration:0.75 animations:^{
@@ -119,12 +216,23 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 #pragma mark - DAZProxyServiceDelegate
 
+
 - (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)array
 {
     self.partiesArray = array;
     
-    //[self.tableView.refreshControl endRefreshing];
-    [self.tableView reloadData];
+    [self.tableView performBatchUpdates:^{
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:UITableViewRowAnimationNone];
+    } completion:^(BOOL finished) {
+        if (finished)
+        {
+            if ([self.tableView.refreshControl isRefreshing])
+            {
+                [self.tableView.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.5];
+            }
+        }
+    }];
 }
 
 @end

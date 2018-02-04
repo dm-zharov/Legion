@@ -47,7 +47,6 @@
 		5EBFADB0ACACA114B98082EBD8FDA650 /* MASViewConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = B38C1219EFDC2F4B7B38590EBEC75C2F /* MASViewConstraint.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		61CCEA01CBE8EFFA5515E7A0D8635AAE /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 51155CB800F86F07D93A4088DA9E6A65 /* MASCompositeConstraint.m */; };
 		6209E20926D79222E59F58B962BFAA1E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3636F129765572B2CBC215D2134D2A4D /* UIKit.framework */; };
-		62CA9AFB082C4D1FA86229A70E347CCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 056564C1949A20D137D64535BB7FA175 /* Foundation.framework */; };
 		67A134A8E94DAD919F69449EC07A29D9 /* GTMSessionFetcherLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A8DD0A1627EB8971C0C05B9C4E6CB14 /* GTMSessionFetcherLogging.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		68F98758BA84B8EC3472A8C6FD646D16 /* Masonry-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AC84B8632D99A61B4890272DAACB926A /* Masonry-dummy.m */; };
 		6D425653C6BAF07E0833A104C2FECF11 /* OCMExceptionReturnValueProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D185C17680F326613DFF8BA89452858F /* OCMExceptionReturnValueProvider.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -99,7 +98,6 @@
 		B6462885514D2F90665D9DC354A0296E /* OCMVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C09720C5DEE9D3A8E8DBE27E629CBB /* OCMVerifier.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B805C5FF5FD8D7890DD5F8F2644E0481 /* OCMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A44C1406A4370057270E98A75E0C431 /* OCMFunctions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BAC0BDE87C9152E6C109755515C1D26F /* OCMIndirectReturnValueProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C509C7DF2340029B22F6564D463120AF /* OCMIndirectReturnValueProvider.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		BCDEB4EA211A7970A52C17FB1D98779C /* Pods-LegionUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE72DC701C1012C6D7BE3B1B180383E7 /* Pods-LegionUITests-dummy.m */; };
 		BF6FB2993CB14EF6BAFB17E6297BC728 /* OCMMacroState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F89C70C44364ECB3CD64FACD5F440E3 /* OCMMacroState.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C4945BF00E7C57BB73562DD5BC37D898 /* NSInvocation+OCMAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DAC23CF8AB2A1208147FE4400610ACD /* NSInvocation+OCMAdditions.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C4E611BA5BA3E0032D4FA80542FF2033 /* OCMArg.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E5D0ECCAB086BCF7739C02A75772E2 /* OCMArg.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -299,7 +297,6 @@
 		B0AD669142433A8288EB8342FA6FF89C /* OCMBlockArgCaller.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OCMBlockArgCaller.m; path = Source/OCMock/OCMBlockArgCaller.m; sourceTree = "<group>"; };
 		B13E1D3EE3CAA6F0B4E1A052B5323FF3 /* Pods-Legion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Legion.release.xcconfig"; sourceTree = "<group>"; };
 		B38C1219EFDC2F4B7B38590EBEC75C2F /* MASViewConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewConstraint.h; path = Masonry/MASViewConstraint.h; sourceTree = "<group>"; };
-		B45404D9117B67ED5669FB22DE21FA29 /* libPods-LegionUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C6D401771671AF9296737736C127CB /* OCMArg.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OCMArg.h; path = Source/OCMock/OCMArg.h; sourceTree = "<group>"; };
 		B7DA8458E5AB4BA0F4E6B04803D2F36C /* OCMReturnValueProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OCMReturnValueProvider.m; path = Source/OCMock/OCMReturnValueProvider.m; sourceTree = "<group>"; };
 		BB946B6E259E3CB046490057EF75C343 /* OCMExpectationRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OCMExpectationRecorder.h; path = Source/OCMock/OCMExpectationRecorder.h; sourceTree = "<group>"; };
@@ -360,14 +357,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3AEAD9C278302530BF2EB543B831365C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				62CA9AFB082C4D1FA86229A70E347CCC /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		434D37BC18A26DA555B28D52070A6C2E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -891,7 +880,6 @@
 				E5369222DE8A9C86AFBF098246291A78 /* libOCMock.a */,
 				700C2EE0C2C5A3F8F5EB2C3DD2F990CA /* libPods-Legion.a */,
 				339712B3E209146719DD58813BDBE0DD /* libPods-LegionTests.a */,
-				B45404D9117B67ED5669FB22DE21FA29 /* libPods-LegionUITests.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1064,22 +1052,6 @@
 			productReference = 4B52B0923C6B264849364148D41BB9D6 /* libGoogleToolboxForMac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		7E958AA96C2C98AF60A8F2228428125B /* Pods-LegionUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 224B7371BD0AD1706373B381F492C0B5 /* Build configuration list for PBXNativeTarget "Pods-LegionUITests" */;
-			buildPhases = (
-				2470879FDDF774484845BF8FF859A74F /* Sources */,
-				3AEAD9C278302530BF2EB543B831365C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-LegionUITests";
-			productName = "Pods-LegionUITests";
-			productReference = B45404D9117B67ED5669FB22DE21FA29 /* libPods-LegionUITests.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		9DC8D9E02903E93BD0B2FEC9D846EA20 /* Masonry */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 34CAE1CB89EDBF2E53735CC5D4E5E69F /* Build configuration list for PBXNativeTarget "Masonry" */;
@@ -1176,7 +1148,6 @@
 				A561198B7669F579C29FC6864AE4991F /* OCMock */,
 				2E9BB6F8A9E48DABAF29567A3CB4A511 /* Pods-Legion */,
 				279E00EF3F0168C90379088E4C091B20 /* Pods-LegionTests */,
-				7E958AA96C2C98AF60A8F2228428125B /* Pods-LegionUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1220,14 +1191,6 @@
 				828BADC5729BF1287CCD1114F2B5A0B4 /* OCObserverMockObject.m in Sources */,
 				CD09AB272C437827BDF24AD1A4E50F61 /* OCPartialMockObject.m in Sources */,
 				7AF70638D3F5705B49D50A24132B23AD /* OCProtocolMockObject.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2470879FDDF774484845BF8FF859A74F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BCDEB4EA211A7970A52C17FB1D98779C /* Pods-LegionUITests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1599,27 +1562,6 @@
 			};
 			name = Release;
 		};
-		7FF43C71D42533C75ABBC6D8BF79C83D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DA401BEA6E1429ADB512932D4860CA6 /* Pods-LegionUITests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 		A49654F6325EA909BB91A3C63DC64264 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 004806A1A1668E7006CBDD0CDB1A2972 /* GoogleToolboxForMac.xcconfig */;
@@ -1683,26 +1625,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		BDF16ACD89DE175687B6639C4CC6AAA8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70D5C053F6962681EB88A470DC8F0862 /* Pods-LegionUITests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		DB4AA09D6A87734975482BB05CC1F54A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1791,15 +1713,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		224B7371BD0AD1706373B381F492C0B5 /* Build configuration list for PBXNativeTarget "Pods-LegionUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BDF16ACD89DE175687B6639C4CC6AAA8 /* Debug */,
-				7FF43C71D42533C75ABBC6D8BF79C83D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		26AE791F404F3732C3335D0EFE25E20A /* Build configuration list for PBXNativeTarget "GoogleToolboxForMac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

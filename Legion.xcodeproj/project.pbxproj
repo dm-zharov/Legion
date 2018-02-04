@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */; };
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
 		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
@@ -24,6 +23,7 @@
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */; };
+		239F48DF2025FD2A00D13770 /* DAZPartyCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */; };
 		23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
 		23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */; };
@@ -32,20 +32,13 @@
 		23BEA5922016302B000ECFE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */; };
 		23BEA5952016302C000ECFE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5942016302C000ECFE5 /* main.m */; };
 		23BEA59F2016302C000ECFE5 /* LegionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA59E2016302C000ECFE5 /* LegionTests.m */; };
-		23BEA5AA2016302C000ECFE5 /* LegionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5A92016302C000ECFE5 /* LegionUITests.m */; };
 		23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D526AE201CDFAB002DC411 /* VKAccessToken.m */; };
+		23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */; };
 		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		23BEA59B2016302C000ECFE5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23BEA5772016302B000ECFE5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 23BEA57E2016302B000ECFE5;
-			remoteInfo = Legion;
-		};
-		23BEA5A62016302C000ECFE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 23BEA5772016302B000ECFE5 /* Project object */;
 			proxyType = 1;
@@ -86,6 +79,8 @@
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAGradientLayer+Gradients.h"; sourceTree = "<group>"; };
 		239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CAGradientLayer+Gradients.m"; sourceTree = "<group>"; };
+		239F48DD2025FD2A00D13770 /* DAZPartyCreateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreateViewController.h; sourceTree = "<group>"; };
+		239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyCreateViewController.m; sourceTree = "<group>"; };
 		23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationViewController.h; sourceTree = "<group>"; };
 		23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationViewController.m; sourceTree = "<group>"; };
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,11 +96,10 @@
 		23BEA59A2016302C000ECFE5 /* LegionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LegionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA59E2016302C000ECFE5 /* LegionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegionTests.m; sourceTree = "<group>"; };
 		23BEA5A02016302C000ECFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		23BEA5A52016302C000ECFE5 /* LegionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LegionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		23BEA5A92016302C000ECFE5 /* LegionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LegionUITests.m; sourceTree = "<group>"; };
-		23BEA5AB2016302C000ECFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23D526AD201CDFAB002DC411 /* VKAccessToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VKAccessToken.h; sourceTree = "<group>"; };
 		23D526AE201CDFAB002DC411 /* VKAccessToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKAccessToken.m; sourceTree = "<group>"; };
+		23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyDetailsViewControllers.h; sourceTree = "<group>"; };
+		23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyDetailsViewControllers.m; sourceTree = "<group>"; };
 		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3912D243E638C9C75441C0EB /* libPods-LegionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,14 +124,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23BEA5A22016302C000ECFE5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				11A9CDD156892E6FE58EFFB5 /* libPods-LegionUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +215,10 @@
 				23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */,
 				23BEA5852016302B000ECFE5 /* DAZPartiesTableViewController.h */,
 				23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */,
+				23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */,
+				23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */,
+				239F48DD2025FD2A00D13770 /* DAZPartyCreateViewController.h */,
+				239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -287,7 +277,6 @@
 			children = (
 				23BEA5812016302B000ECFE5 /* Legion */,
 				23BEA59D2016302C000ECFE5 /* LegionTests */,
-				23BEA5A82016302C000ECFE5 /* LegionUITests */,
 				23BEA5802016302B000ECFE5 /* Products */,
 				1FE9D96B0CBCF89ECFCC1AFF /* Pods */,
 				BEB9C2E1A44675CDEC9212B5 /* Frameworks */,
@@ -299,7 +288,6 @@
 			children = (
 				23BEA57F2016302B000ECFE5 /* Legion.app */,
 				23BEA59A2016302C000ECFE5 /* LegionTests.xctest */,
-				23BEA5A52016302C000ECFE5 /* LegionUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -332,15 +320,6 @@
 				23BEA5A02016302C000ECFE5 /* Info.plist */,
 			);
 			path = LegionTests;
-			sourceTree = "<group>";
-		};
-		23BEA5A82016302C000ECFE5 /* LegionUITests */ = {
-			isa = PBXGroup;
-			children = (
-				23BEA5A92016302C000ECFE5 /* LegionUITests.m */,
-				23BEA5AB2016302C000ECFE5 /* Info.plist */,
-			);
-			path = LegionUITests;
 			sourceTree = "<group>";
 		};
 		BEB9C2E1A44675CDEC9212B5 /* Frameworks */ = {
@@ -397,27 +376,6 @@
 			productReference = 23BEA59A2016302C000ECFE5 /* LegionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		23BEA5A42016302C000ECFE5 /* LegionUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 23BEA5B42016302C000ECFE5 /* Build configuration list for PBXNativeTarget "LegionUITests" */;
-			buildPhases = (
-				D8268100188F45CB6A89A693 /* [CP] Check Pods Manifest.lock */,
-				23BEA5A12016302C000ECFE5 /* Sources */,
-				23BEA5A22016302C000ECFE5 /* Frameworks */,
-				23BEA5A32016302C000ECFE5 /* Resources */,
-				BCFFB17D1F551933FF83114A /* [CP] Embed Pods Frameworks */,
-				74AC53C0BF51618AE970DF39 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				23BEA5A72016302C000ECFE5 /* PBXTargetDependency */,
-			);
-			name = LegionUITests;
-			productName = LegionUITests;
-			productReference = 23BEA5A52016302C000ECFE5 /* LegionUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -432,11 +390,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					23BEA5992016302C000ECFE5 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 23BEA57E2016302B000ECFE5;
-					};
-					23BEA5A42016302C000ECFE5 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 23BEA57E2016302B000ECFE5;
@@ -458,7 +411,6 @@
 			targets = (
 				23BEA57E2016302B000ECFE5 /* Legion */,
 				23BEA5992016302C000ECFE5 /* LegionTests */,
-				23BEA5A42016302C000ECFE5 /* LegionUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -475,13 +427,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		23BEA5982016302C000ECFE5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23BEA5A32016302C000ECFE5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -539,21 +484,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Legion/Pods-Legion-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		74AC53C0BF51618AE970DF39 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9C462D36997BAACB19EC337A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,39 +496,6 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Legion-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BCFFB17D1F551933FF83114A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8268100188F45CB6A89A693 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-LegionUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -646,10 +543,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
+				239F48DF2025FD2A00D13770 /* DAZPartyCreateViewController.m in Sources */,
 				2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */,
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
 				2346B739201E74F50039DF3F /* DAZNetworkService.m in Sources */,
+				23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */,
 				239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
@@ -676,14 +575,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23BEA5A12016302C000ECFE5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23BEA5AA2016302C000ECFE5 /* LegionUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -691,11 +582,6 @@
 			isa = PBXTargetDependency;
 			target = 23BEA57E2016302B000ECFE5 /* Legion */;
 			targetProxy = 23BEA59B2016302C000ECFE5 /* PBXContainerItemProxy */;
-		};
-		23BEA5A72016302C000ECFE5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 23BEA57E2016302B000ECFE5 /* Legion */;
-			targetProxy = 23BEA5A62016302C000ECFE5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -879,36 +765,6 @@
 			};
 			name = Release;
 		};
-		23BEA5B52016302C000ECFE5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J59EP59PB8;
-				INFOPLIST_FILE = LegionUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sbertech.learner.LegionUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Legion;
-			};
-			name = Debug;
-		};
-		23BEA5B62016302C000ECFE5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J59EP59PB8;
-				INFOPLIST_FILE = LegionUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sbertech.learner.LegionUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Legion;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -935,15 +791,6 @@
 			buildConfigurations = (
 				23BEA5B22016302C000ECFE5 /* Debug */,
 				23BEA5B32016302C000ECFE5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		23BEA5B42016302C000ECFE5 /* Build configuration list for PBXNativeTarget "LegionUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				23BEA5B52016302C000ECFE5 /* Debug */,
-				23BEA5B62016302C000ECFE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
