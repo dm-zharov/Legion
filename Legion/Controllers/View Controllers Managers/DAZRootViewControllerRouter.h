@@ -1,5 +1,5 @@
 //
-//  DAZViewControllerRouter.h
+//  DAZRootViewControllerRouter.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 31.01.2018.
@@ -14,7 +14,7 @@ extern NSString *const DAZAuthorizationTokenExpiredNotification;
 extern NSString *const DAZAuthorizationTokenReceivedNotification;
 
 
-@interface DAZViewControllerRouter : NSObject
+@interface DAZRootViewControllerRouter : NSObject
 
 - (UIViewController *)rootViewController;
 

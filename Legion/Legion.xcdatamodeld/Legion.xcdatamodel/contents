@@ -15,12 +15,13 @@
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="members" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="status" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="claim" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Claim" inverseName="party" inverseEntity="Claim" syncable="YES"/>
     </entity>
     <elements>
         <element name="Claim" positionX="-29" positionY="171" width="128" height="88"/>
-        <element name="Party" positionX="-270" positionY="198" width="128" height="223"/>
+        <element name="Party" positionX="-270" positionY="198" width="128" height="238"/>
     </elements>
 </model>

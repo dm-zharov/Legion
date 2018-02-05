@@ -8,12 +8,12 @@
 
 #import <Masonry/Masonry.h>
 
-#import "DAZViewControllerRouter.h"
+#import "DAZRootViewControllerRouter.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZPartyTableViewCell.h"
-#import "DAZPartyCreateViewController.h"
 #import "DAZPartyDetailsViewControllers.h"
 #import "DAZProxyService.h"
+#import "DAZPartyCreateViewControllersAssembly.h"
 
 #import "CAGradientLayer+Gradients.h"
 
@@ -30,6 +30,8 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
+
+@property (nonatomic, strong) DAZPartyCreateViewControllersAssembly *partyCreateViewController;
 
 @end
 
@@ -115,15 +117,11 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)actionCreateParty:(id)sender
 {
-    DAZPartyCreateViewController *partyCreateViewController = [[DAZPartyCreateViewController alloc] init];
+    self.partyCreateViewController = [[DAZPartyCreateViewControllersAssembly alloc] init];
     
-    UINavigationController *navigationController = [[UINavigationController alloc]
-                                                        initWithRootViewController:partyCreateViewController];
-    navigationController.navigationBar.translucent = NO;
+    UIViewController *partyCreateViewController = [self.partyCreateViewController rootViewController];
     
-    navigationController.navigationBar.shadowImage = [UIImage new];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:partyCreateViewController animated:YES completion:nil];
 }
 
 - (void)actionShowParty:(id)sender

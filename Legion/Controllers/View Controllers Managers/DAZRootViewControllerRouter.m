@@ -1,12 +1,12 @@
 //
-//  DAZViewControllerRouter.m
+//  DAZRootViewControllerRouter.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 31.01.2018.
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import "DAZViewControllerRouter.h"
+#import "DAZRootViewControllerRouter.h"
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
 
@@ -14,7 +14,7 @@ NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTo
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
 
 
-@interface DAZViewControllerRouter ()
+@interface DAZRootViewControllerRouter ()
 
 //@property (nonatomic, weak) UIWindow *window;
 // Методы, вызываемые при получении уведомления о изменении статуса авторизации.
@@ -23,7 +23,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @end
 
-@implementation DAZViewControllerRouter
+@implementation DAZRootViewControllerRouter
 
 #pragma mark - Lifecycle
 

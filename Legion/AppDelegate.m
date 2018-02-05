@@ -9,13 +9,13 @@
 #import <Firebase.h>
 
 #import "AppDelegate.h"
-#import "DAZViewControllerRouter.h"
+#import "DAZRootViewControllerRouter.h"
 #import "DAZAuthorizationMediator.h"
 #import "DAZAuthorizationViewController.h"
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) DAZViewControllerRouter *viewControllerRouter;
+@property (nonatomic, strong) DAZRootViewControllerRouter *viewControllerRouter;
            
 @end
 
@@ -35,7 +35,7 @@
     self.window.layer.cornerRadius = 5;
     self.window.layer.masksToBounds = YES;
     
-    self.viewControllerRouter = [[DAZViewControllerRouter alloc] init];
+    self.viewControllerRouter = [[DAZRootViewControllerRouter alloc] init];
     self.window.rootViewController = [self.viewControllerRouter rootViewController];
     
     [self.window makeKeyAndVisible];

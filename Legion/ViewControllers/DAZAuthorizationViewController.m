@@ -7,7 +7,7 @@
 //
 
 #import <Masonry.h>
-#import "DAZViewControllerRouter.h"
+#import "DAZRootViewControllerRouter.h"
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZAuthorizationMediator.h"

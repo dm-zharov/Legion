@@ -18,12 +18,12 @@
 		2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */; };
 		2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */; };
 		2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */; };
-		2354FA0F20221953000A97C8 /* DAZViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZViewControllerRouter.m */; };
+		2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */; };
 		2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA16202243AA000A97C8 /* NSError+Domains.m */; };
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */; };
-		239F48DF2025FD2A00D13770 /* DAZPartyCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */; };
+		239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DE2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m */; };
 		23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */; };
 		23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5832016302B000ECFE5 /* AppDelegate.m */; };
 		23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */; };
@@ -34,6 +34,8 @@
 		23BEA59F2016302C000ECFE5 /* LegionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA59E2016302C000ECFE5 /* LegionTests.m */; };
 		23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D526AE201CDFAB002DC411 /* VKAccessToken.m */; };
 		23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */; };
+		23D9D1AF20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */; };
+		23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */; };
 		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +72,8 @@
 		2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PartyMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
 		2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
 		2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
-		2354FA0D20221953000A97C8 /* DAZViewControllerRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZViewControllerRouter.h; sourceTree = "<group>"; };
-		2354FA0E20221953000A97C8 /* DAZViewControllerRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZViewControllerRouter.m; sourceTree = "<group>"; };
+		2354FA0D20221953000A97C8 /* DAZRootViewControllerRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZRootViewControllerRouter.h; sourceTree = "<group>"; };
+		2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZRootViewControllerRouter.m; sourceTree = "<group>"; };
 		2354FA15202243AA000A97C8 /* NSError+Domains.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Domains.h"; sourceTree = "<group>"; };
 		2354FA16202243AA000A97C8 /* NSError+Domains.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Domains.m"; sourceTree = "<group>"; };
 		2354FA182023F450000A97C8 /* DAZPartyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyTableViewCell.h; sourceTree = "<group>"; };
@@ -79,8 +81,8 @@
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAGradientLayer+Gradients.h"; sourceTree = "<group>"; };
 		239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CAGradientLayer+Gradients.m"; sourceTree = "<group>"; };
-		239F48DD2025FD2A00D13770 /* DAZPartyCreateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreateViewController.h; sourceTree = "<group>"; };
-		239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyCreateViewController.m; sourceTree = "<group>"; };
+		239F48DD2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZSelectionScreenBaseViewController.h; sourceTree = "<group>"; };
+		239F48DE2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZSelectionScreenBaseViewController.m; sourceTree = "<group>"; };
 		23AFB4F4201C892600260C11 /* DAZAuthorizationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationViewController.h; sourceTree = "<group>"; };
 		23AFB4F5201C892600260C11 /* DAZAuthorizationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationViewController.m; sourceTree = "<group>"; };
 		23BEA57F2016302B000ECFE5 /* Legion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Legion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,10 @@
 		23D526AE201CDFAB002DC411 /* VKAccessToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKAccessToken.m; sourceTree = "<group>"; };
 		23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyDetailsViewControllers.h; sourceTree = "<group>"; };
 		23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyDetailsViewControllers.m; sourceTree = "<group>"; };
+		23D9D1AD20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreateViewControllersAssembly.h; sourceTree = "<group>"; };
+		23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyCreateViewControllersAssembly.m; sourceTree = "<group>"; };
+		23D9D1B02027461D00E25EA9 /* DAZSelectionScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZSelectionScreenViewController.h; sourceTree = "<group>"; };
+		23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZSelectionScreenViewController.m; sourceTree = "<group>"; };
 		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3912D243E638C9C75441C0EB /* libPods-LegionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +170,17 @@
 			path = "Network Service";
 			sourceTree = "<group>";
 		};
+		234EBCC7202890E100FB83C6 /* View Controllers Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2354FA0D20221953000A97C8 /* DAZRootViewControllerRouter.h */,
+				2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */,
+				23D9D1AD20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.h */,
+				23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */,
+			);
+			path = "View Controllers Managers";
+			sourceTree = "<group>";
+		};
 		2354FA052020CB5C000A97C8 /* Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,8 +234,7 @@
 				23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */,
 				23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */,
 				23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */,
-				239F48DD2025FD2A00D13770 /* DAZPartyCreateViewController.h */,
-				239F48DE2025FD2A00D13770 /* DAZPartyCreateViewController.m */,
+				23D9D1AC202736ED00E25EA9 /* DAZSelectionScreenViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -264,8 +280,7 @@
 		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2354FA0D20221953000A97C8 /* DAZViewControllerRouter.h */,
-				2354FA0E20221953000A97C8 /* DAZViewControllerRouter.m */,
+				234EBCC7202890E100FB83C6 /* View Controllers Managers */,
 				2346B732201E66E40039DF3F /* Authorization Service */,
 				2346B733201E730F0039DF3F /* Network Service */,
 			);
@@ -320,6 +335,17 @@
 				23BEA5A02016302C000ECFE5 /* Info.plist */,
 			);
 			path = LegionTests;
+			sourceTree = "<group>";
+		};
+		23D9D1AC202736ED00E25EA9 /* DAZSelectionScreenViewController */ = {
+			isa = PBXGroup;
+			children = (
+				239F48DD2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.h */,
+				239F48DE2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m */,
+				23D9D1B02027461D00E25EA9 /* DAZSelectionScreenViewController.h */,
+				23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */,
+			);
+			name = DAZSelectionScreenViewController;
 			sourceTree = "<group>";
 		};
 		BEB9C2E1A44675CDEC9212B5 /* Frameworks */ = {
@@ -543,7 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
-				239F48DF2025FD2A00D13770 /* DAZPartyCreateViewController.m in Sources */,
+				239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */,
 				2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */,
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
@@ -552,12 +578,14 @@
 				239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
+				23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */,
+				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
 				2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */,
 				2351BED5201F371E0065C1C1 /* PartyMO+CoreDataClass.m in Sources */,
 				2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */,
 				23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */,
-				2354FA0F20221953000A97C8 /* DAZViewControllerRouter.m in Sources */,
+				2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */,
 				23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */,
 				2346B736201E742C0039DF3F /* DAZProxyService.m in Sources */,
 				2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */,
@@ -645,7 +673,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -694,7 +722,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
