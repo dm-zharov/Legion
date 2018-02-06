@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PartyMO+CoreDataClass.h"
+
+#import "DAZPartiesTableViewController.h"
 
 @interface DAZPartyDetailsViewControllers : UIViewController
+
+@property (nonatomic, weak) DAZPartiesTableViewController *delegate;
+
+@property (nonatomic, strong) PartyMO *party;
 
 @end

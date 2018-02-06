@@ -10,4 +10,6 @@
 
 @interface DAZPartiesTableViewController : UIViewController
 
+- (void)dismiss;
+
 @end

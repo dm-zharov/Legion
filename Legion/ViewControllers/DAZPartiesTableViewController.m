@@ -31,6 +31,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
+@property (nonatomic, weak) UIView *purpleView;
+@property (nonatomic, assign) CGRect cellRect;
+
 @property (nonatomic, strong) DAZPartyCreateViewControllersAssembly *partyCreateViewController;
 
 @end
@@ -159,8 +162,10 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     // Получение начального фрейма перехода из ячейки
     DAZPartyTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect cellFrame = [self.view convertRect:cell.cardView.bounds fromView:cell.cardView];
+    self.cellRect = cellFrame;
     
     UIView *purpleView = [[UIView alloc] initWithFrame:cellFrame];
+    self.purpleView = purpleView;
 
     CAGradientLayer *purpleLayer = [CAGradientLayer purpleGradientLayer];
     purpleLayer.frame = self.view.bounds;
@@ -173,8 +178,12 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self.view addSubview:purpleView];
     
     DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
+    partyDetailsViewController.delegate = self;
+    partyDetailsViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    partyDetailsViewController.party = self.partiesArray[indexPath.row];
+    
     partyDetailsViewController.view.frame = CGRectInset(self.view.frame, 50, 50);
-    [UIView animateWithDuration:0.35
+    [UIView animateWithDuration:0.2
                           delay:0
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
@@ -194,7 +203,28 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
      }];
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle {
+- (void)dismiss
+{
+    self.navigationController.navigationBarHidden = NO;
+    [UIView animateWithDuration:0.2
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         self.navigationController.navigationBar.transform =
+                         CGAffineTransformIdentity;
+                         
+                         self.tabBarController.tabBar.transform =
+                         CGAffineTransformIdentity;
+                         
+                         self.purpleView.layer.cornerRadius = 10;
+                         self.purpleView.frame = self.cellRect;
+                     } completion:^(BOOL finished) {
+                         [self.purpleView removeFromSuperview];
+                     }];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
     if ([self.navigationController isNavigationBarHidden])
     {
         return UIStatusBarStyleDefault;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
+		23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 23034527202A2422004CF6C8 /* UIImage+Overlay.m */; };
 		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
 		2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */; };
@@ -51,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		23034526202A2422004CF6C8 /* UIImage+Overlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Overlay.h"; sourceTree = "<group>"; };
+		23034527202A2422004CF6C8 /* UIImage+Overlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Overlay.m"; sourceTree = "<group>"; };
 		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
 		2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationMediator.h; sourceTree = "<group>"; };
 		2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediator.m; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 		23AFB4C5201B493D00260C11 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				23034526202A2422004CF6C8 /* UIImage+Overlay.h */,
+				23034527202A2422004CF6C8 /* UIImage+Overlay.m */,
 				239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */,
 				239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */,
 				2354FA15202243AA000A97C8 /* NSError+Domains.h */,
@@ -592,6 +597,7 @@
 				2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */,
 				2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */,
 				2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */,
+				23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
