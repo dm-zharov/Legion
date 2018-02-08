@@ -31,7 +31,7 @@
     return container.viewContext;
 }
 
-+ (NSArray<PartyMO *> *)partiesArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)parties
++ (NSArray<PartyMO *> *)convertPartiesArray:(NSArray<NSDictionary *> *)parties
 {
     NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:[parties count]];
     for (NSDictionary *party in parties)
@@ -51,7 +51,7 @@
     return partiesArray;
 }
 
-+ (NSArray<ClaimMO *> *)claimsArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)claims
++ (NSArray<ClaimMO *> *)convertClaimsArray:(NSArray<NSDictionary *> *)claims
 {
     NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:[claims count]];
     for (NSDictionary *claim in claims)
@@ -69,6 +69,28 @@
     }
     
     return claimsArray;
+}
+
++ (NSArray<NSArray *> *)incomeAndOutcomeArraysFromClaimsArray:(NSArray<ClaimMO *> *)claims
+{
+    NSMutableArray *outcomeArray = [NSMutableArray new];
+    NSMutableArray *incomeArray = [NSMutableArray new];
+    
+    for (ClaimMO *claim in claims)
+    {
+        if (claim.author != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
+        {
+            [outcomeArray addObject:claim];
+        }
+        else
+        {
+            [incomeArray addObject:claim];
+        }
+    }
+    
+    NSArray *devidedArray = @[outcomeArray, incomeArray];
+    return devidedArray;
+    
 }
 
 #pragma mark - Lifecycle

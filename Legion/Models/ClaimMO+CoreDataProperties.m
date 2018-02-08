@@ -2,7 +2,7 @@
 //  ClaimMO+CoreDataProperties.m
 //  
 //
-//  Created by Дмитрий Жаров on 30.01.2018.
+//  Created by Дмитрий Жаров on 08.02.2018.
 //
 //
 
@@ -14,9 +14,10 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Claim"];
 }
 
-@dynamic published;
+@dynamic author;
 @dynamic status;
-@dynamic party;
 @dynamic uid;
+@dynamic date;
+@dynamic party;
 
 @end

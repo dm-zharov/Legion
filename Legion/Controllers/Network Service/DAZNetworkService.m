@@ -23,8 +23,8 @@ static NSString *const DAZFunctionUpdateParty = @"updateParty";
 static NSString *const DAZFunctionDeleteParty = @"deleteParty";
 
 static NSString *const DAZFunctionGetClaims = @"getClaims";
-static NSString *const DAZFunctionSendClaim = @"addClaim";
-static NSString *const DAZFunctionUpdateClaim = @"deleteClaim";
+static NSString *const DAZFunctionSendClaim = @"sendClaim";
+static NSString *const DAZFunctionUpdateClaim = @"updateClaim";
 static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 

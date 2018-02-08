@@ -99,7 +99,8 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.tableView.refreshControl = refreshControl;
 }
 
-- (void)setupNetworkService {
+- (void)setupNetworkService
+{
     self.networkService  = [[DAZProxyService alloc] init];
     self.networkService.delegate = self;
 }
@@ -246,9 +247,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 #pragma mark - DAZProxyServiceDelegate
 
 
-- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)array networkStatus:(DAZNetworkStatus)status
+- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status
 {
-    self.partiesArray = array;
+    self.partiesArray = parties;
     
     [self.tableView performBatchUpdates:^{
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]

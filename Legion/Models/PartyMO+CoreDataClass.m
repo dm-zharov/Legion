@@ -30,8 +30,7 @@
 
 + (instancetype)partyWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary
 {
-    PartyMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
-                                                  inManagedObjectContext:context];
+    PartyMO *item = [self partyWithContext:context];
     
     item.author = dictionary[@"author"];
     item.uid = dictionary[@"uid"];
@@ -52,12 +51,6 @@
     item.members = [dictionary[@"members"] intValue];
     
     item.status = dictionary[@"status"];
-    
-    return item;
-}
-
-+ (instancetype)partyWithContext:(NSManagedObjectContext *)context data:(NSData *)data {
-    PartyMO *item = [self partyWithContext:context];
     
     return item;
 }
@@ -154,7 +147,7 @@
 
 #pragma mark - Coding
 - (NSDictionary *)dictionary {
-    return [[self class] dictionaryFromParty:self];
+    return [PartyMO dictionaryFromParty:self];
 }
 
 #pragma mark - Basic

@@ -87,6 +87,19 @@
 
 #pragma mark - Claims
 
+- (void)getClaims
+{
+    if ([self isServerReachable])
+    {
+        [self.networkService downloadClaims];
+    }
+    else
+    {
+        NSArray<ClaimMO *> *claimsArray = [self.coreDataManager fetchClaims];
+        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOffline];
+    }
+}
+
 - (void)sendClaim:(ClaimMO *)claim
 {
     if ([self isServerReachable])
@@ -116,7 +129,7 @@
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
 {
     [self.coreDataManager removeParties];
-    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByArrayOfDictionaries:parties];
+    NSArray *partiesArray = [[self.coreDataManager class] convertPartiesArray:parties];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
     {
@@ -128,8 +141,7 @@
 
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
 {
-    [self.coreDataManager removeClaims];
-    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByArrayOfDictionaries:claims];
+    NSArray *claimsArray = [[self.coreDataManager class] convertClaimsArray:claims];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
     {

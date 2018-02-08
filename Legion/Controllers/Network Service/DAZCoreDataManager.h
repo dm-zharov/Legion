@@ -19,8 +19,8 @@
 
 + (NSManagedObjectContext *)coreDataContext;
 
-+ (NSArray<PartyMO *> *)partiesArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)parties;
-+ (NSArray<ClaimMO *> *)claimsArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)claims;
++ (NSArray<PartyMO *> *)convertPartiesArray:(NSArray<NSDictionary *> *)parties;
++ (NSArray<ClaimMO *> *)convertClaimsArray:(NSArray<NSDictionary *> *)claims;
 
 - (NSArray<PartyMO*> *)fetchParties;
 - (void)saveParties:(NSArray<PartyMO *> *)parties;

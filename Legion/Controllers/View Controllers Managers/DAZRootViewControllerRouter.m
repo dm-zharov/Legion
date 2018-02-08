@@ -75,7 +75,8 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (UITabBarController *)tabBarController
 {
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController];
+    tabBarController.viewControllers =
+        @[self.firstViewController, self.secondViewController, self.thirdViewController];
     
     return tabBarController;
 }
@@ -89,7 +90,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     navigationController.navigationBar.prefersLargeTitles = YES;
     
-    navigationController.tabBarItem.title = @"Тусовки";
+    navigationController.tabBarItem.title = @"Все тусовки";
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Parties Icon"];
     
     return navigationController;

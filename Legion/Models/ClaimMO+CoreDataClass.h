@@ -12,7 +12,8 @@
 @class PartyMO, UserMO;
 
 typedef NS_ENUM(NSUInteger, DAZClaimStatus) {
-    DAZClaimStatusOpen,
+    DAZClaimStatusConfirmed,
+    DAZClaimStatusRequested,
     DAZClaimStatusClosed
 };
 
@@ -25,23 +26,22 @@ NS_ASSUME_NONNULL_BEGIN
 //// Creation
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context;
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary;
-+ (instancetype)claimWithContext:(NSManagedObjectContext *)context data:(NSData *)data;
 
-//// Instance Accessors
-//+ (NSString *)stringFromStatus:(DAZClaimStatus)status;
-//+ (DAZClaimStatus)statusFromString:(NSString *)status;
-//
-//// Accessors
-//- (DAZClaimStatus)claimStatus;
-//- (void)setPartyStatus:(DAZClaimStatus)status;
-//
-//// Coding
+// Instance Accessors
++ (NSDictionary *)dictionaryFromClaim:(ClaimMO *)claim;
++ (NSString *)stringFromStatus:(DAZClaimStatus)status;
++ (DAZClaimStatus)statusFromString:(NSString *)status;
+
+// Accessors
+- (DAZClaimStatus)claimStatus;
+- (void)setClaimStatus:(DAZClaimStatus)status;
+
+// Coding
 - (NSDictionary *)dictionaryFromClaim;
-- (NSData *)dataFromClaim;
-//
-//// Basic
-//- (BOOL)saveClaim;
-//- (BOOL)deleteClaim;
+
+// Basic
+- (BOOL)saveClaim;
+- (BOOL)deleteClaim;
 
 @end
 

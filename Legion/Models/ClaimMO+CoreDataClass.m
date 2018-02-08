@@ -14,35 +14,107 @@
 
 + (NSString *)entityName
 {
-    return @"Party";
+    return @"Claim";
 }
 
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context {
-    return nil;
+    ClaimMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
+                                                  inManagedObjectContext:context];
+    
+    return item;
 }
 
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary {
-    return nil;
+    ClaimMO *item = [self claimWithContext:context];
+    
+    item.author = dictionary[@"author"];
+    item.uid = dictionary[@"uid"];
+    item.status = dictionary[@"status"];
+    
+    NSTimeInterval date = [dictionary[@"date"] doubleValue];
+    item.date = [NSDate dateWithTimeIntervalSince1970:date];
+    
+    return item;
 }
 
-+ (instancetype)claimWithContext:(NSManagedObjectContext *)context data:(NSData *)data {
-    return nil;
++ (NSDictionary *)dictionaryFromClaim:(ClaimMO *)claim
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    
+    if (claim.author)
+    {
+        dictionary[@"author"] = claim.author;
+    }
+    
+    if (claim.uid)
+    {
+        dictionary[@"uid"] = claim.uid;
+    }
+    
+    if (claim.status)
+    {
+        dictionary[@"status"] = claim.status;
+    }
+    
+    if (claim.date)
+    {
+        dictionary[@"date"] = [@(claim.date.timeIntervalSince1970) stringValue];
+    }
+    
+    return dictionary;
 }
 
-//// Instance Accessors
-//+ (NSString *)stringFromStatus:(DAZClaimStatus)status;
-//+ (DAZClaimStatus)statusFromString:(NSString *)status;
-//
-//// Accessors
-//- (DAZClaimStatus)claimStatus;
-//- (void)setPartyStatus:(DAZClaimStatus)status;
-//
-//// Coding
+// Instance Accessors
++ (NSString *)stringFromStatus:(DAZClaimStatus)status
+{
+    return @[@"Подтверждено", @"Запрошено", @"Отклонено"][status];
+}
+
++ (DAZClaimStatus)statusFromString:(NSString *)status
+{
+    if ([@"Подтверждено" isEqualToString:status]) {
+        return DAZClaimStatusConfirmed;
+    } else if ([@"Запрошено" isEqualToString:status]) {
+        return DAZClaimStatusRequested;
+    } else if ([@"Отклонено" isEqualToString:status]) {
+        return DAZClaimStatusClosed;
+    }
+    
+    return NSNotFound;
+}
+
+// Accessors
+- (DAZClaimStatus)claimStatus
+{
+    return [ClaimMO statusFromString:self.status];
+}
+
+- (void)setClaimStatus:(DAZClaimStatus)status
+{
+    self.status = [ClaimMO stringFromStatus:status];
+}
+
+// Coding
 - (NSDictionary *)dictionaryFromClaim {
-    return [NSDictionary new];
+    return [ClaimMO dictionaryFromClaim:self];
 }
-- (NSData *)dataFromClaim {
-    return [NSData new];
+
+#pragma mark - Basic
+
+- (BOOL)saveClaim
+{
+    NSError *error;
+    if (![self.managedObjectContext save:&error])
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)deleteClaim {
+    [self.managedObjectContext deleteObject:self];
+    return [self saveClaim];
 }
 
 @end

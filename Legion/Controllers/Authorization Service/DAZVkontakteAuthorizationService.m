@@ -69,6 +69,7 @@ static NSString *const DAZVkontakteServiceRelativeString =
         
         VKAccessToken *token = [[VKAccessToken alloc] initWithDictionary:parametersDict];
         [VKAccessToken setAccessToken:token];
+        [[NSUserDefaults standardUserDefaults] setObject:token.userId forKey:@"userID"];
         [self completedSignInWithResult:token error:nil];
         
         return YES;

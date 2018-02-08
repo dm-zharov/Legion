@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Creation
 + (instancetype)partyWithContext:(NSManagedObjectContext *)context;
 + (instancetype)partyWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary;
-+ (instancetype)partyWithContext:(NSManagedObjectContext *)context data:(NSData *)data;
 
 // Instance Accessors
 + (NSDictionary *)dictionaryFromParty:(PartyMO *)party;

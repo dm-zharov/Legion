@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D47" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Claim" representedClassName="ClaimMO" syncable="YES">
-        <attribute name="published" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="party" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Party" inverseName="claim" inverseEntity="Party" syncable="YES"/>
     </entity>
     <entity name="Party" representedClassName="PartyMO" syncable="YES">
@@ -21,7 +23,7 @@
         <relationship name="claim" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Claim" inverseName="party" inverseEntity="Claim" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Claim" positionX="-29" positionY="171" width="128" height="88"/>
+        <element name="Claim" positionX="-29" positionY="171" width="128" height="118"/>
         <element name="Party" positionX="-270" positionY="198" width="128" height="238"/>
     </elements>
 </model>

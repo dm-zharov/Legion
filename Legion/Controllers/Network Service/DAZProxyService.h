@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
 - (void)updateParty:(PartyMO *)party;
 - (void)deleteParty:(PartyMO *)party;
 
+- (void)getClaims;
 - (void)sendClaim:(ClaimMO *)party;
 - (void)updateClaim:(ClaimMO *)claim;
 - (void)deleteClaim:(ClaimMO *)claim;
