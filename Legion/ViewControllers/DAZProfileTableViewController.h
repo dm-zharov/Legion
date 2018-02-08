@@ -1,5 +1,5 @@
 //
-//  DAZProfileViewController.h
+//  DAZProfileTableViewController.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 07.02.2018.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DAZProfileViewController : UIViewController
+@interface DAZProfileTableViewController : UIViewController
 
 @end

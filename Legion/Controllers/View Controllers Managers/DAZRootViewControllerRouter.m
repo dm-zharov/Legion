@@ -11,7 +11,7 @@
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZClaimsTableViewController.h"
-#import "DAZProfileViewController.h"
+#import "DAZProfileTableViewController.h"
 
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
@@ -90,7 +90,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     navigationController.navigationBar.prefersLargeTitles = YES;
     
-    navigationController.tabBarItem.title = @"Все тусовки";
+    navigationController.tabBarItem.title = @"Тусовки";
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Parties Icon"];
     
     return navigationController;
@@ -114,7 +114,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (UIViewController *)thirdViewController
 {
     UINavigationController *navigationController =
-    [[UINavigationController alloc] initWithRootViewController:[[DAZProfileViewController alloc] init]];
+    [[UINavigationController alloc] initWithRootViewController:[[DAZProfileTableViewController alloc] init]];
     
     [navigationController.navigationBar sh_customShadow];
     
