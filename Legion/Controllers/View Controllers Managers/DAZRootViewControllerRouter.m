@@ -7,8 +7,11 @@
 //
 
 #import "DAZRootViewControllerRouter.h"
+#import "UINavigationBar+Shadow.h"
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
+#import "DAZClaimsTableViewController.h"
+#import "DAZProfileViewController.h"
 
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
@@ -16,14 +19,14 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @interface DAZRootViewControllerRouter ()
 
-//@property (nonatomic, weak) UIWindow *window;
-// Методы, вызываемые при получении уведомления о изменении статуса авторизации.
-- (void)authorizationTokenReceived;
-- (void)authorizationTokenExpired;
+// Приватные методы, обрабатывающие уведомления о изменении состояния авторизации
+- (void)authorizationTokenReceived:(NSNotification *)notification;
+- (void)authorizationTokenExpired:(NSNotification *)notification;
 
 @end
 
 @implementation DAZRootViewControllerRouter
+
 
 #pragma mark - Lifecycle
 
@@ -33,21 +36,21 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     [[NSNotificationCenter defaultCenter] removeObserver:self name:DAZAuthorizationTokenExpiredNotification object:nil];
 }
 
-#pragma mark - Public
+
+#pragma mark - Accessors
 
 - (UIViewController *)rootViewController
 {
-    // Вызывается при открытии приложения и последующих изменениях статуса авторизации.
-    
+    // Вызывается при открытии приложения и последующих изменениях статуса авторизации
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(authorizationTokenReceived)
+                                                 selector:@selector(authorizationTokenReceived:)
                                                      name:DAZAuthorizationTokenReceivedNotification
                                                    object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(authorizationTokenExpired)
+                                                 selector:@selector(authorizationTokenExpired:)
                                                      name:DAZAuthorizationTokenExpiredNotification
                                                    object:nil];
     });
@@ -56,22 +59,23 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     if (!loggedIn)
     {
-        // Показать экран авторизации.
+        // Показать экран авторизации
         return [[DAZAuthorizationViewController alloc] init];
     }
     else
     {
-        // Показать экран приложения.
+        // Показать экран приложения
         return self.tabBarController;
     }
 }
 
-#pragma mark - Private
+
+#pragma mark - RootViewController Assembly
 
 - (UITabBarController *)tabBarController
 {
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[self.firstViewController];
+    tabBarController.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController];
     
     return tabBarController;
 }
@@ -81,60 +85,79 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     UINavigationController *navigationController =
         [[UINavigationController alloc] initWithRootViewController:[[DAZPartiesTableViewController alloc] init]];
     
-    navigationController.navigationBar.shadowImage = [UIImage new];
-    navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
-    navigationController.navigationBar.layer.shadowOpacity = 0.25;
-    navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
-    navigationController.navigationBar.layer.shadowRadius = 2.0;
+    [navigationController.navigationBar sh_customShadow];
     
     navigationController.navigationBar.prefersLargeTitles = YES;
+    
     navigationController.tabBarItem.title = @"Тусовки";
+    navigationController.tabBarItem.image = [UIImage imageNamed:@"Parties Icon"];
     
     return navigationController;
 }
 
 - (UIViewController *)secondViewController
 {
-    return nil;
+    UINavigationController *navigationController =
+        [[UINavigationController alloc] initWithRootViewController:[[DAZClaimsTableViewController alloc] init]];
+    
+    [navigationController.navigationBar sh_customShadow];
+    
+    navigationController.navigationBar.prefersLargeTitles = YES;
+    
+    navigationController.tabBarItem.title = @"Запросы";
+    navigationController.tabBarItem.image = [UIImage imageNamed:@"Claims Icon"];
+    
+    return navigationController;
 }
 
 - (UIViewController *)thirdViewController
 {
-    return nil;
+    UINavigationController *navigationController =
+    [[UINavigationController alloc] initWithRootViewController:[[DAZProfileViewController alloc] init]];
+    
+    [navigationController.navigationBar sh_customShadow];
+    
+    navigationController.navigationBar.prefersLargeTitles = YES;
+    
+    navigationController.tabBarItem.title = @"Профиль";
+    navigationController.tabBarItem.image = [UIImage imageNamed:@"Profile Icon"];
+    
+    return navigationController;
 }
 
-#pragma mark - Authorization State Changed
+#pragma mark - Public
 
-- (void)authorizationTokenReceived
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
+{
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    if (animated)
+    {
+        [UIView transitionWithView:window
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        animations:^{
+            window.rootViewController = rootViewController;
+                        } completion:nil];
+    }
+}
+
+#pragma mark - Private
+
+- (void)authorizationTokenReceived:(NSNotification *)notification
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    UIViewController *rootViewController = self.rootViewController;
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    [UIView transitionWithView:window
-                      duration:0.75
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-                        window.rootViewController = rootViewController;
-                    } completion:nil];
+    [self setRootViewController:[self rootViewController] animated:YES];
 }
 
-- (void)authorizationTokenExpired
+- (void)authorizationTokenExpired:(NSNotification *)notification
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loggedIn"];
     [NSUserDefaults resetStandardUserDefaults];
     
-    UIViewController *rootViewController = self.rootViewController;
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    [UIView transitionWithView:window
-                      duration:0.75
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-                        window.rootViewController = rootViewController;
-                    } completion:nil];
+    [self setRootViewController:[self rootViewController] animated:YES];
 }
 
 @end

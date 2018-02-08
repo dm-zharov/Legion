@@ -12,6 +12,7 @@
 
 @protocol DAZSelectionScreenBaseViewControllerProtocol <NSObject>
 
+@optional
 - (void)contentInView:(UIView *)contentView; // Заполнить полученный contentView.
 - (void)actionButtonPressed; // Нажата кнопка завершения.
 

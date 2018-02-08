@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)partyWithContext:(NSManagedObjectContext *)context data:(NSData *)data;
 
 // Instance Accessors
++ (NSDictionary *)dictionaryFromParty:(PartyMO *)party;
 + (NSString *)stringFromStatus:(DAZPartyStatus)status;
 + (DAZPartyStatus)statusFromString:(NSString *)status;
 
@@ -36,8 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPartyStatus:(DAZPartyStatus)status;
 
 // Coding
-- (NSDictionary *)dictionaryFromParty;
-- (NSData *)dataFromParty;
+- (NSDictionary *)dictionary;
 
 // Basic
 - (BOOL)saveParty;

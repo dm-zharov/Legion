@@ -12,8 +12,6 @@
 typedef NS_ENUM(NSInteger, DAZSelectionScreenType) {
     // Результат: (NSDate *)
     DAZSelectionScreenDatePicker = 1,
-    // Результат: (NSDate *)
-    DAZSelectionScreenTimePicker,
     // Результат: (NSString *)
     DAZSelectionScreenPickerView,
     // Результат: (NSString *)
@@ -32,10 +30,10 @@ typedef NS_ENUM(NSInteger, DAZSelectionScreenType) {
 
 @interface DAZSelectionScreenViewController : DAZSelectionScreenBaseViewController <DAZSelectionScreenBaseViewControllerProtocol>
 
-@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak) id<DAZSelectionScreenDelegate> delegate;
 
-@property (nonatomic, readonly) NSString *message;
 @property (nonatomic, readonly) DAZSelectionScreenType type;
+@property (nonatomic, readonly) NSString *message;
 
 - (instancetype)initWithType:(DAZSelectionScreenType)type message:(NSString *)message;
 

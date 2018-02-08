@@ -7,15 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DAZNetworkService.h"
 
 @class PartyMO, ClaimMO;
+
+typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
+    DAZNetworkOnline = 1,
+    DAZNetworkOffline,
+};
 
 @protocol DAZProxyServiceDelegate <NSObject>
 
 @optional
-- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)array;
-- (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)array;
+- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status;
+- (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims networkStatus:(DAZNetworkStatus)status;
 
 @end
 
@@ -24,11 +28,12 @@
 @property (nonatomic, weak) id <DAZProxyServiceDelegate> delegate;
 
 - (void)getParties;
-- (void)saveParty:(PartyMO *)party;
+- (void)addParty:(PartyMO *)party;
+- (void)updateParty:(PartyMO *)party;
 - (void)deleteParty:(PartyMO *)party;
 
-- (void)getClaims;
-- (void)saveClaim:(ClaimMO *)claim;
+- (void)sendClaim:(ClaimMO *)party;
+- (void)updateClaim:(ClaimMO *)claim;
 - (void)deleteClaim:(ClaimMO *)claim;
 
 @end

@@ -9,19 +9,22 @@
 #import <Masonry.h>
 
 #import "DAZSelectionScreenViewController.h"
+#import "UIColor+Colors.h"
 
-@interface DAZSelectionScreenViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface DAZSelectionScreenViewController () <UIPickerViewDataSource, UIPickerViewDelegate,
+                                                    UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, assign) DAZSelectionScreenType type;
 
 @property (nonatomic, weak) UIView *contentView;
 
 @property (nonatomic, weak) UIDatePicker *datePicker;
-@property (nonatomic, weak) UIDatePicker *timePicker;
 @property (nonatomic, weak) UIPickerView *pickerView;
 @property (nonatomic, copy) NSArray *pickerData;
 @property (nonatomic, weak) UITextField *textField;
+
 @property (nonatomic, weak) UITextView *textView;
+@property (nonatomic, copy)NSString * textViewPlaceholder;
 
 @property (nonatomic, weak) UILabel *membersLabel;
 @property (nonatomic, weak) UISlider *sliderView;
@@ -49,16 +52,18 @@
     {
         [self.textField becomeFirstResponder];
     }
-    
-    if (self.textView && [self.textView canBecomeFirstResponder])
+    else if (self.textView && [self.textView canBecomeFirstResponder])
     {
         [self.textView becomeFirstResponder];
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOutsideTextView:)];
+        [self.view addGestureRecognizer:tapRecognizer];
     }
 }
 
+
 #pragma mark - DAZSelectionScreenBaseViewControllerProtocol
 
-- (void)contentInView:(UIView *)contentView
+- (void)setupContentInView:(UIView *)contentView
 {
     if (!contentView)
     {
@@ -71,9 +76,6 @@
     {
         case DAZSelectionScreenDatePicker:
             [self setupDatePicker];
-            break;
-        case DAZSelectionScreenTimePicker:
-            [self setupTimePicker];
             break;
         case DAZSelectionScreenPickerView:
             [self setupPickerView];
@@ -102,55 +104,31 @@
 {
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    datePicker.minuteInterval = 30;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    datePicker.date = [calendar startOfDayForDate:datePicker.date];
-    
-    datePicker.timeZone = [NSTimeZone localTimeZone];
     datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"ru_RU"];
     
-    // Установить максимальную дату на 1 месяц от текущей даты.
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // Округлить до ближайших следующих 30 минут
+    NSDateComponents *minuteComponent = [calendar components:NSCalendarUnitMinute fromDate:datePicker.date];
+    minuteComponent.minute = 30 - ([minuteComponent minute] % 30);
+    datePicker.date = [calendar dateByAddingComponents:minuteComponent toDate:datePicker.date options:0];
+    
+    datePicker.minimumDate = datePicker.date;
+    
+    // Установить максимальную дату на 1 месяц от текущей даты
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.month = 1;
-    datePicker.minimumDate = datePicker.date;
     datePicker.maximumDate = [calendar dateByAddingComponents:dateComponents toDate:datePicker.minimumDate options:0];
+    
+    datePicker.date = datePicker.minimumDate;
     
     [self.contentView addSubview:datePicker];
     
     self.datePicker = datePicker;
     
     [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.contentView);
-        make.left.and.right.equalTo(self.view);
-    }];
-}
-
-#pragma mark - DAZSelectionScreenTimePicker
-
-- (void)setupTimePicker
-{
-    UIDatePicker *timePicker = [[UIDatePicker alloc] init];
-    timePicker.datePickerMode = UIDatePickerModeTime;
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    timePicker.minimumDate = [calendar startOfDayForDate:timePicker.date];
-    
-    timePicker.timeZone = [NSTimeZone localTimeZone];
-    timePicker.locale = [NSLocale localeWithLocaleIdentifier:@"ru_RU"];
-    
-    timePicker.minuteInterval = 30;
-    
-    // Установить по умолчанию на 20:00
-    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-    dateComponents.hour = 24;
-    timePicker.maximumDate = [calendar dateByAddingComponents:dateComponents toDate:timePicker.minimumDate options:0];
-    
-    [self.contentView addSubview:timePicker];
-    
-    self.timePicker = timePicker;
-    
-    [self.timePicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.contentView);
         make.left.and.right.equalTo(self.view);
     }];
@@ -206,11 +184,10 @@
     
     textField.textAlignment = NSTextAlignmentCenter;
     textField.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
+    textField.textColor = [UIColor cl_darkPurpleColor];
     textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-    textField.returnKeyType = UIReturnKeyNext;
     textField.spellCheckingType = UITextSpellCheckingTypeNo;
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
-    textField.textColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
     
     textField.delegate = self;
     
@@ -240,13 +217,21 @@
     return YES;
 }
 
-#pragma mark - DAZSelectionScreenSliderTextView
+#pragma mark - DAZSelectionScreenTextView
 
 - (void)setupTextView
 {
     UITextView *textView = [[UITextView alloc] init];
     textView.scrollEnabled = NO;
     textView.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    
+    // Placeholder text
+    self.textViewPlaceholder = @"Скажите гостям: что взять с собой, какие условия... Минимум 10 символов!";
+    textView.text = self.textViewPlaceholder;
+    textView.textColor = [UIColor lightGrayColor];
+    
+    textView.delegate = self;
     
     textView.textContainer.maximumNumberOfLines = 12;
     textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -258,11 +243,43 @@
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).with.offset(16);
         make.left.equalTo(self.contentView.mas_left).with.offset(16);
-        make.left.equalTo(self.contentView.mas_right).with.offset(-16);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-16);
     }];
 }
 
 #pragma mark UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    static BOOL beginEditing = NO;
+    
+    if (beginEditing)
+    {
+        return YES;
+    }
+    else if ([self.textView.text isEqualToString:self.textViewPlaceholder])
+    {
+        self.textView.textColor = [UIColor blackColor];
+        self.textView.text = text;
+        beginEditing = YES;
+    }
+    
+    return YES;
+}
+
+#pragma mark Actions
+
+-(void)tappedOutsideTextView:(UITapGestureRecognizer *)tapRecognizer
+{
+    if ([self.textView isFirstResponder] && [self.textView.text length] > 10)
+    {
+        [self.textView resignFirstResponder];
+    }
+    else if ([self.textView canBecomeFirstResponder])
+    {
+        [self.textView becomeFirstResponder];
+    }
+}
 
 #pragma mark - DAZSelectionScreenSlider
 
@@ -272,7 +289,7 @@
     
     membersLabel.text = @"5";
     membersLabel.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
-    membersLabel.textColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    membersLabel.textColor = [UIColor cl_darkPurpleColor];
     membersLabel.textAlignment = NSTextAlignmentCenter;
     
     [self.contentView addSubview:membersLabel];
@@ -322,11 +339,6 @@
         case DAZSelectionScreenDatePicker:
         {
             result = self.datePicker.date;
-            break;
-        }
-        case DAZSelectionScreenTimePicker:
-        {
-            result = self.timePicker.date;
             break;
         }
         case DAZSelectionScreenPickerView:

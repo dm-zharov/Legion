@@ -8,10 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+
+
 @protocol DAZNetworkServiceDelegate <NSObject>
 
+@optional
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties;
+- (void)networkServiceDidFinishAddParty;
+- (void)networkServiceDidFinishUpdateParty;
+- (void)networkServiceDidFinishDeleteParty;
+
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claimsDictionary;
+- (void)networkServiceDidFinishSendClaim;
+- (void)networkServiceDidFinishUpdateClaim;
+- (void)networkServiceDidFinishDeleteClaim;
 
 @end
 
@@ -19,12 +29,16 @@
 
 @property (nonatomic, weak) id <DAZNetworkServiceDelegate> delegate;
 
+- (BOOL)isServerReachable;
+
 - (void)downloadParties;
-- (void)uploadParty:(NSDictionary *)partyDictionary;
+- (void)addParty:(NSDictionary *)partyDictionary;
+- (void)updateParty:(NSDictionary *)partyDictionary;
 - (void)deleteParty:(NSDictionary *)partyDictionary;
 
 - (void)downloadClaims;
-- (void)uploadClaim:(NSDictionary *)claimDictionary;
+- (void)sendClaim:(NSDictionary *)claimDictionary;
+- (void)updateClaim:(NSDictionary *)claimDictionary;
 - (void)deleteClaim:(NSDictionary *)claimDictionary;
 
 @end

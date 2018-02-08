@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
 		23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 23034527202A2422004CF6C8 /* UIImage+Overlay.m */; };
+		2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */; };
+		2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */; };
 		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
 		2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */; };
@@ -22,6 +24,8 @@
 		2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */; };
 		2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA16202243AA000A97C8 /* NSError+Domains.m */; };
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
+		239101C4202B3592001E8DE1 /* DAZProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101C3202B3592001E8DE1 /* DAZProfileViewController.m */; };
+		239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */; };
 		239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DE2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m */; };
@@ -35,7 +39,7 @@
 		23BEA59F2016302C000ECFE5 /* LegionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA59E2016302C000ECFE5 /* LegionTests.m */; };
 		23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D526AE201CDFAB002DC411 /* VKAccessToken.m */; };
 		23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */; };
-		23D9D1AF20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */; };
+		23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1AE20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m */; };
 		23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */; };
 		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
 /* End PBXBuildFile section */
@@ -54,6 +58,10 @@
 		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		23034526202A2422004CF6C8 /* UIImage+Overlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Overlay.h"; sourceTree = "<group>"; };
 		23034527202A2422004CF6C8 /* UIImage+Overlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Overlay.m"; sourceTree = "<group>"; };
+		23034529202B2E3B004CF6C8 /* UIColor+Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Colors.h"; sourceTree = "<group>"; };
+		2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Colors.m"; sourceTree = "<group>"; };
+		2303452C202B3214004CF6C8 /* UINavigationBar+Shadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Shadow.h"; sourceTree = "<group>"; };
+		2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Shadow.m"; sourceTree = "<group>"; };
 		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
 		2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationMediator.h; sourceTree = "<group>"; };
 		2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediator.m; sourceTree = "<group>"; };
@@ -81,6 +89,11 @@
 		2354FA16202243AA000A97C8 /* NSError+Domains.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Domains.m"; sourceTree = "<group>"; };
 		2354FA182023F450000A97C8 /* DAZPartyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyTableViewCell.h; sourceTree = "<group>"; };
 		2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyTableViewCell.m; sourceTree = "<group>"; };
+		239101C2202B3592001E8DE1 /* DAZProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZProfileViewController.h; sourceTree = "<group>"; };
+		239101C3202B3592001E8DE1 /* DAZProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProfileViewController.m; sourceTree = "<group>"; };
+		239101C5202B363C001E8DE1 /* DAZClaimsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZClaimsTableViewController.h; sourceTree = "<group>"; };
+		239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZClaimsTableViewController.m; sourceTree = "<group>"; };
+		239101CE202B55B7001E8DE1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAGradientLayer+Gradients.h"; sourceTree = "<group>"; };
 		239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CAGradientLayer+Gradients.m"; sourceTree = "<group>"; };
@@ -105,8 +118,8 @@
 		23D526AE201CDFAB002DC411 /* VKAccessToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VKAccessToken.m; sourceTree = "<group>"; };
 		23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyDetailsViewControllers.h; sourceTree = "<group>"; };
 		23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyDetailsViewControllers.m; sourceTree = "<group>"; };
-		23D9D1AD20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreateViewControllersAssembly.h; sourceTree = "<group>"; };
-		23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyCreateViewControllersAssembly.m; sourceTree = "<group>"; };
+		23D9D1AD20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreationViewControllersAssembly.h; sourceTree = "<group>"; };
+		23D9D1AE20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyCreationViewControllersAssembly.m; sourceTree = "<group>"; };
 		23D9D1B02027461D00E25EA9 /* DAZSelectionScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZSelectionScreenViewController.h; sourceTree = "<group>"; };
 		23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZSelectionScreenViewController.m; sourceTree = "<group>"; };
 		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,8 +191,8 @@
 			children = (
 				2354FA0D20221953000A97C8 /* DAZRootViewControllerRouter.h */,
 				2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */,
-				23D9D1AD20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.h */,
-				23D9D1AE20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m */,
+				23D9D1AD20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.h */,
+				23D9D1AE20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m */,
 			);
 			path = "View Controllers Managers";
 			sourceTree = "<group>";
@@ -237,7 +250,11 @@
 				23BEA5862016302B000ECFE5 /* DAZPartiesTableViewController.m */,
 				23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */,
 				23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */,
+				239101C5202B363C001E8DE1 /* DAZClaimsTableViewController.h */,
+				239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */,
 				23D9D1AC202736ED00E25EA9 /* DAZSelectionScreenViewController */,
+				239101C2202B3592001E8DE1 /* DAZProfileViewController.h */,
+				239101C3202B3592001E8DE1 /* DAZProfileViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -252,6 +269,10 @@
 		23AFB4C5201B493D00260C11 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				23034529202B2E3B004CF6C8 /* UIColor+Colors.h */,
+				2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */,
+				2303452C202B3214004CF6C8 /* UINavigationBar+Shadow.h */,
+				2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */,
 				23034526202A2422004CF6C8 /* UIImage+Overlay.h */,
 				23034527202A2422004CF6C8 /* UIImage+Overlay.m */,
 				239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */,
@@ -356,6 +377,7 @@
 		BEB9C2E1A44675CDEC9212B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				239101CE202B55B7001E8DE1 /* SystemConfiguration.framework */,
 				F06017E82CF3D563961069EC /* libPods-Legion.a */,
 				3912D243E638C9C75441C0EB /* libPods-LegionTests.a */,
 				E69339F2168CB49557F5B7B6 /* libPods-LegionUITests.a */,
@@ -575,6 +597,7 @@
 			files = (
 				23D526AF201CDFAB002DC411 /* VKAccessToken.m in Sources */,
 				239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */,
+				2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */,
 				2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */,
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
@@ -584,10 +607,12 @@
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
 				23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */,
-				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreateViewControllersAssembly.m in Sources */,
+				239101C4202B3592001E8DE1 /* DAZProfileViewController.m in Sources */,
+				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
 				2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */,
 				2351BED5201F371E0065C1C1 /* PartyMO+CoreDataClass.m in Sources */,
+				2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */,
 				2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */,
 				23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */,
 				2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */,
@@ -596,6 +621,7 @@
 				2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */,
 				2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */,
 				2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */,
+				239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */,
 				2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */,
 				23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  DAZPartyCreateViewControllersAssembly.h
+//  DAZPartyCreationViewControllersAssembly.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 04.02.2018.
@@ -12,7 +12,7 @@
 
 // Сборщик экранов создания новой тусовки.
 
-@interface DAZPartyCreateViewControllersAssembly : NSObject
+@interface DAZPartyCreationViewControllersAssembly : NSObject
 
 @property (nonatomic, strong) PartyMO *party;
 

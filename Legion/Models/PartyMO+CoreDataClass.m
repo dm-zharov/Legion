@@ -33,28 +33,25 @@
     PartyMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
                                                   inManagedObjectContext:context];
     
-    NSDictionary *itemDictionary = dictionary;
-    //BOOL dictionaryCorrect = YES;
-
-    item.author = itemDictionary[@"author"];
-    item.uid = itemDictionary[@"uid"];
-    item.title = itemDictionary[@"title"];
-    item.address = itemDictionary[@"address"];
-    item.apartment = itemDictionary[@"apartment"];
+    item.author = dictionary[@"author"];
+    item.uid = dictionary[@"uid"];
+    item.title = dictionary[@"title"];
+    item.address = dictionary[@"address"];
+    item.apartment = dictionary[@"apartment"];
     
-    NSTimeInterval created = [itemDictionary[@"created"] doubleValue];
+    NSTimeInterval created = [dictionary[@"created"] doubleValue];
     item.created = [NSDate dateWithTimeIntervalSince1970:created];
     
-    NSTimeInterval closed = [itemDictionary[@"closed"] doubleValue];
-    item.closed = closed > 0 ? [NSDate new] : [NSDate dateWithTimeIntervalSince1970:closed];
+    NSTimeInterval closed = [dictionary[@"closed"] doubleValue];
+    item.closed = [NSDate dateWithTimeIntervalSince1970:closed];
     
-    NSTimeInterval date = [itemDictionary[@"date"] doubleValue];
+    NSTimeInterval date = [dictionary[@"date"] doubleValue];
     item.date = [NSDate dateWithTimeIntervalSince1970:date];
     
-    item.desc = itemDictionary[@"desc"];
-    item.members = [itemDictionary[@"members"] intValue];
+    item.desc = dictionary[@"desc"];
+    item.members = [dictionary[@"members"] intValue];
     
-    item.status = itemDictionary[@"status"];
+    item.status = dictionary[@"status"];
     
     return item;
 }
@@ -63,6 +60,68 @@
     PartyMO *item = [self partyWithContext:context];
     
     return item;
+}
+
++ (NSDictionary *)dictionaryFromParty:(PartyMO *)party
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    
+    if (party.author)
+    {
+        dictionary[@"author"] = party.author;
+    }
+
+    if (party.uid)
+    {
+        dictionary[@"uid"] = party.uid;
+    }
+    
+    if (party.title)
+    {
+        dictionary[@"title"] = party.title;
+    }
+    
+    if (party.address)
+    {
+        dictionary[@"address"] = party.address;
+    }
+    
+    if (party.apartment)
+    {
+        dictionary[@"apartment"] = party.apartment;
+    }
+
+    if (party.created)
+    {
+        dictionary[@"created"] = [@(party.created.timeIntervalSince1970) stringValue];
+    }
+    
+    if (party.closed)
+    {
+        dictionary[@"closed"] = [@(party.closed.timeIntervalSince1970) stringValue];
+    }
+    
+    if (party.date)
+    {
+         dictionary[@"date"] = [@(party.date.timeIntervalSince1970) stringValue];
+    }
+    
+    if (party.desc)
+    {
+        dictionary[@"desc"] = party.desc;
+    }
+    
+    if (party.members > 0)
+    {
+        dictionary[@"members"] = [@(party.members) stringValue];
+    }
+    
+    if (party.status)
+    {
+        dictionary[@"status"] = party.status;
+    }
+    
+    return dictionary;
 }
 
 #pragma mark - Creation
@@ -94,12 +153,8 @@
 }
 
 #pragma mark - Coding
-- (NSDictionary *)dictionaryFromParty {
-    return [NSDictionary dictionary];
-}
-
-- (NSData *)dataFromParty {
-    return [NSData data];
+- (NSDictionary *)dictionary {
+    return [[self class] dictionaryFromParty:self];
 }
 
 #pragma mark - Basic

@@ -8,6 +8,7 @@
 
 #import <Masonry.h>
 #import "DAZSelectionScreenBaseViewController.h"
+#import "UIColor+Colors.h"
 
 @interface DAZSelectionScreenBaseViewController ()
 
@@ -37,7 +38,6 @@
 
     [self setupMessageLabel];
     [self setupContinueButton];
-    
     [self setupContentView];
     // Do any additional setup after loading the view.
 }
@@ -75,7 +75,7 @@
 {
     UIButton *actionButton = [[UIButton alloc] init];
     
-    actionButton.backgroundColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    actionButton.backgroundColor = [UIColor cl_darkPurpleColor];
     actionButton.layer.cornerRadius = 10;
     [actionButton setTitle:@"Далее" forState:UIControlStateNormal];
     [actionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -109,19 +109,19 @@
         make.bottom.equalTo(self.actionButton.mas_top);
     }];
     
-    [self contentInView:contentView];
+    [self setupContentInView:contentView];
 }
 
 #pragma mark - DAZSelectionScreenBaseViewControllerProtocol
 
-- (void)contentInView:(UIView *)contentView
+- (void)setupContentInView:(UIView *)contentView
 {
-    
+    return;
 }
 
 - (void)actionButtonPressed
 {
-
+    return;
 }
 
 @end

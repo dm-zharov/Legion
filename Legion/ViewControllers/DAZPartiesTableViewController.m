@@ -13,7 +13,7 @@
 #import "DAZPartyTableViewCell.h"
 #import "DAZPartyDetailsViewControllers.h"
 #import "DAZProxyService.h"
-#import "DAZPartyCreateViewControllersAssembly.h"
+#import "DAZPartyCreationViewControllersAssembly.h"
 
 #import "CAGradientLayer+Gradients.h"
 
@@ -34,7 +34,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, weak) UIView *purpleView;
 @property (nonatomic, assign) CGRect cellRect;
 
-@property (nonatomic, strong) DAZPartyCreateViewControllersAssembly *partyCreateViewController;
+@property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreateViewController;
 
 @end
 
@@ -77,6 +77,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     tableView.dataSource = self;
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    tableView.contentInset = UIEdgeInsetsMake(0, 0, 16, 0);
     tableView.showsVerticalScrollIndicator = NO;
     tableView.showsHorizontalScrollIndicator = NO;
     
@@ -120,7 +121,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)actionCreateParty:(id)sender
 {
-    self.partyCreateViewController = [[DAZPartyCreateViewControllersAssembly alloc] init];
+    self.partyCreateViewController = [[DAZPartyCreationViewControllersAssembly alloc] init];
     
     UIViewController *partyCreateViewController = [self.partyCreateViewController rootViewController];
     
@@ -245,7 +246,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 #pragma mark - DAZProxyServiceDelegate
 
 
-- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)array
+- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)array networkStatus:(DAZNetworkStatus)status
 {
     self.partiesArray = array;
     

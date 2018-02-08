@@ -31,9 +31,8 @@
     return container.viewContext;
 }
 
-+ (NSArray<PartyMO *> *)partiesArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)parties
++ (NSArray<PartyMO *> *)partiesArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)parties
 {
-    
     NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:[parties count]];
     for (NSDictionary *party in parties)
     {
@@ -41,6 +40,7 @@
         if (!item)
         {
             partiesArray = nil;
+            return partiesArray;
         }
         else
         {
@@ -51,20 +51,20 @@
     return partiesArray;
 }
 
-+ (NSArray<ClaimMO *> *)claimsArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)claims
++ (NSArray<ClaimMO *> *)claimsArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)claims
 {
-    
     NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:[claims count]];
     for (NSDictionary *claim in claims)
     {
         ClaimMO *item = [ClaimMO claimWithContext:[self coreDataContext] dictionary:claim];
         if (!item)
         {
-            [claimsArray addObject:item];
+            claimsArray = nil;
+            return claimsArray;
         }
         else
         {
-            return nil;
+            [claimsArray addObject:item];
         }
     }
     
@@ -83,7 +83,7 @@
 }
 
 
-#pragma mark - Parties Interface
+#pragma mark - Parties Selectors
 
 - (NSArray<PartyMO *> *)fetchParties
 {
@@ -95,17 +95,12 @@
     [self saveObjects:parties];
 }
 
-- (void)saveParty:(PartyMO *)party
+- (void)removeParties
 {
-    [self saveObject:party];
+    [self removeObjectsWithEntityName:[PartyMO entityName]];
 }
 
-- (void)deleteParty:(PartyMO *)party
-{
-    [self deleteObject:party];
-}
-
-#pragma mark - Claims Interface
+#pragma mark - Claims Selectors
 
 - (NSArray<ClaimMO *> *)fetchClaims
 {
@@ -117,17 +112,12 @@
     [self saveObjects:claims];
 }
 
-- (void)saveClaim:(ClaimMO *)claim
+- (void)removeClaims
 {
-    [self updateCoreData];
+    [self removeObjectsWithEntityName:[ClaimMO entityName]];
 }
 
-- (void)deleteClaim:(ClaimMO *)claim
-{
-    [self deleteObject:claim];
-}
-
-#pragma mark - Accessors
+#pragma mark - CoreData Accessors
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName
 {
@@ -135,14 +125,28 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
     //fetchRequest.fetchLimit = 1;
     
-    //NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
-    //[fetchRequest setSortDescriptors:@[sort]];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sort]];
     
     NSError *error;
     NSArray *results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];
-    NSLog(@"Fetching error: %@", error);
+    
+    if (!results)
+    {
+        NSLog(@"Fetching error: %@", error);
+        return nil;
+    }
     
     return results;
+}
+
+- (void)removeObjectsWithEntityName:(NSString *)entityName
+{
+    NSArray *removableObjects = [self fetchObjectsWithEntityName:entityName];
+    
+    for (id object in removableObjects) {
+        [self.coreDataContext deleteObject:object];
+    }
 }
 
 - (void)saveObjects:(NSArray *)objects
@@ -150,30 +154,38 @@
     for (id object in objects) {
         [self.coreDataContext insertObject:object];
     }
-    [self updateCoreData];
+    
+    [self saveContext];
+}
+
+- (void)deleteObjects:(NSArray *)objects
+{
+    for (id object in objects) {
+        [self.coreDataContext deleteObject:object];
+    }
+    
+    [self saveContext];
 }
 
 - (void)saveObject:(id)object
 {
     [self.coreDataContext insertObject:object];
-    [self updateCoreData];
+    [self saveContext];
 }
 
 - (void)deleteObject:(id)object
 {
     [self.coreDataContext deleteObject:object];
-    [self updateCoreData];
+    [self saveContext];
 }
 
-- (BOOL)updateCoreData
+- (void)saveContext
 {
     NSError *error;
     if ([self.coreDataContext hasChanges] && ![self.coreDataContext save:&error])
     {
-        return NO;
+        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
     }
-    
-    return YES;
 }
 
 @end

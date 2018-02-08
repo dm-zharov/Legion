@@ -1,29 +1,28 @@
 //
-//  DAZPartyCreateViewControllersAssembly.m
+//  DAZPartyCreationViewControllersAssembly.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 04.02.2018.
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import "DAZPartyCreateViewControllersAssembly.h"
+#import "DAZPartyCreationViewControllersAssembly.h"
 #import "DAZSelectionScreenViewController.h"
-
 #import "DAZProxyService.h"
 #import "DAZCoreDataManager.h"
 
+
 static NSString *const DAZPartyMessageDate = @"Когда планируется тусовка?";
-static NSString *const DAZPartyMessageTime = @"Во сколько начало?";
 static NSString *const DAZPartyMessageAddress = @"В каком общежитии?";
 static NSString *const DAZPartyMessageApartment = @"В какой квартире?";
 static NSString *const DAZPartyMessageMembers = @"Сколько людей ожидается?";
 static NSString *const DAZPartyMessage = @"Добавьте сообщение для гостей!";
+static NSString *const DAZPartyMessageTitle = @"Осталось придумать заголовок!";
 
 
-@interface DAZPartyCreateViewControllersAssembly () <DAZSelectionScreenDelegate>
+@interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenDelegate>
 
 @property (nonatomic, strong) UINavigationController *navigationController;
-
 @property (nonatomic, strong) DAZProxyService *networkService;
 
 @property (nonatomic, assign) NSInteger currentItem;
@@ -31,7 +30,10 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
 
 @end
 
-@implementation DAZPartyCreateViewControllersAssembly
+@implementation DAZPartyCreationViewControllersAssembly
+
+
+#pragma mark - Lifecycle
 
 - (instancetype)init
 {
@@ -42,19 +44,22 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
     return self;
 }
 
+#pragma mark - Public
+
 - (UIViewController *)rootViewController
 {
     self.currentItem = 0;
     
     self.party = [PartyMO partyWithContext:[DAZCoreDataManager coreDataContext]];
     
+    // Цепочка экранов, порядок которой можно изменять и дополнять
     self.chainArray = @[
-                        @[DAZPartyMessageDate, @(DAZSelectionScreenDatePicker)],
-                        @[DAZPartyMessageTime, @(DAZSelectionScreenTimePicker)],
-                        @[DAZPartyMessageAddress, @(DAZSelectionScreenPickerView)],
-                        @[DAZPartyMessageApartment, @(DAZSelectionScreenTextField)],
-                        @[DAZPartyMessageMembers, @(DAZSelectionScreenSlider)],
-                        @[DAZPartyMessage, @(DAZSelectionScreenTextView)]
+                        @[@(DAZSelectionScreenDatePicker), DAZPartyMessageDate],
+                        @[@(DAZSelectionScreenPickerView), DAZPartyMessageAddress],
+                        @[@(DAZSelectionScreenTextField), DAZPartyMessageApartment],
+                        @[@(DAZSelectionScreenSlider), DAZPartyMessageMembers],
+                        @[@(DAZSelectionScreenTextView), DAZPartyMessage],
+                        @[@(DAZSelectionScreenTextField), DAZPartyMessageTitle]
                        ];
     
     self.navigationController =
@@ -66,14 +71,15 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
     return self.navigationController;
 }
 
+#pragma mark - Private
+
 - (DAZSelectionScreenViewController *)nextViewController
 {
     self.currentItem = self.navigationController.viewControllers.count;
     
     NSArray *item = self.chainArray[self.currentItem];
-    
-    DAZSelectionScreenType type = [item[1] integerValue];
-    NSString *message = item[0];
+    DAZSelectionScreenType type = [item[0] integerValue];
+    NSString *message = item[1];
     
     DAZSelectionScreenViewController *nextViewController =
         [[DAZSelectionScreenViewController alloc] initWithType:type message:message];
@@ -98,6 +104,7 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
     
 }
 
+// Дополнительная настройка первого экрана цепочки
 - (DAZSelectionScreenViewController *)tuneFirstViewController:(DAZSelectionScreenViewController *)viewController
 {
     viewController.navigationItem.leftBarButtonItem =
@@ -109,6 +116,7 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
     return viewController;
 }
 
+// Дополнительная настройка последнего экрана цепочки
 - (DAZSelectionScreenViewController *)tuneLastViewController:(DAZSelectionScreenViewController *)viewController
 {
     [viewController.actionButton setTitle:@"Завершить" forState:UIControlStateNormal];
@@ -129,7 +137,7 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
     }
     else
     {
-        [self.networkService saveParty:self.party];
+        [self.networkService addParty:self.party];
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -150,12 +158,6 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
             self.party.date = date;
             break;
         }
-        case DAZSelectionScreenTimePicker:
-        {
-            NSDate *date = result;
-            self.party.time = date.timeIntervalSince1970;
-            break;
-        }
         case DAZSelectionScreenPickerView:
         {
             NSString *address = result;
@@ -164,8 +166,17 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
         }
         case DAZSelectionScreenTextField:
         {
-            NSString *apartment = result;
-            self.party.apartment = apartment;
+            if ([self.chainArray[self.currentItem][1] isEqualToString:DAZPartyMessageTitle])
+            {
+                NSString *title = result;
+                self.party.title = title;
+            }
+            
+            if ([self.chainArray[self.currentItem][1] isEqualToString:DAZPartyMessageApartment])
+            {
+                NSString *apartment = result;
+                self.party.apartment = apartment;
+            }
             break;
         }
         case DAZSelectionScreenTextView:

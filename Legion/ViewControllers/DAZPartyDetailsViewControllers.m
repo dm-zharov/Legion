@@ -9,6 +9,7 @@
 #import "DAZPartyDetailsViewControllers.h"
 #import "CAGradientLayer+Gradients.h"
 #import "UIImage+Overlay.h"
+#import "UIColor+Colors.h"
 
 #import <Masonry.h>
 
@@ -209,7 +210,7 @@
 {
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
-    titleLabel.textColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    titleLabel.textColor = [UIColor cl_darkPurpleColor];
     
     [self.detailsView addSubview:titleLabel];
     

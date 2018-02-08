@@ -7,7 +7,7 @@
 //
 
 #import "CAGradientLayer+Gradients.h"
-#import <UIKit/UIColor.h>
+#import "UIColor+Colors.h"
 
 @implementation CAGradientLayer (Gradients)
 

@@ -19,17 +19,17 @@
 
 + (NSManagedObjectContext *)coreDataContext;
 
-+ (NSArray<PartyMO *> *)partiesArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)parties;
-+ (NSArray<ClaimMO *> *)claimsArrayWithArrayOfDictionaries:(NSArray<NSDictionary *> *)claimsDictionary;
++ (NSArray<PartyMO *> *)partiesArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)parties;
++ (NSArray<ClaimMO *> *)claimsArrayByArrayOfDictionaries:(NSArray<NSDictionary *> *)claims;
 
 - (NSArray<PartyMO*> *)fetchParties;
 - (void)saveParties:(NSArray<PartyMO *> *)parties;
-- (void)saveParty:(PartyMO *)party;
-- (void)deleteParty:(PartyMO *)party;
+- (void)removeParties;
 
 - (NSArray<ClaimMO *> *)fetchClaims;
 - (void)saveClaims:(NSArray<ClaimMO *> *)claims;
-- (void)saveClaim:(ClaimMO *)claim;
-- (void)deleteClaim:(ClaimMO *)claim;
+- (void)removeClaims;
+
+- (void)saveContext;
 
 @end

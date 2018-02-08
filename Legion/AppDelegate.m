@@ -7,11 +7,11 @@
 //
 
 #import <Firebase.h>
-
 #import "AppDelegate.h"
 #import "DAZRootViewControllerRouter.h"
-#import "DAZAuthorizationMediator.h"
 #import "DAZAuthorizationViewController.h"
+#import "UIColor+Colors.h"
+
 
 @interface AppDelegate ()
 
@@ -22,6 +22,7 @@
 
 @implementation AppDelegate
 
+
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -30,7 +31,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.tintColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    self.window.tintColor = [UIColor cl_darkPurpleColor];
     
     self.window.layer.cornerRadius = 5;
     self.window.layer.masksToBounds = YES;
@@ -85,7 +86,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    // Передача полученной строки с токеном сервису авторизации.
+    // Передача полученной строки с токеном сервису авторизации
     if ([self.window.rootViewController isKindOfClass:[DAZAuthorizationViewController class]])
     {
         DAZAuthorizationViewController *viewController = (DAZAuthorizationViewController *)self.window.rootViewController;
@@ -94,6 +95,7 @@
     
     return YES;
 }
+
 
 #pragma mark - Core Data stack
 

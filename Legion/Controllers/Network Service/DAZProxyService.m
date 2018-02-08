@@ -39,94 +39,104 @@
     return self;
 }
 
+#pragma mark - Reachability
+
+- (BOOL)isServerReachable
+{
+    return [self.networkService isServerReachable];
+}
+
 #pragma mark - Parties
 
 - (void)getParties
 {
-    if ([self isConnectionActive])
+    if ([self isServerReachable])
     {
         [self.networkService downloadParties];
     }
     else
     {
-        [self.coreDataManager fetchParties];
+        NSArray<PartyMO *> *partiesArray = [self.coreDataManager fetchParties];
+        [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOffline];
     }
 }
 
-- (void)saveParty:(PartyMO *)party
+- (void)addParty:(PartyMO *)party
 {
-    if ([self isConnectionActive])
+    if ([self isServerReachable])
     {
-        [self.networkService uploadParty:[party dictionaryFromParty]];
+        [self.networkService addParty:[party dictionary]];
     }
 }
 
-- (void)deleteParty:(PartyMO *)party {
-    if ([self isConnectionActive])
+- (void)updateParty:(PartyMO *)party
+{
+    if ([self isServerReachable])
     {
-        [self.networkService deleteParty:[party dictionaryFromParty]];
+        [self.networkService updateParty:[party dictionary]];
+    }
+}
+
+- (void)deleteParty:(PartyMO *)party
+{
+    if ([self isServerReachable])
+    {
+        [self.networkService deleteParty:[party dictionary]];
     }
 }
 
 #pragma mark - Claims
 
-- (void)getClaims
+- (void)sendClaim:(ClaimMO *)claim
 {
-    if ([self isConnectionActive])
+    if ([self isServerReachable])
     {
-        [self.networkService downloadClaims];
-    }
-    else
-    {
-        [self.coreDataManager fetchClaims];
+        [self.networkService sendClaim:[claim dictionaryFromClaim]];
     }
 }
 
-- (void)saveClaim:(ClaimMO *)claim
+- (void)updateClaim:(ClaimMO *)claim
 {
-    if ([self isConnectionActive])
+    if ([self isServerReachable])
     {
-        [self.networkService uploadClaim:[claim dictionaryFromClaim]];
+        [self.networkService updateClaim:[claim dictionaryFromClaim]];
     }
 }
 
 - (void)deleteClaim:(ClaimMO *)claim
 {
-    if ([self isConnectionActive])
+    if ([self isServerReachable])
     {
         [self.networkService deleteClaim:[claim dictionaryFromClaim]];
     }
 }
 
-#pragma mark - Internet connection test
-
-- (BOOL)isConnectionActive
-{
-    // Тестирование активного соединения
-    NSURL *serverURL = [NSURL URLWithString:@"https://us-central1-legion-svc.cloudfunctions.net/"];
-    NSData *data = [NSData dataWithContentsOfURL:serverURL];
-    
-    return data ? YES : NO;
-}
-
 #pragma mark - DAZNetworkServiceDelegate
 
-- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties {
-    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayWithArrayOfDictionaries:parties];
-    [self.coreDataManager saveParties:partiesArray];
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:)])
+- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
+{
+    [self.coreDataManager removeParties];
+    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByArrayOfDictionaries:parties];
+    
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
     {
-        [self.delegate proxyServiceDidFinishDownloadParties:partiesArray];
+        [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOnline];
     }
+    
+    [self.coreDataManager saveContext];
 }
 
-- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims {
-    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayWithArrayOfDictionaries:claims];
-    [self.coreDataManager saveClaims:claimsArray];
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:)])
+- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
+{
+    [self.coreDataManager removeClaims];
+    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByArrayOfDictionaries:claims];
+    
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
     {
-        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray];
+        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOnline];
     }
+    
+    [self.coreDataManager saveContext];
 }
 
 @end

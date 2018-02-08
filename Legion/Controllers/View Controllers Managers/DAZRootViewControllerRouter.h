@@ -6,7 +6,6 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 
@@ -17,5 +16,6 @@ extern NSString *const DAZAuthorizationTokenReceivedNotification;
 @interface DAZRootViewControllerRouter : NSObject
 
 - (UIViewController *)rootViewController;
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated;
 
 @end
