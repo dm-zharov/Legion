@@ -14,9 +14,9 @@
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-- (void)openURL:(NSURL *)url;
-
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signOut;
+
+- (void)processAuthorizationURL:(NSURL *)url;
 
 @end

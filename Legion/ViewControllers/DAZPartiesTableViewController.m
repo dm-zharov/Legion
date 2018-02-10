@@ -8,33 +8,31 @@
 
 #import <Masonry/Masonry.h>
 
-#import "DAZRootViewControllerRouter.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZPartyTableViewCell.h"
-#import "DAZPartyDetailsViewControllers.h"
-#import "DAZProxyService.h"
 #import "DAZPartyCreationViewControllersAssembly.h"
+#import "DAZPartyDetailsViewControllers.h"
+#import "DAZPresentPartyDetailsTransitionController.h"
+#import "DAZProxyService.h"
 
 #import "CAGradientLayer+Gradients.h"
-
 #import "PartyMO+CoreDataClass.h"
 
 
 static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 
-@interface DAZPartiesTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface DAZPartiesTableViewController () <UIViewControllerTransitioningDelegate, DAZProxyServiceDelegate,
+                                                UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
-@property (nonatomic, nullable, copy) NSArray<PartyMO *> *partiesArray;
+@property (nonatomic, nullable, copy) NSArray *partiesArray;
 
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
-@property (nonatomic, weak) UIView *purpleView;
-@property (nonatomic, assign) CGRect cellRect;
-
 @property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreateViewController;
+@property (nonatomic, strong) DAZPresentPartyDetailsTransitionController *presentDetailsViewController;
 
 @end
 
@@ -76,12 +74,15 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     tableView.delegate = self;
     tableView.dataSource = self;
     
+    tableView.layer.masksToBounds = NO;
+    tableView.clipsToBounds = NO;
+    
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.contentInset = UIEdgeInsetsMake(0, 0, 16, 0);
     tableView.showsVerticalScrollIndicator = NO;
     tableView.showsHorizontalScrollIndicator = NO;
     
-    [tableView registerClass:[DAZPartyTableViewCell class] forCellReuseIdentifier:@"DAZPartyTableViewCell"];
+    [tableView registerClass:[DAZPartyTableViewCell class] forCellReuseIdentifier:DAZPartiesTableViewCellReuseIdentifier];
     
     [self.view addSubview:tableView];
     
@@ -143,7 +144,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DAZPartyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DAZPartyTableViewCell"];
+    DAZPartyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DAZPartiesTableViewCellReuseIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     PartyMO *party = self.partiesArray[indexPath.row];
@@ -164,66 +165,21 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     // Получение начального фрейма перехода из ячейки
     DAZPartyTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     CGRect cellFrame = [self.view convertRect:cell.cardView.bounds fromView:cell.cardView];
-    self.cellRect = cellFrame;
     
-    UIView *purpleView = [[UIView alloc] initWithFrame:cellFrame];
-    self.purpleView = purpleView;
-
-    CAGradientLayer *purpleLayer = [CAGradientLayer purpleGradientLayer];
-    purpleLayer.frame = self.view.bounds;
-    [purpleView.layer addSublayer:purpleLayer];
-    
-    purpleView.layer.cornerRadius = 10;
-    purpleView.layer.masksToBounds = YES;
-    purpleView.userInteractionEnabled = YES;
-    
-    [self.view addSubview:purpleView];
+    self.presentDetailsViewController = [[DAZPresentPartyDetailsTransitionController alloc] init];
+    self.presentDetailsViewController.cellFrame = cellFrame;
     
     DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
-    partyDetailsViewController.delegate = self;
-    partyDetailsViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
     partyDetailsViewController.party = self.partiesArray[indexPath.row];
-    
-    partyDetailsViewController.view.frame = CGRectInset(self.view.frame, 50, 50);
-    [UIView animateWithDuration:0.2
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-        purpleView.layer.cornerRadius = 5;
-        purpleView.frame = self.view.frame;
-        
-        CGRect navigationBarFrame = self.navigationController.navigationBar.frame;
-        self.navigationController.navigationBar.transform =
-            CGAffineTransformMakeTranslation(0, -(CGRectGetHeight(navigationBarFrame) + 20));
-        
-        CGRect tabBarFrame = self.tabBarController.tabBar.frame;
-        self.tabBarController.tabBar.transform =
-            CGAffineTransformMakeTranslation(0, CGRectGetHeight(tabBarFrame));
-     } completion:^(BOOL finished) {
-         self.navigationController.navigationBarHidden = YES;
-         [self presentViewController:partyDetailsViewController animated:YES completion:nil];
-     }];
+    partyDetailsViewController.modalPresentationStyle = UIModalPresentationCustom;
+    partyDetailsViewController.transitioningDelegate = self;
+
+    [self presentViewController:partyDetailsViewController animated:YES completion:nil];
 }
 
-- (void)dismiss
+- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
-    self.navigationController.navigationBarHidden = NO;
-    [UIView animateWithDuration:0.2
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         
-                         self.navigationController.navigationBar.transform =
-                         CGAffineTransformIdentity;
-                         
-                         self.tabBarController.tabBar.transform =
-                         CGAffineTransformIdentity;
-                         
-                         self.purpleView.layer.cornerRadius = 10;
-                         self.purpleView.frame = self.cellRect;
-                     } completion:^(BOOL finished) {
-                         [self.purpleView removeFromSuperview];
-                     }];
+    return self.presentDetailsViewController;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -251,18 +207,22 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     self.partiesArray = parties;
     
-    [self.tableView performBatchUpdates:^{
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                      withRowAnimation:UITableViewRowAnimationNone];
-    } completion:^(BOOL finished) {
-        if (finished)
-        {
-            if ([self.tableView.refreshControl isRefreshing])
+    if (![self.tableView.refreshControl isRefreshing])
+    {
+        [self.tableView reloadData];
+    }
+    else
+    {
+        [self.tableView performBatchUpdates:^{
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                          withRowAnimation:UITableViewRowAnimationNone];
+        } completion:^(BOOL finished) {
+            if (finished)
             {
-                [self.tableView.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.5];
+                [self.tableView.refreshControl endRefreshing];
             }
-        }
-    }];
+        }];
+    }
 }
 
 @end

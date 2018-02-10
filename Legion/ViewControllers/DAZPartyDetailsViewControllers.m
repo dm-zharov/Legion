@@ -15,7 +15,6 @@
 
 @interface DAZPartyDetailsViewControllers ()
 
-@property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
 
 @property (nonatomic, weak) UILabel *navigationLabel;
@@ -52,7 +51,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CAGradientLayer *purpleLayer = [CAGradientLayer purpleGradientLayer];
+    CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
     purpleLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:purpleLayer];
     
@@ -173,7 +172,7 @@
     UIView *detailsView = [[UIView alloc] init];
     detailsView.backgroundColor = [UIColor whiteColor];
     detailsView.layer.cornerRadius = 10;
-    detailsView.layer.masksToBounds = YES;
+    detailsView.layer.masksToBounds = NO;
     
     [self.contentView addSubview:detailsView];
     
@@ -472,7 +471,7 @@
 - (void)actionCloseViewController
 {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate dismiss];
+        //[self.delegate dismiss];
     }];
 }
 

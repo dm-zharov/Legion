@@ -32,8 +32,11 @@
 {
     PartyMO *item = [self partyWithContext:context];
     
-    item.author = dictionary[@"author"];
-    item.uid = dictionary[@"uid"];
+    item.partyID = dictionary[@"partyID"];
+    
+    item.authorID = dictionary[@"authorID"];
+    item.authorName = dictionary[@"authorName"];
+    
     item.title = dictionary[@"title"];
     item.address = dictionary[@"address"];
     item.apartment = dictionary[@"apartment"];
@@ -59,14 +62,19 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     
-    if (party.author)
+    if (party.partyID)
     {
-        dictionary[@"author"] = party.author;
+        dictionary[@"partyID"] = party.partyID;
     }
-
-    if (party.uid)
+    
+    if (party.authorID)
     {
-        dictionary[@"uid"] = party.uid;
+        dictionary[@"authorID"] = party.authorID;
+    }
+    
+    if (party.authorName)
+    {
+        dictionary[@"authorName"] = party.authorName;
     }
     
     if (party.title)

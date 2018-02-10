@@ -16,6 +16,6 @@
 
 + (CGFloat)height;
 
-- (void)setWithClaim:(ClaimMO *)claim;
+- (void)setWithClaim:(ClaimMO *)claim isIncome:(BOOL)income;
 
 @end

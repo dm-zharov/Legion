@@ -33,7 +33,7 @@
 {
     self.navigationItem.title = @"Профиль";
     self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"Настройки" style:UIBarButtonItemStylePlain target:self action:@selector(settings)];
+    [[UIBarButtonItem alloc] initWithTitle:@"Настройки" style:UIBarButtonItemStylePlain target:self action:nil];
 }
 
 - (void)setupTableView

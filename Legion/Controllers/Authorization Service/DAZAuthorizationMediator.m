@@ -6,12 +6,14 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
+#import <Firebase.h>
+
 #import "DAZAuthorizationMediator.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 
+#import "DAZUserProfile.h"
 #import "VKAccessToken.h"
-#import <Firebase.h>
 
 @interface DAZAuthorizationMediator () <DAZAuthorizationServiceDelegate>
 
@@ -22,8 +24,8 @@
 
 @implementation DAZAuthorizationMediator
 
-- (void)openURL:(NSURL *)url {
-    [self.vkontakteAuthorizationService processURL:(NSURL *)url];
+- (void)processAuthorizationURL:(NSURL *)url {
+    [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
 }
 
 - (instancetype)init
@@ -57,12 +59,11 @@
         default:
         {
             NSError *error = [[NSError alloc]
-                initWithDomain:@"Ошибка авторизации: неверный тип авторизации." code:0 userInfo:nil];
-            [self authorizationServiceDidFinishSignInWithResult:nil error:error];
+                initWithDomain:@"Ошибка авторизации: отсутствующий способ авторизации." code:0 userInfo:nil];
+            [self authorizationServiceDidFinishSignInWithProfile:nil error:error];
             break;
         }
     }
-    
 }
 
 - (void)signOut
@@ -72,19 +73,37 @@
 
 #pragma mark - DAZAuthorizationServiceDelegate
 
-- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error
+- (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
 {
-    if ([result isKindOfClass:[VKAccessToken class]])
-    {
-        VKAccessToken *accessToken = (VKAccessToken *)result;
-        [self.firebaseAuthorizationService signInWithUserID:accessToken.userId];
+    if (!profile) {
+        if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
+        {
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:nil error:error];
+        }
     }
-    else if ([result isKindOfClass:[FIRUser class]]) {
-        [self.delegate authorizationServiceDidFinishSignInWithResult:result error:error];
+    
+    if (profile.authorizationType == DAZAuthorizationVkontakte)
+    {
+        [self.firebaseAuthorizationService signInWithUserID:profile.userID];
+    }
+    else if (profile.authorizationType == DAZAuthorizationAnonymously)
+    {
+        FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
+        changeRequest.displayName = @"Дмитрий Жаров";
+        //changeRequest.displayName = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
+        //changeRequest.photoURL = profile.photoURL;
+        [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+            NSLog(@"Updated data");
+        }];
+        
+        if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
+        {
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        }
     }
 }
 
-- (void)authorizationServiceDidFinishSignOutProcess
+- (void)authorizationServiceDidFinishSignOut
 {
     if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignOut)])
     {

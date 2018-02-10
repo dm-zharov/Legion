@@ -11,6 +11,13 @@
 
 @interface VKAccessToken ()
 
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *email;
+
+@property (nonatomic, assign) NSTimeInterval expiresIn;
+@property (nonatomic, assign) NSTimeInterval created;
+
 @end
 
 @implementation VKAccessToken
@@ -40,7 +47,7 @@
         _token = dictionary[@"access_token"];
         _email = dictionary[@"email"];
         _expiresIn = [dictionary[@"expires_in"] floatValue];
-        _userId = dictionary[@"user_id"];
+        _userID = dictionary[@"user_id"];
         _created = [[NSDate new] timeIntervalSince1970];
     }
     return self;

@@ -10,6 +10,8 @@
 #import "DAZClaimTableViewCell.h"
 #import "ClaimMO+CoreDataClass.h"
 
+#import "UIImageView+Cache.h"
+
 @interface DAZClaimTableViewCell ()
 
 @property (nonatomic, strong) ClaimMO *claim;
@@ -75,16 +77,40 @@
     [super updateConstraints];
 }
 
-- (void)setWithClaim:(ClaimMO *)claim
+- (void)setWithClaim:(ClaimMO *)claim isIncome:(BOOL)income;
 {
     self.claim = claim;
+    
+    NSURL *url = [NSURL URLWithString:@"https://pp.userapi.com/c638621/v638621924/1b2b/dkgj2QnR72Q.jpg"];
+    
+    if (url)
+    {
+        [self.avatarImageView ch_imageWithContentsOfURL:url];
+        self.avatarImageView.clipsToBounds = YES;
+        self.avatarImageView.layer.cornerRadius = 24;
+        self.avatarImageView.layer.masksToBounds = YES;
+    }
+    else
+    {
+        self.avatarImageView.image = [UIImage imageNamed:@"Placeholder"];
+        self.avatarImageView.clipsToBounds = YES;
+        self.avatarImageView.layer.cornerRadius = 24;
+        self.avatarImageView.layer.masksToBounds = YES;
+    }
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterShortStyle;
     NSString *date = [dateFormatter stringFromDate:claim.date];
     
-    self.messageLabel.text = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@", claim.author, claim.uid, date];
+    if (income)
+    {
+        self.messageLabel.text = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@", claim.authorName, claim.partyID, date];
+    }
+    else
+    {
+        self.messageLabel.text = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@", claim.authorName, claim.partyID, date];
+    }
 }
 
 @end

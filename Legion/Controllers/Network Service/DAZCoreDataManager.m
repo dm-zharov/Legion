@@ -78,7 +78,7 @@
     
     for (ClaimMO *claim in claims)
     {
-        if (claim.author != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
+        if (claim.authorID != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
         {
             [outcomeArray addObject:claim];
         }

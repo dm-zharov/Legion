@@ -21,7 +21,6 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, copy) NSArray<NSArray *> *devidedClaimsArray;
-
 @property (nonatomic, weak) UISegmentedControl *segmentedControl;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
@@ -47,11 +46,6 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 {
     [super viewWillAppear:animated];
     [self.networkService getClaims];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Setup UI
@@ -90,6 +84,8 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     tableView.showsVerticalScrollIndicator = NO;
     tableView.showsHorizontalScrollIndicator = NO;
     
+    tableView.allowsSelection = NO;
+    
     [tableView registerClass:[DAZClaimTableViewCell class] forCellReuseIdentifier:DAZClaimTableViewCellIdentifier];
     
     DAZInfoView *footerView = [[DAZInfoView alloc] init];
@@ -123,7 +119,34 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (void)actionSegmentChanged:(id)sender
 {
+    if ([sender isKindOfClass:[UISegmentedControl class]])
+    {
+        UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
+        if (segmentedControl.selectedSegmentIndex == 0)
+        {
+            self.tableView.tableFooterView.hidden = NO;
+        }
+        else if (segmentedControl.selectedSegmentIndex == 1)
+        {
+            self.tableView.tableFooterView.hidden = YES;
+        }
+    }
+    
     [self.tableView reloadData];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.segmentedControl.selectedSegmentIndex == 0)
+    {
+        return YES;
+    }
+    else if (self.segmentedControl.selectedSegmentIndex == 1)
+    {
+        return NO;
+    }
+    
+    return NO;
 }
 
 - (void)actionRefreshClaims:(id)sender
@@ -172,11 +195,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
         ClaimMO *claim = self.devidedClaimsArray[0][indexPath.row];
-        [cell setWithClaim:claim];
+        [cell setWithClaim:claim isIncome:NO];
     }
     else if (self.segmentedControl.selectedSegmentIndex == 1) {
         ClaimMO *claim = self.devidedClaimsArray[1][indexPath.row];
-        [cell setWithClaim:claim];
+        [cell setWithClaim:claim isIncome:YES];
     }
     
     
@@ -192,6 +215,8 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     UIContextualAction *confirmAction = [UIContextualAction
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Подтвердить"
@@ -203,7 +228,10 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         }];
     confirmAction.backgroundColor = [UIColor cl_lightPurpleColor];
     
-    return [UISwipeActionsConfiguration configurationWithActions:@[confirmAction]];
+    UISwipeActionsConfiguration *swipeActionsConfiguration = [UISwipeActionsConfiguration configurationWithActions:@[confirmAction]];
+    swipeActionsConfiguration.performsFirstActionWithFullSwipe = NO;
+    
+    return swipeActionsConfiguration;
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,7 +259,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     
     for (ClaimMO *claim in claims)
     {
-        if (claim.author != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
+        if (claim.authorID != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
         {
             [outcomeArray addObject:claim];
         }
@@ -244,18 +272,22 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     NSArray *devidedArray = @[outcomeArray, incomeArray];
     self.devidedClaimsArray = devidedArray;
     
-    [self.tableView performBatchUpdates:^{
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                      withRowAnimation:UITableViewRowAnimationNone];
-    } completion:^(BOOL finished) {
-        if (finished)
-        {
-            if ([self.tableView.refreshControl isRefreshing])
+    if (![self.tableView.refreshControl isRefreshing])
+    {
+        [self.tableView reloadData];
+    }
+    else
+    {
+        [self.tableView performBatchUpdates:^{
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                          withRowAnimation:UITableViewRowAnimationNone];
+        } completion:^(BOOL finished) {
+            if (finished)
             {
-                [self.tableView.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.5];
+                [self.tableView.refreshControl endRefreshing];
             }
-        }
-    }];
+        }];
+    }
 }
 
 @end

@@ -20,7 +20,7 @@
 - (instancetype)initWithMediator:(id)mediator;
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
-- (void)signInWithUserID:(NSString *)uid;
+- (void)signInWithUserID:(NSString *)userID;
 
 - (void)signOut;
 

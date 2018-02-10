@@ -104,11 +104,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionAddParty
                     dictionary:partyDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishAddParty)])
@@ -131,11 +129,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionUpdateParty
                     dictionary:partyDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateParty)])
@@ -158,11 +154,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionDeleteParty
                     dictionary:partyDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteParty)])
@@ -183,7 +177,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     [self dataTaskWithFunction:DAZFunctionGetClaims
                     dictionary:nil
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error)
         {
           NSArray *claims = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -215,11 +208,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionSendClaim
                     dictionary:claimDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishSendClaim)])
@@ -242,11 +233,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionUpdateClaim
                     dictionary:claimDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateClaim)])
@@ -269,11 +258,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    self.application.networkActivityIndicatorVisible = YES;
     [self dataTaskWithFunction:DAZFunctionDeleteClaim
                     dictionary:claimDictionary
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
-        self.application.networkActivityIndicatorVisible = NO;
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteClaim)])
@@ -296,7 +283,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     // Проверка на состояние авторизации
     [[FIRAuth auth].currentUser getIDTokenWithCompletion:^(NSString * _Nullable token, NSError * _Nullable error)
     {
-        
+         
         if (!token)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];

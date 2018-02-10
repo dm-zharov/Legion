@@ -27,8 +27,9 @@
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary {
     ClaimMO *item = [self claimWithContext:context];
     
-    item.author = dictionary[@"author"];
-    item.uid = dictionary[@"uid"];
+    item.authorName = dictionary[@"authorName"];
+    item.authorID = dictionary[@"authorID"];
+    item.partyID = dictionary[@"partyID"];
     item.status = dictionary[@"status"];
     
     NSTimeInterval date = [dictionary[@"date"] doubleValue];
@@ -41,14 +42,19 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     
-    if (claim.author)
+    if (claim.authorName)
     {
-        dictionary[@"author"] = claim.author;
+        dictionary[@"authorName"] = claim.authorName;
     }
     
-    if (claim.uid)
+    if (claim.authorID)
     {
-        dictionary[@"uid"] = claim.uid;
+        dictionary[@"authorID"] = claim.authorID;
+    }
+    
+    if (claim.partyID)
+    {
+        dictionary[@"partyID"] = claim.partyID;
     }
     
     if (claim.status)

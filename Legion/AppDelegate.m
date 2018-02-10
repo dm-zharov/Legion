@@ -90,7 +90,7 @@
     if ([self.window.rootViewController isKindOfClass:[DAZAuthorizationViewController class]])
     {
         DAZAuthorizationViewController *viewController = (DAZAuthorizationViewController *)self.window.rootViewController;
-        [viewController.authorizationMediator openURL:url];
+        [viewController.authorizationMediator processAuthorizationURL:url];
     }
     
     return YES;

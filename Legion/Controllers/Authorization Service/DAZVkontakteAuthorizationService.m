@@ -8,6 +8,7 @@
 
 #import <SafariServices/SafariServices.h>
 #import "DAZVkontakteAuthorizationService.h"
+#import "DAZUserProfile.h"
 
 #import "NSError+Domains.h"
 
@@ -29,67 +30,6 @@ static NSString *const DAZVkontakteServiceRelativeString =
 
 @implementation DAZVkontakteAuthorizationService
 
-- (BOOL)processURL:(NSURL *)url
-{
-//    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain
-//                                                code:NSURLErrorUnknown
-//                                            userInfo:nil];
-    
-    if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
-    {
-        NSString *absoluteString = [url absoluteString];
-        NSRange rangeOfHash = [absoluteString rangeOfString:@"#"];
-        
-        if (rangeOfHash.location == NSNotFound)
-        {
-            //[self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        NSString *parametersString = [absoluteString substringFromIndex:rangeOfHash.location + 1];
-        if (parametersString.length == 0)
-        {
-            //[self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        NSDictionary *parametersDict = [self explodeParametersString:parametersString];
-        
-        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"])
-        {
-            //[self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        if (!parametersDict[@"access_token"])
-        {
-            //[self completedSignInWithResult:nil error:error];
-            return NO;
-        }
-        
-        VKAccessToken *token = [[VKAccessToken alloc] initWithDictionary:parametersDict];
-        [VKAccessToken setAccessToken:token];
-        [[NSUserDefaults standardUserDefaults] setObject:token.userId forKey:@"userID"];
-        [self completedSignInWithResult:token error:nil];
-        
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (NSDictionary *)explodeParametersString:(NSString *)parametersString
-{
-    NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
-    NSMutableDictionary *parametersDict = [[NSMutableDictionary alloc] init];
-    for (NSString *keyValueString in keyValuePairs) {
-        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
-        parametersDict[keyValueArray[0]] = keyValueArray[1];
-    }
-    
-    return parametersDict;
-}
-
 #pragma mark - Lifecycle
 
 - (instancetype)init
@@ -105,17 +45,6 @@ static NSString *const DAZVkontakteServiceRelativeString =
         _delegate = mediator;
     }
     return self;
-}
-
-+ (void)setAccessToken:(VKAccessToken *)token
-{
-    [VKAccessToken setAccessToken:token];
-}
-
-+ (VKAccessToken *)accessToken
-{
-    [VKAccessToken accessToken];
-    return nil;
 }
 
 #pragma mark - DAZAuthorizationServiceProtocol
@@ -142,17 +71,15 @@ static NSString *const DAZVkontakteServiceRelativeString =
         
         UIApplication *application = [UIApplication sharedApplication];
         
-        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-            
+        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)])
+        {
             NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly: @NO };
             
             [application openURL:absoluteURL options:options completionHandler:^(BOOL success) {
-            
                 if (!success)
                 {
-                    [self completedSignInWithResult:nil error:error];;
+                    [self completedSignInWithProfile:nil error:error];;
                 }
-                
             }];
         }
     }
@@ -169,11 +96,11 @@ static NSString *const DAZVkontakteServiceRelativeString =
            
             if (!error)
             {
-                [self processURL:callbackURL];
+                [self processAuthorizationURL:callbackURL];
             }
             else
             {
-                [self completedSignInWithResult:nil error:error];
+                [self completedSignInWithProfile:nil error:error];
             }
         }];
         
@@ -187,23 +114,81 @@ static NSString *const DAZVkontakteServiceRelativeString =
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"vkauthorize://authorize"]];
 }
 
-- (BOOL)isLoggedIn
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"loggedIn"];
-}
-
 - (void)signOut
 {
     [self completedSignOut];
 }
 
-#pragma mark - Optional messages for DAZAuthorizationServiceDelegate
-
-- (void)completedSignInWithResult:(VKAccessToken *)result error:(NSError *)error
+- (BOOL)processAuthorizationURL:(NSURL *)url
 {
-    if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithResult:error:)])
+    NSError *error = [NSError errorWithDomain:DAZVkontakteOpenURLErrorDomain code:0 userInfo:nil];
+    if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
     {
-        [self.delegate authorizationServiceDidFinishSignInWithResult:result error:error];
+        NSString *absoluteString = [url absoluteString];
+        NSRange rangeOfHash = [absoluteString rangeOfString:@"#"];
+        
+        if (rangeOfHash.location == NSNotFound)
+        {
+            [self completedSignInWithProfile:nil error:error];
+            return NO;
+        }
+        
+        NSString *parametersString = [absoluteString substringFromIndex:rangeOfHash.location + 1];
+        if (parametersString.length == 0)
+        {
+            [self completedSignInWithProfile:nil error:error];
+            return NO;
+        }
+        
+        NSDictionary *parametersDict = [self explodeParametersString:parametersString];
+        
+        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"])
+        {
+            [self completedSignInWithProfile:nil error:error];
+            return NO;
+        }
+        
+        if (!parametersDict[@"access_token"])
+        {
+            [self completedSignInWithProfile:nil error:error];
+            return NO;
+        }
+        
+        VKAccessToken *token = [[VKAccessToken alloc] initWithDictionary:parametersDict];
+        
+        DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+        profile.userID = token.userID;
+        profile.accessToken = token.token;
+        profile.email = token.email;
+        
+        [self completedSignInWithProfile:profile error:nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (NSDictionary *)explodeParametersString:(NSString *)parametersString
+{
+    NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
+    NSMutableDictionary *parametersDict = [[NSMutableDictionary alloc] init];
+    for (NSString *keyValueString in keyValuePairs)
+    {
+        NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
+        parametersDict[keyValueArray[0]] = keyValueArray[1];
+    }
+    
+    return parametersDict;
+}
+
+#pragma mark - DAZAuthorizationServiceDelegate
+
+- (void)completedSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
+{
+    if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
+    {
+        [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
     }
 }
 

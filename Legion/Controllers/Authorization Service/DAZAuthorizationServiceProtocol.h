@@ -9,10 +9,12 @@
 #ifndef DAZAuthorizationServiceProtocol_h
 #define DAZAuthorizationServiceProtocol_h
 
+@class DAZUserProfile;
+
 typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
     /// Авторизоваться через "Вконтакте"
     DAZAuthorizationVkontakte,
-    /// Авторизовать анонимно через"Firebase"
+    /// Авторизоваться анонимно
     DAZAuthorizationAnonymously
 };
 
@@ -29,7 +31,7 @@ typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
 
 @optional
 
-- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error;
+- (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error;
 - (void)authorizationServiceDidFinishSignOut;
 
 @end

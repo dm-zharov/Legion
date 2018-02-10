@@ -13,7 +13,7 @@
 
 @interface DAZPartyDetailsViewControllers : UIViewController
 
-@property (nonatomic, weak) DAZPartiesTableViewController *delegate;
+@property (nonatomic, weak) UIScrollView *scrollView;
 
 @property (nonatomic, strong) PartyMO *party;
 

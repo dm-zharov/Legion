@@ -11,6 +11,7 @@
 #import "PartyMO+CoreDataClass.h"
 
 #import "CAGradientLayer+Gradients.h"
+#import "UIImageView+Cache.h"
 
 
 @interface DAZPartyTableViewCell ()
@@ -19,7 +20,7 @@
 
 @property (nonatomic, getter=isFlipped, assign) BOOL flipped;
 
-//
+// Front surface
 
 @property (nonatomic, strong) UIView *frontCardView;
 @property (nonatomic, strong) CAGradientLayer *frontCardLayer;
@@ -36,7 +37,7 @@
 @property (nonatomic, strong) UILabel *capacityLabel;
 @property (nonatomic, strong) UILabel *membersLabel;
 
-//
+// Back surface
 
 @property (nonatomic, strong) UIView *backCardView;
 @property (nonatomic, strong) CAGradientLayer *backCardLayer;
@@ -70,12 +71,12 @@
         
         // Подложка с фиолетовым слоем
         _frontCardView = [[UIView alloc] init];
-        _frontCardView.layer.cornerRadius = 10;
+        _frontCardView.layer.cornerRadius = 14;
         _frontCardView.layer.masksToBounds = YES;
         _frontCardView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:_frontCardView];
 
-        _frontCardLayer = [CAGradientLayer purpleGradientLayer];
+        _frontCardLayer = [CAGradientLayer gr_purpleGradientLayer];
         [_frontCardView.layer addSublayer:_frontCardLayer];
 
         // Заголовок
@@ -133,7 +134,7 @@
         _backCardView.backgroundColor = [UIColor whiteColor];
         [self.contentView insertSubview:_backCardView belowSubview:_frontCardView];
         
-        _backCardLayer = [CAGradientLayer purpleGradientLayer];
+        _backCardLayer = [CAGradientLayer gr_purpleGradientLayer];
         [_backCardView.layer addSublayer:_backCardLayer];
         
         // "Сообщение"
@@ -285,7 +286,18 @@
     // Bottom-left
     // In future release
     //self.avatarImageView;
-    self.authorLabel.text = party.author;
+    NSURL *url = [NSURL URLWithString:@"https://pp.userapi.com/c638621/v638621924/1b2b/dkgj2QnR72Q.jpg"];
+    
+    [self.avatarImageView ch_imageWithContentsOfURL:url];
+    
+    if (party.authorName)
+    {
+        self.authorLabel.text = party.authorName;
+    }
+    else
+    {
+        self.authorLabel.text = party.authorID;
+    }
     
     // Bottom-right
     self.membersLabel.text = [NSString stringWithFormat:@"%d", party.members];

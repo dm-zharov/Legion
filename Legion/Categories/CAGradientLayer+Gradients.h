@@ -10,6 +10,6 @@
 
 @interface CAGradientLayer (Gradients)
 
-+ (CAGradientLayer *)purpleGradientLayer;
++ (CAGradientLayer *)gr_purpleGradientLayer;
 
 @end

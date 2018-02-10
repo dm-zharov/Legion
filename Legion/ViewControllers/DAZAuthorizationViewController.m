@@ -7,12 +7,14 @@
 //
 
 #import <Masonry.h>
-#import "DAZRootViewControllerRouter.h"
+
 #import "DAZAuthorizationViewController.h"
+#import "DAZRootViewControllerRouter.h"
 #import "DAZPartiesTableViewController.h"
-#import "DAZAuthorizationMediator.h"
+
 #import "CAGradientLayer+Gradients.h"
 #import "UIColor+Colors.h"
+#import "UIViewController+Alerts.h"
 
 
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
@@ -42,11 +44,6 @@
     [self setupAuthorizationService];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 
 #pragma mark - Setup UI
 
@@ -57,9 +54,9 @@
 
 - (void)setupBackgroundLayer
 {
-    CAGradientLayer *purpleLayer = [CAGradientLayer purpleGradientLayer];
+    CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
     purpleLayer.frame = self.view.frame;
-    [self.view.layer insertSublayer:purpleLayer atIndex:0];
+    [self.view.layer addSublayer:purpleLayer];
 }
 
 - (void)setupGreetingLabel
@@ -134,12 +131,12 @@
     
     self.anonymousInButton = anonymousInButton;
     
-    UIEdgeInsets offsets = UIEdgeInsetsMake(16, 16, -16, -16);
+    UIEdgeInsets offsets = UIEdgeInsetsMake(8, 16, -8, -16);
     [self.anonymousInButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.signInButton.mas_bottom).with.offset(offsets.top);
         make.leading.equalTo(self.view.mas_leading).with.offset(offsets.left);
         make.trailing.equalTo(self.view.mas_trailing).with.offset(offsets.right);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(offsets.bottom);
+        make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).with.offset(offsets.bottom);
         make.height.equalTo(@48);
     }];
     
@@ -167,32 +164,15 @@
 
 #pragma mark - DAZAuthotizationServiceDelegate
 
-- (void)authorizationServiceDidFinishSignInWithResult:(id)result error:(NSError *)error
+- (void)authorizationServiceDidFinishSignInWithProfile:(id)result error:(NSError *)error
 {
-    if (result)
+    if (!error)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenReceivedNotification object:nil];
     }
     else
     {
-        static NSString *alertTitle = @"Ошибка сети";
-        static NSString *alertMessage = @"Произошла ошибка подключения, проверьте "
-        "соединение с интернетом либо попробуйте позже.";
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                       message:alertMessage
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleDefault handler:nil];
-        
-        [alert addAction:agreeAction];
-        
-        [self presentViewController:alert animated:YES completion:nil];
+        [self al_presentNetworkAlertViewController];
     }
-}
-
-- (void)authorizationServiceDidFinishSignOut
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
 }
 @end

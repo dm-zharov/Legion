@@ -11,6 +11,12 @@
 #import "DAZFirebaseAuthorizationService.h"
 #import "NSError+Domains.h"
 
+#import "DAZUserProfile.h"
+
+
+static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";
+static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
+
 @implementation DAZFirebaseAuthorizationService
 
 #pragma mark - Lifecycle
@@ -42,12 +48,16 @@
     }
 }
 
-- (void)signInWithUserID:(NSString *)uid
+- (void)signInWithUserID:(NSString *)userID
 {
-    NSDictionary *jsonData = @{@"uid" : uid};
-
+    if (!userID)
+    {
+        return;
+    }
+    
     NSError *error;
-    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&error];
+    NSDictionary *json = @{ @"userID" : userID };
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:json options:0 error:&error];
     
     if (!bodyData)
     {
@@ -55,19 +65,21 @@
     }
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURL *url = [NSURL URLWithString:@"https://us-central1-legion-svc.cloudfunctions.net/authWithUserID"];
+    
+    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZServerBaseURL, DAZFunctionAuthWithUserID];
+    NSURL *url = [NSURL URLWithString:absoluteURL];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPBody = bodyData;
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
         {
             NSString *token = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self signInWithCustomToken:token];
-            });
+            [self signInWithCustomToken:token];
         }
         else
         {
@@ -75,7 +87,6 @@
                 [self completedSignInWithResult:nil error:error];
             });
         }
-        
     }];
     [postDataTask resume];
 }
@@ -83,9 +94,12 @@
 - (void)signInWithCustomToken:(NSString *)token
 {
     [[FIRAuth auth] signInWithCustomToken:token completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
-        if (!error) {
+        if (!error)
+        {
             [self completedSignInWithResult:user error:nil];
-        } else {
+        }
+        else
+        {
             [self completedSignInWithResult:nil error:error];
         }
     }];
@@ -93,7 +107,6 @@
 
 - (void)signInAnonymously
 {
-    [[FIRAuth auth] signOut:nil]; // Debug only.
     [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *_Nullable user, NSError *_Nullable error) {
         if (!error) {
             [self completedSignInWithResult:user error:nil];
@@ -105,7 +118,6 @@
 
 - (BOOL)isLoggedIn
 {
-//    return [[NSUserDefaults standardUserDefaults] valueForKey:@"loggedIn"];
     return !![FIRAuth auth].currentUser;
 }
 
@@ -119,13 +131,19 @@
     }
 }
 
-#pragma mark - Optional messages for DAZAuthorizationServiceDelegate
+#pragma mark - DAZAuthorizationServiceDelegate
 
 - (void)completedSignInWithResult:(FIRUser *)user error:(NSError *)error
 {
-    if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithResult:error:)])
+    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+    profile.authorizationType = DAZAuthorizationAnonymously;
+    
+    if (!error)
     {
-        [self.delegate authorizationServiceDidFinishSignInWithResult:user error:error];
+        if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
+        {
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        }
     }
 }
 
