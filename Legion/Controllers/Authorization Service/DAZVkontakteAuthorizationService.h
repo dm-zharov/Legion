@@ -13,8 +13,6 @@
 
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-+ (void)setUserProfileWithUserID:(NSString *)userID completionHandler:(void (^)(DAZUserProfile *profile))handler;
-
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
 

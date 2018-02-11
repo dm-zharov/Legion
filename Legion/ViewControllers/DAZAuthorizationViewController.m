@@ -24,6 +24,8 @@
 @property (nonatomic, weak) UIButton *signInButton;
 @property (nonatomic, weak) UIButton *anonymousInButton;
 
+@property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
+
 @end
 
 @implementation DAZAuthorizationViewController
@@ -41,6 +43,8 @@
     [self setupSignInButton];
     [self setupAnonymousInButton];
     
+    [self setupActivityIndicatorView];
+    
     [self setupAuthorizationService];
 }
 
@@ -55,7 +59,7 @@
 - (void)setupBackgroundLayer
 {
     CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
-    purpleLayer.frame = self.view.frame;
+    purpleLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:purpleLayer];
 }
 
@@ -142,16 +146,40 @@
     
 }
 
+- (void)setupActivityIndicatorView
+{
+    
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    
+    [self.view addSubview:activityIndicatorView];
+    
+    self.activityIndicatorView = activityIndicatorView;
+    
+    [self.activityIndicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop).with.offset(32);
+        make.right.equalTo(self.view).with.offset(-32);
+    }];
+}
+
+
 #pragma mark - Actions
 
 - (void)actionSignIn:(id)sender
 {
+    [self.activityIndicatorView startAnimating];
     [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationVkontakte];
 }
 
 - (void)actionAnonymousIn:(id)sender
 {
+    [self.activityIndicatorView startAnimating];
     [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
+}
+
+- (void)stopActivityIndicator
+{
+    [self.activityIndicatorView stopAnimating];
 }
 
 #pragma mark - DAZAuthorizationService
@@ -164,8 +192,9 @@
 
 #pragma mark - DAZAuthotizationServiceDelegate
 
-- (void)authorizationServiceDidFinishSignInWithProfile:(id)result error:(NSError *)error
+- (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
 {
+    [self.activityIndicatorView stopAnimating];
     if (!error)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenReceivedNotification object:nil];

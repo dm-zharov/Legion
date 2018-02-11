@@ -12,13 +12,16 @@
 #import "DAZAuthorizationViewController.h"
 #import "UIColor+Colors.h"
 
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) DAZRootViewControllerRouter *viewControllerRouter;
            
 @end
 
+
 @implementation AppDelegate
+
 
 #pragma mark - UIApplicationDelegate
 

@@ -11,7 +11,6 @@
 #import "DAZAuthorizationMediator.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
-
 #import "DAZUserProfile.h"
 
 
@@ -35,7 +34,6 @@
         _vkontakteAuthorizationService = [[DAZVkontakteAuthorizationService alloc] initWithMediator:self];
         _firebaseAuthorizationService = [[DAZFirebaseAuthorizationService alloc] initWithMediator:self];
     }
-    
     return self;
 }
 
@@ -88,21 +86,18 @@
     
     if (profile.authorizationType == DAZAuthorizationVkontakte)
     {
-        // Используем идентификатор пользователя "ВКонтакте" в качестве ключа авторизации на сервере "Firebase"
+        /**
+         * Перехватываем завершенную авторизацию через "ВКонтакте" и используем полученный по токену идентификатор
+         * пользователя "ВКонтакте" в качестве ключа авторизации на сервере "Firebase".
+         */
         [self.firebaseAuthorizationService signInWithUserID:profile.userID];
     }
-    else if (profile.authorizationType == DAZAuthorizationAnonymously)
+    else
     {
         if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
         {
-            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:nil];
         }
-        
-        [DAZVkontakteAuthorizationService setUserProfileWithUserID:profile.userID completionHandler:^(DAZUserProfile *profile) {
-            NSString *displayName = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
-            NSURL *photoURL = profile.photoURL;
-            [DAZFirebaseAuthorizationService setDisplayName:displayName avatarURL:photoURL];
-        }];
     }
 }
 

@@ -76,6 +76,11 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
     return [self.userDefaults integerForKey:DAZUserAuthorizationTypeKey];
 }
 
+- (NSString *)fullName
+{
+    return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+
 - (NSString *)userID
 {
     return [self.userDefaults stringForKey:DAZUserIDKey];

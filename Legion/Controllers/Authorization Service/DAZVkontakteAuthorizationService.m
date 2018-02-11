@@ -38,7 +38,7 @@ static NSString *const DAZVkontakteRelativeString =
 
 #pragma mark - Instance Accessors
 
-+ (void)setUserProfileWithUserID:(NSString *)userID completionHandler:(void (^)(DAZUserProfile *profile))handler
+- (void)setUserProfileWithUserID:(NSString *)userID completionHandler:(void (^)(DAZUserProfile *profile))handler
 {
     NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_400_orig&name_case=Nom&v=v5.71", userID];
     
@@ -154,8 +154,7 @@ static NSString *const DAZVkontakteRelativeString =
             return NO;
         }
         
-        DAZUserProfile *profile = [self setUserProfileByParametersDictionary:parametersDictionary];
-        [self completedSignInWithProfile:profile error:nil];
+        [self processSignInWithParametersDictionary:parametersDictionary];
         
         return YES;
     }
@@ -224,27 +223,62 @@ static NSString *const DAZVkontakteRelativeString =
 - (NSDictionary *)explodeParametersString:(NSString *)parametersString
 {
     NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
-    NSMutableDictionary *parametersDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *parametersDictionary = [[NSMutableDictionary alloc] init];
     for (NSString *keyValueString in keyValuePairs)
     {
         NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
-        parametersDict[keyValueArray[0]] = keyValueArray[1];
+        parametersDictionary[keyValueArray[0]] = keyValueArray[1];
     }
     
-    return parametersDict;
+    return parametersDictionary;
 }
 
-- (DAZUserProfile *)setUserProfileByParametersDictionary:(NSDictionary *)dictionary
+- (void)processSignInWithParametersDictionary:(NSDictionary *)dictionary
 {
     DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-    
     profile.authorizationType = DAZAuthorizationVkontakte;
-    profile.tempAccessToken = dictionary[@"access_token"];
-    
     profile.userID = dictionary[@"user_id"];
     profile.email = dictionary[@"email"];
     
-    return profile;
+    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_400_orig&name_case=Nom&v=v5.71", profile.userID];
+    
+    NSURL *url = [NSURL URLWithString:absoluteURL];
+    
+    NSURLSession *session = [NSURLSession sharedSession];;
+    
+    NSURLSessionDataTask *profileDataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error)
+        {
+            NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (responseData)
+            {
+                NSDictionary *userData = responseData[@"response"][0];
+                profile.firstName = userData[@"first_name"];
+                profile.lastName = userData[@"last_name"];
+                
+                NSURL *photoURL = [NSURL URLWithString:userData[@"photo_400_orig"]];
+                profile.photoURL = photoURL;
+            
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self completedSignInWithProfile:profile error:nil];
+                });
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self completedSignInWithProfile:nil error:error];
+                });
+            }
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completedSignInWithProfile:nil error:error];
+            });
+        }
+    }];
+    
+    [profileDataTask resume];
 }
 
 #pragma mark - DAZAuthorizationServiceDelegate

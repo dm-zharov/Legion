@@ -19,31 +19,6 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 @implementation DAZFirebaseAuthorizationService
 
-#pragma mark - Instance Accessors
-
-+ (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
-{
-    if (!displayName)
-    {
-        return;
-    }
-    
-    FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
-    changeRequest.displayName = displayName;
-    
-    if (url)
-    {
-        changeRequest.photoURL = url;
-    }
-    
-    [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
-        if (error)
-        {
-            NSLog(@"Ошибка обновления данных пользователя %@", error.localizedDescription);
-        }
-    }];
-}
-
 #pragma mark - Lifecycle
 
 - (instancetype)init
@@ -99,11 +74,12 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request
+    NSURLSessionDataTask *customTokenTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
         {
             NSString *token = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            // Мы получили токен для авторизации на сервере "Firebase", теперь можно осуществить вход.
             [self signInWithCustomToken:token];
         }
         else
@@ -113,7 +89,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
             });
         }
     }];
-    [postDataTask resume];
+    [customTokenTask resume];
 }
 
 - (void)signInWithCustomToken:(NSString *)token
@@ -121,11 +97,57 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     [[FIRAuth auth] signInWithCustomToken:token completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         if (!error)
         {
-            [self completedSignInWithResult:user error:nil];
+            [self processSignInWithCustomToken];
         }
         else
         {
-            [self completedSignInWithResult:nil error:error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completedSignInWithResult:nil error:error];
+            });
+        }
+    }];
+}
+
+- (void)processSignInWithCustomToken
+{
+    /**
+     * Обновляем данные пользователя на сервере "Firebase" с помощью данных профиля, так как
+     * после последней авторизации они могли претерпеть изменения. На данном этапе авторизация уже завершена.
+     */
+    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+    profile.authorizationType = DAZAuthorizationAnonymously;
+    
+    if (profile.fullName)
+    {
+        [self setDisplayName:profile.fullName avatarURL:profile.photoURL];
+    }
+    
+    // Сообщаем делегату, что авторизация завершена.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self completedSignInWithResult:profile error:nil];
+    });
+    
+}
+
+- (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
+{
+    if (!displayName)
+    {
+        return;
+    }
+    
+    FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
+    changeRequest.displayName = displayName;
+    
+    if (url)
+    {
+        changeRequest.photoURL = url;
+    }
+    
+    [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+        if (error)
+        {
+            NSLog(@"Ошибка обновления данных пользователя %@", error.localizedDescription);
         }
     }];
 }
@@ -133,17 +155,23 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 - (void)signInAnonymously
 {
     [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *_Nullable user, NSError *_Nullable error) {
-        if (!error) {
-            [self completedSignInWithResult:user error:nil];
+        if (!error)
+        {
+            DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+            // Будет доработано в будущем релизе.
+            profile.authorizationType = DAZAuthorizationAnonymously;
+            profile.firstName = @"Анонимный";
+            profile.lastName = @"пользователь";
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completedSignInWithResult:profile error:nil];
+            });
         } else {
-            [self completedSignInWithResult:nil error:error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self completedSignInWithResult:nil error:error];
+            });
         }
     }];
-}
-
-- (BOOL)isLoggedIn
-{
-    return !![FIRAuth auth].currentUser;
 }
 
 - (void)signOut
@@ -158,17 +186,11 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 #pragma mark - DAZAuthorizationServiceDelegate
 
-- (void)completedSignInWithResult:(FIRUser *)user error:(NSError *)error
+- (void)completedSignInWithResult:(DAZUserProfile *)profile error:(NSError *)error
 {
-    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-    profile.authorizationType = DAZAuthorizationAnonymously;
-    
-    if (!error)
+    if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
     {
-        if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
-        {
-            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
-        }
+        [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
     }
 }
 

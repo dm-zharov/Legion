@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
+
 @interface DAZUserProfile : NSObject
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;
 
-@property (nonatomic, copy) NSString *tempAccessToken;
+@property (nonatomic, readonly) NSString* fullName;
 
 @property (nonatomic) NSString *userID;
 @property (nonatomic) NSString *firstName;
