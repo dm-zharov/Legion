@@ -9,10 +9,12 @@
 #import <SafariServices/SafariServices.h>
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZUserProfile.h"
-
 #import "NSError+Domains.h"
 
-static NSString *const DAZVkontakteServiceRelativeString =
+static NSString *const DAZVkontakteResourceScheme = @"https://oauth.vk.com/";
+static NSString *const DAZVkontakteApplicationScheme = @"vkauthorize://";
+
+static NSString *const DAZVkontakteRelativeString =
     @"authorize?"
      "revoke=1"
      "&response_type=token"
@@ -26,16 +28,54 @@ static NSString *const DAZVkontakteServiceRelativeString =
 
 @property (nonatomic, strong) SFAuthenticationSession *session;
 
+- (void)signInWithVkontakteApplication;
+- (void)signInWithSafariAuthorizationSession;
+
 @end
 
 @implementation DAZVkontakteAuthorizationService
+
+
+#pragma mark - Instance Accessors
+
++ (void)setUserProfileWithUserID:(NSString *)userID completionHandler:(void (^)(DAZUserProfile *profile))handler
+{
+    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_400_orig&name_case=Nom&v=v5.71", userID];
+    
+    NSURL *url = [NSURL URLWithString:absoluteURL];
+    
+    NSURLSession *session = [NSURLSession sharedSession];;
+    
+    NSURLSessionDataTask *profileDataTsk = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error)
+        {
+            NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (responseData)
+            {
+                NSDictionary *userData = responseData[@"response"][0];
+                DAZUserProfile *userProfile = [[DAZUserProfile alloc] init];
+                userProfile.firstName = userData[@"first_name"];
+                userProfile.lastName = userData[@"last_name"];
+                
+                NSURL *photoURL = [NSURL URLWithString:userData[@"photo_400_orig"]];
+                userProfile.photoURL = photoURL;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    handler(userProfile);
+                });
+            }
+        }
+    }];
+    
+    [profileDataTsk resume];
+}
+
 
 #pragma mark - Lifecycle
 
 - (instancetype)init
 {
-    self = [super init];
-    return self;
+    return [super init];
 }
 
 - (instancetype)initWithMediator:(id)mediator
@@ -47,71 +87,26 @@ static NSString *const DAZVkontakteServiceRelativeString =
     return self;
 }
 
+
 #pragma mark - DAZAuthorizationServiceProtocol
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    
     if (authorizationType != DAZAuthorizationVkontakte)
     {
         return;
     }
     
-    BOOL vkApp = [self isVkontakeAppInstalled];
+    BOOL vkAppAvailable = [self isVkontakeApplicationAvailable];
     
-    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain
-                                                code:NSURLErrorUnknown
-                                            userInfo:nil];
-    
-    if (vkApp)
+    if (vkAppAvailable)
     {
-        NSString *baseURL = @"vkauthorize://";
-        NSURL *absoluteURL = [NSURL URLWithString:
-            [NSString stringWithFormat:@"%@%@", baseURL, DAZVkontakteServiceRelativeString]];
-        
-        UIApplication *application = [UIApplication sharedApplication];
-        
-        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)])
-        {
-            NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly: @NO };
-            
-            [application openURL:absoluteURL options:options completionHandler:^(BOOL success) {
-                if (!success)
-                {
-                    [self completedSignInWithProfile:nil error:error];;
-                }
-            }];
-        }
+        [self signInWithVkontakteApplication];
     }
     else
     {
-        NSString *baseURL = @"https://oauth.vk.com/";
-        NSURL *absoluteURL = [NSURL URLWithString:
-            [NSString stringWithFormat:@"%@%@", baseURL, DAZVkontakteServiceRelativeString]];
-        
-        SFAuthenticationSession *session = [[SFAuthenticationSession alloc] initWithURL:absoluteURL
-                                                                      callbackURLScheme:@"vk6347345://"
-                                       completionHandler:^(NSURL * _Nullable callbackURL, NSError * _Nullable error) {
-            [self.session cancel];
-           
-            if (!error)
-            {
-                [self processAuthorizationURL:callbackURL];
-            }
-            else
-            {
-                [self completedSignInWithProfile:nil error:error];
-            }
-        }];
-        
-        self.session = session;
-        [self.session start];
+        [self signInWithSafariAuthorizationSession];
     }
-}
-
-- (BOOL)isVkontakeAppInstalled
-{
-    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"vkauthorize://authorize"]];
 }
 
 - (void)signOut
@@ -119,13 +114,18 @@ static NSString *const DAZVkontakteServiceRelativeString =
     [self completedSignOut];
 }
 
+
+#pragma mark - Public
+
 - (BOOL)processAuthorizationURL:(NSURL *)url
 {
     NSError *error = [NSError errorWithDomain:DAZVkontakteOpenURLErrorDomain code:0 userInfo:nil];
     if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
     {
-        NSString *absoluteString = [url absoluteString];
-        NSRange rangeOfHash = [absoluteString rangeOfString:@"#"];
+        NSString *absoluteURL = [url absoluteString];
+        
+        // Поиск места, с которого начинаются ключи параметров
+        NSRange rangeOfHash = [absoluteURL rangeOfString:@"#"];
         
         if (rangeOfHash.location == NSNotFound)
         {
@@ -133,40 +133,92 @@ static NSString *const DAZVkontakteServiceRelativeString =
             return NO;
         }
         
-        NSString *parametersString = [absoluteString substringFromIndex:rangeOfHash.location + 1];
+        NSString *parametersString = [absoluteURL substringFromIndex:rangeOfHash.location + 1];
         if (parametersString.length == 0)
         {
             [self completedSignInWithProfile:nil error:error];
             return NO;
         }
         
-        NSDictionary *parametersDict = [self explodeParametersString:parametersString];
+        NSDictionary *parametersDictionary = [self explodeParametersString:parametersString];
         
-        if (parametersDict[@"cancel"] || parametersDict[@"error"] || parametersDict[@"fail"])
+        if (parametersDictionary[@"cancel"] || parametersDictionary[@"error"] || parametersDictionary[@"fail"])
         {
             [self completedSignInWithProfile:nil error:error];
             return NO;
         }
         
-        if (!parametersDict[@"access_token"])
+        if (!parametersDictionary[@"access_token"])
         {
             [self completedSignInWithProfile:nil error:error];
             return NO;
         }
         
-        VKAccessToken *token = [[VKAccessToken alloc] initWithDictionary:parametersDict];
-        
-        DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-        profile.userID = token.userID;
-        profile.accessToken = token.token;
-        profile.email = token.email;
-        
+        DAZUserProfile *profile = [self setUserProfileByParametersDictionary:parametersDictionary];
         [self completedSignInWithProfile:profile error:nil];
         
         return YES;
     }
     
     return NO;
+}
+
+#pragma mark - Private
+
+- (void)signInWithVkontakteApplication
+{
+    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZVkontakteResourceScheme, DAZVkontakteRelativeString];
+    NSURL *url = [NSURL URLWithString:absoluteURL];
+    
+    NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain code:NSURLErrorUnknown userInfo:nil];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    if ([application respondsToSelector:@selector(openURL:options:completionHandler:)])
+    {
+        NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly: @NO };
+        
+        [application openURL:url options:options completionHandler:^(BOOL success) {
+            if (!success)
+            {
+                [self completedSignInWithProfile:nil error:error];
+            }
+        }];
+    }
+    else
+    {
+        [self completedSignInWithProfile:nil error:error];
+    }
+}
+
+- (void)signInWithSafariAuthorizationSession
+{
+    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZVkontakteResourceScheme, DAZVkontakteRelativeString];
+    NSURL *url = [NSURL URLWithString:absoluteURL];
+    
+    SFAuthenticationSession *session =
+        [[SFAuthenticationSession alloc] initWithURL:url
+                                   callbackURLScheme:@"vk6347345://"
+                                   completionHandler:^(NSURL * _Nullable callbackURL, NSError * _Nullable error) {
+            [self.session cancel];
+
+            if (!error)
+            {
+              [self processAuthorizationURL:callbackURL];
+            }
+            else
+            {
+              [self completedSignInWithProfile:nil error:error];
+            }
+        }];
+    
+    self.session = session;
+    
+    [self.session start];
+}
+
+- (BOOL)isVkontakeApplicationAvailable
+{
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:DAZVkontakteApplicationScheme]];
 }
 
 - (NSDictionary *)explodeParametersString:(NSString *)parametersString
@@ -180,6 +232,19 @@ static NSString *const DAZVkontakteServiceRelativeString =
     }
     
     return parametersDict;
+}
+
+- (DAZUserProfile *)setUserProfileByParametersDictionary:(NSDictionary *)dictionary
+{
+    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+    
+    profile.authorizationType = DAZAuthorizationVkontakte;
+    profile.tempAccessToken = dictionary[@"access_token"];
+    
+    profile.userID = dictionary[@"user_id"];
+    profile.email = dictionary[@"email"];
+    
+    return profile;
 }
 
 #pragma mark - DAZAuthorizationServiceDelegate

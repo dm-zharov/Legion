@@ -19,6 +19,31 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 @implementation DAZFirebaseAuthorizationService
 
+#pragma mark - Instance Accessors
+
++ (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
+{
+    if (!displayName)
+    {
+        return;
+    }
+    
+    FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
+    changeRequest.displayName = displayName;
+    
+    if (url)
+    {
+        changeRequest.photoURL = url;
+    }
+    
+    [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+        if (error)
+        {
+            NSLog(@"Ошибка обновления данных пользователя %@", error.localizedDescription);
+        }
+    }];
+}
+
 #pragma mark - Lifecycle
 
 - (instancetype)init

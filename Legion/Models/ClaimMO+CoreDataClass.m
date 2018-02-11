@@ -27,10 +27,21 @@
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary {
     ClaimMO *item = [self claimWithContext:context];
     
-    item.authorName = dictionary[@"authorName"];
     item.authorID = dictionary[@"authorID"];
+
     item.partyID = dictionary[@"partyID"];
     item.status = dictionary[@"status"];
+    
+    if (dictionary[@"photoURL"])
+    {
+        NSURL *photoURL = [NSURL URLWithString:dictionary[@"photoURL"]];
+        item.photoURL = photoURL;
+    }
+    
+    if (dictionary[@"authorName"])
+    {
+        item.authorName = dictionary[@"authorName"];
+    }
     
     NSTimeInterval date = [dictionary[@"date"] doubleValue];
     item.date = [NSDate dateWithTimeIntervalSince1970:date];
@@ -42,14 +53,19 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     
+    if (claim.authorID)
+    {
+        dictionary[@"authorID"] = claim.authorID;
+    }
+    
     if (claim.authorName)
     {
         dictionary[@"authorName"] = claim.authorName;
     }
     
-    if (claim.authorID)
+    if (claim.photoURL)
     {
-        dictionary[@"authorID"] = claim.authorID;
+        dictionary[@"photoURL"] = claim.photoURL;
     }
     
     if (claim.partyID)

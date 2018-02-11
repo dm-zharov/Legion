@@ -5,6 +5,7 @@
         <attribute name="authorName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="partyID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoURL" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="party" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Party" inverseName="claim" inverseEntity="Party" syncable="YES"/>
     </entity>
@@ -19,12 +20,13 @@
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="members" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="partyID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoURL" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="status" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="claim" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Claim" inverseName="party" inverseEntity="Claim" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Claim" positionX="-29" positionY="171" width="128" height="135"/>
-        <element name="Party" positionX="-270" positionY="198" width="128" height="240"/>
+        <element name="Claim" positionX="-29" positionY="171" width="128" height="150"/>
+        <element name="Party" positionX="-270" positionY="198" width="128" height="255"/>
     </elements>
 </model>

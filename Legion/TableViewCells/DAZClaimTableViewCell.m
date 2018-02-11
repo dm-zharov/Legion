@@ -81,11 +81,9 @@
 {
     self.claim = claim;
     
-    NSURL *url = [NSURL URLWithString:@"https://pp.userapi.com/c638621/v638621924/1b2b/dkgj2QnR72Q.jpg"];
-    
-    if (url)
+    if (claim.photoURL)
     {
-        [self.avatarImageView ch_imageWithContentsOfURL:url];
+        [self.avatarImageView ch_imageWithContentsOfURL:claim.photoURL];
         self.avatarImageView.clipsToBounds = YES;
         self.avatarImageView.layer.cornerRadius = 24;
         self.avatarImageView.layer.masksToBounds = YES;

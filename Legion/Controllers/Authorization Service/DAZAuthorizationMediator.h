@@ -11,7 +11,6 @@
 
 @interface DAZAuthorizationMediator : NSObject <DAZAuthorizationServiceProtocol>
 
-@property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;

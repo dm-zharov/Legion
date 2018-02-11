@@ -35,7 +35,17 @@
     item.partyID = dictionary[@"partyID"];
     
     item.authorID = dictionary[@"authorID"];
-    item.authorName = dictionary[@"authorName"];
+    
+    if (dictionary[@"authorName"])
+    {
+        item.authorName = dictionary[@"authorName"];
+    }
+
+    if (dictionary[@"photoURL"])
+    {
+        NSURL *photoURL = [NSURL URLWithString:dictionary[@"photoURL"]];
+        item.photoURL = photoURL;
+    }
     
     item.title = dictionary[@"title"];
     item.address = dictionary[@"address"];
@@ -75,6 +85,10 @@
     if (party.authorName)
     {
         dictionary[@"authorName"] = party.authorName;
+    }
+    if (party.photoURL)
+    {
+        dictionary[@"photoURL"] = party.photoURL;
     }
     
     if (party.title)

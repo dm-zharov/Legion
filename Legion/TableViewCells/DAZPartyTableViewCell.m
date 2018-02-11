@@ -286,9 +286,22 @@
     // Bottom-left
     // In future release
     //self.avatarImageView;
-    NSURL *url = [NSURL URLWithString:@"https://pp.userapi.com/c638621/v638621924/1b2b/dkgj2QnR72Q.jpg"];
     
-    [self.avatarImageView ch_imageWithContentsOfURL:url];
+    if (party.photoURL)
+    {
+        [self.avatarImageView ch_imageWithContentsOfURL:party.photoURL];
+        self.avatarImageView.clipsToBounds = YES;
+        self.avatarImageView.layer.cornerRadius = 12;
+        self.avatarImageView.layer.masksToBounds = YES;
+    }
+    else
+    {
+        self.avatarImageView.image = [UIImage imageNamed:@"Placeholder"];
+        self.avatarImageView.clipsToBounds = YES;
+        self.avatarImageView.layer.cornerRadius = 12;
+        self.avatarImageView.layer.masksToBounds = YES;
+    }
+    
     
     if (party.authorName)
     {

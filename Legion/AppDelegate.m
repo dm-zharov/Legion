@@ -12,16 +12,13 @@
 #import "DAZAuthorizationViewController.h"
 #import "UIColor+Colors.h"
 
-
 @interface AppDelegate ()
 
 @property (nonatomic, strong) DAZRootViewControllerRouter *viewControllerRouter;
            
 @end
 
-
 @implementation AppDelegate
-
 
 #pragma mark - UIApplicationDelegate
 
@@ -77,9 +74,6 @@
     
     [self saveContext];
 }
-
-
-#pragma mark - Authorization state management
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

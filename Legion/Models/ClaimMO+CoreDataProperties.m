@@ -2,7 +2,7 @@
 //  ClaimMO+CoreDataProperties.m
 //  
 //
-//  Created by Дмитрий Жаров on 10.02.2018.
+//  Created by Дмитрий Жаров on 11.02.2018.
 //
 //
 
@@ -15,10 +15,11 @@
 }
 
 @dynamic authorID;
-@dynamic date;
-@dynamic status;
-@dynamic partyID;
 @dynamic authorName;
+@dynamic date;
+@dynamic partyID;
+@dynamic status;
+@dynamic photoURL;
 @dynamic party;
 
 @end

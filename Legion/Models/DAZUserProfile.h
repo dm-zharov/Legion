@@ -9,18 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
-
 @interface DAZUserProfile : NSObject
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;
-@property (nonatomic, copy) NSString *accessToken;
 
-@property (nonatomic, getter=isAnonymous, readonly) BOOL anonymous;
+@property (nonatomic, copy) NSString *tempAccessToken;
 
-@property (nonatomic, copy) NSString *userID;
-@property (nonatomic, copy) NSString *firstName;
-@property (nonatomic, copy) NSString *lastName;
-@property (nonatomic, copy) NSString *email;
-@property (nonatomic, copy) NSURL *photoURL;
+@property (nonatomic) NSString *userID;
+@property (nonatomic) NSString *firstName;
+@property (nonatomic) NSString *lastName;
+@property (nonatomic) NSString *email;
+@property (nonatomic) NSURL *photoURL;
 
 @end

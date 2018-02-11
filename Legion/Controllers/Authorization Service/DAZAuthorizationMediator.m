@@ -13,7 +13,7 @@
 #import "DAZFirebaseAuthorizationService.h"
 
 #import "DAZUserProfile.h"
-#import "VKAccessToken.h"
+
 
 @interface DAZAuthorizationMediator () <DAZAuthorizationServiceDelegate>
 
@@ -22,11 +22,11 @@
 
 @end
 
+
 @implementation DAZAuthorizationMediator
 
-- (void)processAuthorizationURL:(NSURL *)url {
-    [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
-}
+
+#pragma mark - Lifecycle
 
 - (instancetype)init
 {
@@ -39,12 +39,8 @@
     return self;
 }
 
-- (BOOL)isLoggedIn
-{
-    return [self.firebaseAuthorizationService isLoggedIn];
-    
-    return YES;
-}
+
+#pragma mark - DAZAuthorizationServiceProtocol
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
@@ -71,6 +67,14 @@
     [self.firebaseAuthorizationService signOut];
 }
 
+#pragma mark - Public
+
+- (void)processAuthorizationURL:(NSURL *)url
+{
+    [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
+}
+
+
 #pragma mark - DAZAuthorizationServiceDelegate
 
 - (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
@@ -84,22 +88,21 @@
     
     if (profile.authorizationType == DAZAuthorizationVkontakte)
     {
+        // Используем идентификатор пользователя "ВКонтакте" в качестве ключа авторизации на сервере "Firebase"
         [self.firebaseAuthorizationService signInWithUserID:profile.userID];
     }
     else if (profile.authorizationType == DAZAuthorizationAnonymously)
     {
-        FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
-        changeRequest.displayName = @"Дмитрий Жаров";
-        //changeRequest.displayName = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
-        //changeRequest.photoURL = profile.photoURL;
-        [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
-            NSLog(@"Updated data");
-        }];
-        
         if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
         {
             [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
         }
+        
+        [DAZVkontakteAuthorizationService setUserProfileWithUserID:profile.userID completionHandler:^(DAZUserProfile *profile) {
+            NSString *displayName = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
+            NSURL *photoURL = profile.photoURL;
+            [DAZFirebaseAuthorizationService setDisplayName:displayName avatarURL:photoURL];
+        }];
     }
 }
 

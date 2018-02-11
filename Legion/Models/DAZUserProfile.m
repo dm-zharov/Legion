@@ -8,66 +8,102 @@
 
 #import "DAZUserProfile.h"
 
+static NSString *const DAZUserAuthorizationTypeKey = @"authorizationType";
+static NSString *const DAZUserIDKey = @"userID";
+static NSString *const DAZUserFirstNameKey = @"firstName";
+static NSString *const DAZUserLastNameKey = @"lastName";
+static NSString *const DAZUserEmailKey = @"email";
+static NSString *const DAZUserPhotoURLKey = @"photoURL";
+
+@interface DAZUserProfile ()
+
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+
+@end
+
 @implementation DAZUserProfile
 
-- (void)setAnonymous:(BOOL)anonymous
++ (NSUserDefaults *)userDefaults
 {
-    [[NSUserDefaults standardUserDefaults] setBool:anonymous forKey:@"isAnonymous"];
+    return [NSUserDefaults standardUserDefaults];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _userDefaults = [DAZUserProfile userDefaults];
+    }
+    return self;
+}
+
+#pragma mark - Setters
+
+- (void)setAuthorizationType:(DAZAuthorizationType)authorizationType
+{
+    [self.userDefaults setInteger:authorizationType forKey:DAZUserAuthorizationTypeKey];
 }
 
 - (void)setUserID:(NSString *)userID
 {
-    [[NSUserDefaults standardUserDefaults] setValue:userID forKey:@"userID"];
+    [self.userDefaults setValue:userID forKey:DAZUserIDKey];
 }
 
 - (void)setFirstName:(NSString *)firstName
 {
-    [[NSUserDefaults standardUserDefaults] setValue:firstName forKey:@"firstName"];
+    [self.userDefaults setValue:firstName forKey:DAZUserFirstNameKey];
 }
 
 - (void)setLastName:(NSString *)lastName
 {
-    [[NSUserDefaults standardUserDefaults] setValue:lastName forKey:@"lastName"];
+    [self.userDefaults setValue:lastName forKey:DAZUserLastNameKey];
 }
 
 - (void)setEmail:(NSString *)email
 {
-    [[NSUserDefaults standardUserDefaults] setValue:email forKey:@"email"];
+    [self.userDefaults setValue:email forKey:DAZUserEmailKey];
 }
 
 - (void)setPhotoURL:(NSURL *)photoURL
 {
-    [[NSUserDefaults standardUserDefaults] setURL:photoURL forKey:@"photoURL"];
+    [self.userDefaults setURL:photoURL forKey:DAZUserPhotoURLKey];
 }
 
-- (BOOL)isAnonymous
+#pragma mark - Getters
+
+- (DAZAuthorizationType)authorizationType
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"isAnonymous"];
+    return [self.userDefaults integerForKey:DAZUserAuthorizationTypeKey];
 }
 
 - (NSString *)userID
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"userID"];
+    return [self.userDefaults stringForKey:DAZUserIDKey];
 }
 
 - (NSString *)firstName
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"firstName"];
+    return [self.userDefaults stringForKey:DAZUserFirstNameKey];
+}
+
+- (NSString *)lastName
+{
+    return [self.userDefaults stringForKey:DAZUserLastNameKey];
 }
 
 - (NSString *)secondName
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"secondName"];
+    return [self.userDefaults stringForKey:DAZUserLastNameKey];
 }
 
 - (NSString *)email
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"userID"];
+    return [self.userDefaults stringForKey:DAZUserEmailKey];
 }
 
 - (NSURL *)photoURL
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"photoURL"];
+    return [self.userDefaults URLForKey:DAZUserPhotoURLKey];
 }
 
 @end
