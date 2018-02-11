@@ -10,8 +10,8 @@
 
 @interface UIImage (Overlay)
 
-+ (UIImage *)tintedImageFrom:(UIImage *)source withColor:(UIColor *)color;
++ (UIImage *)ov_tintedImageFrom:(UIImage *)source WithColor:(UIColor *)color;
 
-- (UIImage *)tinted;
+- (UIImage *)ov_tintedImage;
 
 @end

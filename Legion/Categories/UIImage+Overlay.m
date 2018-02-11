@@ -10,7 +10,7 @@
 
 @implementation UIImage (Overlay)
 
-+ (UIImage *)tintedImageFrom:(UIImage *)source withColor:(UIColor *)color
++ (UIImage *)ov_tintedImageFrom:(UIImage *)source WithColor:(UIColor *)color
 {
     UIGraphicsBeginImageContextWithOptions(source.size, NO, [UIScreen mainScreen].scale);
     
@@ -39,7 +39,7 @@
     return coloredImg;
 }
 
-- (UIImage *)tinted
+- (UIImage *)ov_tintedImage
 {
     UIColor *topLeftColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:0.7];
     UIColor *bottomRightColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:0.7];

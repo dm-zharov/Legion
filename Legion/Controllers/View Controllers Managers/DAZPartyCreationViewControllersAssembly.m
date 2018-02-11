@@ -46,7 +46,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 
 #pragma mark - Public
 
-- (UIViewController *)rootViewController
+- (UIViewController *)partyCreateViewController
 {
     self.currentItem = 0;
     

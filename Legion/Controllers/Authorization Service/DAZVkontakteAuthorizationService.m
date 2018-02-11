@@ -8,8 +8,9 @@
 
 #import <SafariServices/SafariServices.h>
 #import "DAZVkontakteAuthorizationService.h"
-#import "DAZUserProfile.h"
 #import "NSError+Domains.h"
+#import "DAZUserProfile.h"
+
 
 static NSString *const DAZVkontakteResourceScheme = @"https://oauth.vk.com/";
 static NSString *const DAZVkontakteApplicationScheme = @"vkauthorize://";
@@ -24,6 +25,7 @@ static NSString *const DAZVkontakteRelativeString =
      "&redirect_uri=vk6347345%3A%2F%2Fauthorize"
      "&client_id=6347345";
 
+
 @interface DAZVkontakteAuthorizationService ()
 
 @property (nonatomic, strong) SFAuthenticationSession *session;
@@ -33,42 +35,8 @@ static NSString *const DAZVkontakteRelativeString =
 
 @end
 
+
 @implementation DAZVkontakteAuthorizationService
-
-
-#pragma mark - Instance Accessors
-
-- (void)setUserProfileWithUserID:(NSString *)userID completionHandler:(void (^)(DAZUserProfile *profile))handler
-{
-    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_400_orig&name_case=Nom&v=v5.71", userID];
-    
-    NSURL *url = [NSURL URLWithString:absoluteURL];
-    
-    NSURLSession *session = [NSURLSession sharedSession];;
-    
-    NSURLSessionDataTask *profileDataTsk = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error)
-        {
-            NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (responseData)
-            {
-                NSDictionary *userData = responseData[@"response"][0];
-                DAZUserProfile *userProfile = [[DAZUserProfile alloc] init];
-                userProfile.firstName = userData[@"first_name"];
-                userProfile.lastName = userData[@"last_name"];
-                
-                NSURL *photoURL = [NSURL URLWithString:userData[@"photo_400_orig"]];
-                userProfile.photoURL = photoURL;
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(userProfile);
-                });
-            }
-        }
-    }];
-    
-    [profileDataTsk resume];
-}
 
 
 #pragma mark - Lifecycle
@@ -97,7 +65,7 @@ static NSString *const DAZVkontakteRelativeString =
         return;
     }
     
-    BOOL vkAppAvailable = [self isVkontakeApplicationAvailable];
+    BOOL vkAppAvailable = [self isVkontakteApplicationAvailable];
     
     if (vkAppAvailable)
     {
@@ -140,7 +108,7 @@ static NSString *const DAZVkontakteRelativeString =
             return NO;
         }
         
-        NSDictionary *parametersDictionary = [self explodeParametersString:parametersString];
+        NSDictionary *parametersDictionary = [self processParametersString:parametersString];
         
         if (parametersDictionary[@"cancel"] || parametersDictionary[@"error"] || parametersDictionary[@"fail"])
         {
@@ -183,10 +151,6 @@ static NSString *const DAZVkontakteRelativeString =
             }
         }];
     }
-    else
-    {
-        [self completedSignInWithProfile:nil error:error];
-    }
 }
 
 - (void)signInWithSafariAuthorizationSession
@@ -215,12 +179,7 @@ static NSString *const DAZVkontakteRelativeString =
     [self.session start];
 }
 
-- (BOOL)isVkontakeApplicationAvailable
-{
-    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:DAZVkontakteApplicationScheme]];
-}
-
-- (NSDictionary *)explodeParametersString:(NSString *)parametersString
+- (NSDictionary *)processParametersString:(NSString *)parametersString
 {
     NSArray *keyValuePairs = [parametersString componentsSeparatedByString:@"&"];
     NSMutableDictionary *parametersDictionary = [[NSMutableDictionary alloc] init];
@@ -240,7 +199,7 @@ static NSString *const DAZVkontakteRelativeString =
     profile.userID = dictionary[@"user_id"];
     profile.email = dictionary[@"email"];
     
-    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_400_orig&name_case=Nom&v=v5.71", profile.userID];
+    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_200&name_case=Nom&v=v5.71", profile.userID];
     
     NSURL *url = [NSURL URLWithString:absoluteURL];
     
@@ -256,7 +215,7 @@ static NSString *const DAZVkontakteRelativeString =
                 profile.firstName = userData[@"first_name"];
                 profile.lastName = userData[@"last_name"];
                 
-                NSURL *photoURL = [NSURL URLWithString:userData[@"photo_400_orig"]];
+                NSURL *photoURL = [NSURL URLWithString:userData[@"photo_200"]];
                 profile.photoURL = photoURL;
             
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -279,6 +238,14 @@ static NSString *const DAZVkontakteRelativeString =
     }];
     
     [profileDataTask resume];
+}
+
+
+#pragma mark - Custom Accessors
+
+- (BOOL)isVkontakteApplicationAvailable
+{
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:DAZVkontakteApplicationScheme]];
 }
 
 #pragma mark - DAZAuthorizationServiceDelegate

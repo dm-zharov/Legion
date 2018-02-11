@@ -30,6 +30,7 @@
     item.authorID = dictionary[@"authorID"];
 
     item.partyID = dictionary[@"partyID"];
+    item.partyTitle = dictionary[@"partyTitle"];
     item.status = dictionary[@"status"];
     
     if (dictionary[@"photoURL"])
@@ -65,12 +66,17 @@
     
     if (claim.photoURL)
     {
-        dictionary[@"photoURL"] = claim.photoURL;
+        dictionary[@"photoURL"] = [claim.photoURL absoluteString];
     }
     
     if (claim.partyID)
     {
         dictionary[@"partyID"] = claim.partyID;
+    }
+    
+    if (claim.partyTitle)
+    {
+        dictionary[@"partyTitle"] = claim.partyTitle;
     }
     
     if (claim.status)

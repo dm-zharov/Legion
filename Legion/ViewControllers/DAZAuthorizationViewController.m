@@ -201,7 +201,9 @@
     }
     else
     {
-        [self al_presentNetworkAlertViewController];
+        [self al_presentAlertViewControllerWithTitle:@"Ошибка"
+                                             message:@"Процесс авторизации прерван по причине нестабильного сетевого "
+                                                        "соединения либо был отменен пользователем."];
     }
 }
 @end

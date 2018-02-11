@@ -296,7 +296,7 @@
     }
     else
     {
-        self.avatarImageView.image = [UIImage imageNamed:@"Placeholder"];
+        self.avatarImageView.image = [UIImage imageNamed:@"Clear Avatar"];
         self.avatarImageView.clipsToBounds = YES;
         self.avatarImageView.layer.cornerRadius = 12;
         self.avatarImageView.layer.masksToBounds = YES;

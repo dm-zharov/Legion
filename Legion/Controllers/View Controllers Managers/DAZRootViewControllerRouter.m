@@ -19,7 +19,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @interface DAZRootViewControllerRouter ()
 
-// Приватные методы, обрабатывающие уведомления о изменении состояния авторизации
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;
 
@@ -148,14 +147,12 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self setRootViewController:[self rootViewController] animated:YES];
 }
 
 - (void)authorizationTokenExpired:(NSNotification *)notification
 {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loggedIn"];
     [NSUserDefaults resetStandardUserDefaults];
     
     [self setRootViewController:[self rootViewController] animated:YES];

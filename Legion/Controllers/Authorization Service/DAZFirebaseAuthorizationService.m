@@ -7,15 +7,14 @@
 //
 
 #import <Firebase.h>
-
 #import "DAZFirebaseAuthorizationService.h"
 #import "NSError+Domains.h"
-
 #import "DAZUserProfile.h"
 
 
 static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";
 static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
+
 
 @implementation DAZFirebaseAuthorizationService
 
@@ -47,6 +46,9 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         [self signInAnonymously];
     }
 }
+
+
+#pragma mark - Public
 
 - (void)signInWithUserID:(NSString *)userID
 {
@@ -91,6 +93,9 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     }];
     [customTokenTask resume];
 }
+
+
+#pragma mark - Private
 
 - (void)signInWithCustomToken:(NSString *)token
 {

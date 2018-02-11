@@ -10,16 +10,13 @@
 
 @implementation UIViewController (Alerts)
 
-- (void)al_presentNetworkAlertViewController
+- (void)al_presentAlertViewControllerWithTitle:(NSString *)title message:(NSString *)message
 {
-    static NSString *alertTitle = @"Ошибка сети";
-    static NSString *alertMessage = @"Произошла ошибка сети, проверьте соединение с интернетом либо попробуйте позже.";
-
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                   message:alertMessage
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
 
     [alert addAction:agreeAction];
 

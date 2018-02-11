@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+
 @class PartyMO;
 @class ClaimMO;
-@class UserMO;
+
 
 @interface DAZCoreDataManager : NSObject
 
@@ -19,8 +20,8 @@
 
 + (NSManagedObjectContext *)coreDataContext;
 
-+ (NSArray<PartyMO *> *)convertPartiesArray:(NSArray<NSDictionary *> *)parties;
-+ (NSArray<ClaimMO *> *)convertClaimsArray:(NSArray<NSDictionary *> *)claims;
++ (NSArray<PartyMO *> *)partiesArrayByDictionariesArray:(NSArray<NSDictionary *> *)parties;
++ (NSArray<ClaimMO *> *)claimsArrayByDictionariesArray:(NSArray<NSDictionary *> *)claims;
 
 - (NSArray<PartyMO*> *)fetchParties;
 - (void)saveParties:(NSArray<PartyMO *> *)parties;

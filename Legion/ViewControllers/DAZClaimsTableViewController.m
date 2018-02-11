@@ -10,9 +10,9 @@
 #import "DAZClaimsTableViewController.h"
 #import "DAZClaimTableViewCell.h"
 #import "DAZProxyService.h"
+#import "DAZUserProfile.h"
 #import "DAZInfoView.h"
 #import "UIColor+Colors.h"
-
 #import "ClaimMO+CoreDataClass.h"
 
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
@@ -20,7 +20,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 @interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
-@property (nonatomic, copy) NSArray<NSArray *> *devidedClaimsArray;
+@property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
 @property (nonatomic, weak) UISegmentedControl *segmentedControl;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
@@ -124,11 +124,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
         if (segmentedControl.selectedSegmentIndex == 0)
         {
-            self.tableView.tableFooterView.hidden = NO;
+            self.tableView.tableFooterView.hidden = YES;
         }
         else if (segmentedControl.selectedSegmentIndex == 1)
         {
-            self.tableView.tableFooterView.hidden = YES;
+            self.tableView.tableFooterView.hidden = NO;
         }
     }
     
@@ -139,11 +139,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 {
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
-        return YES;
+        return NO;
     }
     else if (self.segmentedControl.selectedSegmentIndex == 1)
     {
-        return NO;
+        return YES;
     }
     
     return NO;
@@ -162,26 +162,16 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     }
 }
 
-- (void)actionConfirmClaim:(id)sender
-{
-    
-}
-
-- (void)actionDeleteClaim:(id)sender
-{
-    
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
-        return self.devidedClaimsArray[0].count;
+        return self.claimsArray[0].count;
     }
     else if (self.segmentedControl.selectedSegmentIndex == 1) {
-        return self.devidedClaimsArray[1].count;
+        return self.claimsArray[1].count;
     }
     
     return 0;
@@ -194,11 +184,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
     if (self.segmentedControl.selectedSegmentIndex == 0)
     {
-        ClaimMO *claim = self.devidedClaimsArray[0][indexPath.row];
+        ClaimMO *claim = self.claimsArray[0][indexPath.row];
         [cell setWithClaim:claim isIncome:NO];
     }
     else if (self.segmentedControl.selectedSegmentIndex == 1) {
-        ClaimMO *claim = self.devidedClaimsArray[1][indexPath.row];
+        ClaimMO *claim = self.claimsArray[1][indexPath.row];
         [cell setWithClaim:claim isIncome:YES];
     }
     
@@ -221,9 +211,9 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Подтвердить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
-        ClaimMO *item = self.devidedClaimsArray[0][indexPath.row];
+        ClaimMO *item = self.claimsArray[1][indexPath.row];
         [item setClaimStatus:DAZClaimStatusConfirmed];
-        //[self.networkService updateClaim:item];
+        [self.networkService updateClaim:item];
         completionHandler(YES);
         }];
     confirmAction.backgroundColor = [UIColor cl_lightPurpleColor];
@@ -240,9 +230,9 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Отклонить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
-        ClaimMO *item = self.devidedClaimsArray[0][indexPath.row];
+        ClaimMO *item = self.claimsArray[1][indexPath.row];
         [item setClaimStatus:DAZClaimStatusClosed];
-        //[self.networkService updateClaim:item];
+        [self.networkService updateClaim:item];
         completionHandler(YES);
     }];
     declineAction.backgroundColor = [UIColor redColor];
@@ -254,23 +244,18 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims networkStatus:(DAZNetworkStatus)status
 {
-    NSMutableArray *outcomeArray = [NSMutableArray new];
-    NSMutableArray *incomeArray = [NSMutableArray new];
+    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
     
-    for (ClaimMO *claim in claims)
-    {
-        if (claim.authorID != [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"])
-        {
-            [outcomeArray addObject:claim];
-        }
-        else
-        {
-            [incomeArray addObject:claim];
-        }
-    }
+    // Автор заявки совпадает с авторизованным пользователем
+    NSPredicate *outboxPredicate = [NSPredicate predicateWithFormat:@"authorID == %@", profile.userID];
+    NSArray *outboxArray = [claims filteredArrayUsingPredicate:outboxPredicate];
     
-    NSArray *devidedArray = @[outcomeArray, incomeArray];
-    self.devidedClaimsArray = devidedArray;
+    NSPredicate *inboxPredicate = [NSPredicate predicateWithFormat:@"authorID != %@", profile.userID];
+    NSArray *inboxArray = [claims filteredArrayUsingPredicate:inboxPredicate];
+    
+    
+    NSArray *claimsArray = @[outboxArray, inboxArray];
+    self.claimsArray = claimsArray;
     
     if (![self.tableView.refreshControl isRefreshing])
     {

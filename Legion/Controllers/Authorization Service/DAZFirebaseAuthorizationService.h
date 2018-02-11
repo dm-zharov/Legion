@@ -15,10 +15,6 @@
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-// Instance Accesors
-+ (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url;
-
-// Init
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
 

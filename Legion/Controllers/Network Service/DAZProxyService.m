@@ -13,17 +13,17 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
+
 @interface DAZProxyService () <DAZNetworkServiceDelegate>
 
 @property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
 
-- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties;
-- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims;
-
 @end
 
+
 @implementation DAZProxyService
+
 
 #pragma mark - Lifecycle
 
@@ -39,14 +39,16 @@
     return self;
 }
 
-#pragma mark - Reachability
+
+#pragma mark - Reachability Testing
 
 - (BOOL)isServerReachable
 {
     return [self.networkService isServerReachable];
 }
 
-#pragma mark - Parties
+
+#pragma mark - Parties Accessors
 
 - (void)getParties
 {
@@ -57,7 +59,10 @@
     else
     {
         NSArray<PartyMO *> *partiesArray = [self.coreDataManager fetchParties];
-        [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOffline];
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOffline];
+        }
     }
 }
 
@@ -96,7 +101,11 @@
     else
     {
         NSArray<ClaimMO *> *claimsArray = [self.coreDataManager fetchClaims];
-        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOffline];
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOffline];
+        }
+        
     }
 }
 
@@ -124,12 +133,13 @@
     }
 }
 
+
 #pragma mark - DAZNetworkServiceDelegate
 
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
 {
     [self.coreDataManager removeParties];
-    NSArray *partiesArray = [[self.coreDataManager class] convertPartiesArray:parties];
+    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByDictionariesArray:parties];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
     {
@@ -141,7 +151,7 @@
 
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
 {
-    NSArray *claimsArray = [[self.coreDataManager class] convertClaimsArray:claims];
+    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByDictionariesArray:claims];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
     {

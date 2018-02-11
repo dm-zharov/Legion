@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *partyID;
 @property (nullable, nonatomic, copy) NSString *status;
 @property (nullable, nonatomic, copy) NSURL *photoURL;
+@property (nullable, nonatomic, copy) NSString *partyTitle;
 @property (nullable, nonatomic, retain) PartyMO *party;
 
 @end

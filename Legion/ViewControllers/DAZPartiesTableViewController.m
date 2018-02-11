@@ -125,7 +125,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     self.partyCreateViewController = [[DAZPartyCreationViewControllersAssembly alloc] init];
     
-    UIViewController *partyCreateViewController = [self.partyCreateViewController rootViewController];
+    UIViewController *partyCreateViewController = [self.partyCreateViewController partyCreateViewController];
     
     [self presentViewController:partyCreateViewController animated:YES completion:nil];
 }

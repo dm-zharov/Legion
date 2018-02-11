@@ -65,6 +65,7 @@
     [self.firebaseAuthorizationService signOut];
 }
 
+
 #pragma mark - Public
 
 - (void)processAuthorizationURL:(NSURL *)url
@@ -82,6 +83,7 @@
         {
             [self.delegate authorizationServiceDidFinishSignInWithProfile:nil error:error];
         }
+        return;
     }
     
     if (profile.authorizationType == DAZAuthorizationVkontakte)

@@ -10,6 +10,6 @@
 
 @interface UIViewController (Alerts)
 
-- (void)al_presentNetworkAlertViewController;
+- (void)al_presentAlertViewControllerWithTitle:(NSString *)title message:(NSString *)message;
 
 @end

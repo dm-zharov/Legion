@@ -446,7 +446,7 @@
 
 - (void)setContentWithParty:(PartyMO *)party
 {
-    self.imageView.image = [[UIImage imageNamed:@"party-placeholder"] tinted];
+    self.imageView.image = [[UIImage imageNamed:@"party-placeholder"] ov_tintedImage];
     //self.imageView.image = [UIImage tintedImageFrom:[UIImage imageNamed:@"party-placeholder"] withColor:[UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:0.7]];
     
     self.titleLabel.text = party.title;

@@ -23,6 +23,9 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
 
 @implementation DAZUserProfile
 
+
+#pragma mark - Instance Accessors
+
 + (NSUserDefaults *)userDefaults
 {
     return [NSUserDefaults standardUserDefaults];

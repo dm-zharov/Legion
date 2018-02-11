@@ -20,6 +20,7 @@
 @dynamic partyID;
 @dynamic status;
 @dynamic photoURL;
+@dynamic partyTitle;
 @dynamic party;
 
 @end

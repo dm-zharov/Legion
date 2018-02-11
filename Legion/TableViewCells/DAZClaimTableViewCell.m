@@ -11,6 +11,7 @@
 #import "ClaimMO+CoreDataClass.h"
 
 #import "UIImageView+Cache.h"
+#import "UIColor+Colors.h"
 
 @interface DAZClaimTableViewCell ()
 
@@ -90,25 +91,52 @@
     }
     else
     {
-        self.avatarImageView.image = [UIImage imageNamed:@"Placeholder"];
+        self.avatarImageView.image = [UIImage imageNamed:@"Purple Avatar"];
         self.avatarImageView.clipsToBounds = YES;
         self.avatarImageView.layer.cornerRadius = 24;
         self.avatarImageView.layer.masksToBounds = YES;
     }
     
+    NSString *authorString = claim.authorName;
+    NSString *partyString = claim.partyTitle;
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    NSString *date = [dateFormatter stringFromDate:claim.date];
+    NSString *dateString = [dateFormatter stringFromDate:claim.date];
     
+    NSString *message;
     if (income)
     {
-        self.messageLabel.text = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@", claim.authorName, claim.partyID, date];
+        message = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@",
+                                authorString, partyString, dateString];
     }
     else
     {
-        self.messageLabel.text = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@", claim.authorName, claim.partyID, date];
+        message = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@", authorString, partyString, dateString];
     }
+    
+    NSRange authorRange = [message rangeOfString:authorString];
+    NSRange partyRange = [message rangeOfString:partyString];
+    NSRange dateRange = [message rangeOfString:dateString];
+    
+    NSMutableAttributedString *attributedMessage = [[NSMutableAttributedString alloc] initWithString:message];
+    
+    NSDictionary <NSAttributedStringKey, id> *purpleTextAttributes =
+    @{ NSForegroundColorAttributeName: [UIColor cl_darkPurpleColor],
+       NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightBold]
+    };
+    
+    NSDictionary <NSAttributedStringKey, id> *grayTextAttributes =
+    @{ NSForegroundColorAttributeName: [UIColor grayColor],
+       NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightRegular]
+       };
+    
+    [attributedMessage addAttributes:purpleTextAttributes range:authorRange];
+    [attributedMessage addAttributes:purpleTextAttributes range:partyRange];
+    [attributedMessage addAttributes:grayTextAttributes range:dateRange];
+    
+    self.messageLabel.attributedText = attributedMessage;
 }
 
 @end

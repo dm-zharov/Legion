@@ -16,6 +16,6 @@
 
 @property (nonatomic, strong) PartyMO *party;
 
-- (UIViewController *)rootViewController;
+- (UIViewController *)partyCreateViewController;
 
 @end
