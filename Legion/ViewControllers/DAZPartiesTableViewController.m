@@ -28,6 +28,8 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, nullable, copy) NSArray *partiesArray;
 
+@property (nonatomic, getter=isStatusBarHidden, assign) BOOL statusBarHidden;
+
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
@@ -54,6 +56,11 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     [super viewWillAppear:animated];
     [self.networkService getParties];
+    
+    self.statusBarHidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        [self setNeedsStatusBarAppearanceUpdate];
+    }];
 }
 
 #pragma mark - Setup UI
@@ -175,21 +182,26 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     partyDetailsViewController.transitioningDelegate = self;
 
     [self presentViewController:partyDetailsViewController animated:YES completion:nil];
+    self.statusBarHidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        [self setNeedsStatusBarAppearanceUpdate];
+    }];
 }
 
-- (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
     return self.presentDetailsViewController;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    if ([self.navigationController isNavigationBarHidden])
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if ([self isStatusBarHidden])
     {
-        return UIStatusBarStyleDefault;
+        return UIStatusBarStyleLightContent;
     }
     else
     {
-        return UIStatusBarStyleLightContent;
+        return UIStatusBarStyleDefault;
     }
 }
 

@@ -10,6 +10,7 @@
 #import "CAGradientLayer+Gradients.h"
 #import "UIImage+Overlay.h"
 #import "UIColor+Colors.h"
+#import "UIImage+Cache.h"
 
 #import <Masonry.h>
 
@@ -446,6 +447,17 @@
 
 - (void)setContentWithParty:(PartyMO *)party
 {
+    if (party.photoURL)
+    {
+         [UIImage ch_imageWithContentsOfURL:party.photoURL completion:^(UIImage *image) {
+             self.avatarImageView.image = image;
+         }];
+    }
+    else
+    {
+        self.avatarImageView.image = [[UIImage imageNamed:@"party-placeholder"] ov_tintedImage];
+    }
+    
     self.imageView.image = [[UIImage imageNamed:@"party-placeholder"] ov_tintedImage];
     //self.imageView.image = [UIImage tintedImageFrom:[UIImage imageNamed:@"party-placeholder"] withColor:[UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:0.7]];
     

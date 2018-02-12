@@ -185,7 +185,7 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
     textField.textColor = [UIColor cl_darkPurpleColor];
-    textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textField.spellCheckingType = UITextSpellCheckingTypeNo;
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
     
@@ -204,6 +204,21 @@
 }
 
 #pragma mark UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField.text.length < 10)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -251,17 +266,10 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    static BOOL beginEditing = NO;
-    
-    if (beginEditing)
+    if ([textView.text isEqualToString:self.textViewPlaceholder])
     {
-        return YES;
-    }
-    else if ([self.textView.text isEqualToString:self.textViewPlaceholder])
-    {
-        self.textView.textColor = [UIColor blackColor];
-        self.textView.text = text;
-        beginEditing = YES;
+        textView.textColor = [UIColor blackColor];
+        textView.text = @"";
     }
     
     return YES;

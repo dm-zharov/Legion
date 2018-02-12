@@ -8,72 +8,55 @@
 
 #import <Masonry.h>
 #import "DAZPresentPartyDetailsTransitionController.h"
+#import "DAZPartiesTableViewController.h"
 #import "DAZPartyDetailsViewControllers.h"
 
 @interface DAZPresentPartyDetailsTransitionController ()
-
-@property (nonatomic, assign) CATransform3D cellTransform;
 
 @end
 
 @implementation DAZPresentPartyDetailsTransitionController
 
-- (CATransform3D)animateCell:(CGRect)cellFrame
-{    
-    CGFloat scaleFromX = (1000 - (cellFrame.origin.x - 200)) / 1000;
-    CGFloat scaleMax = 1.0;
-    CGFloat scaleMin = 0.6;
-    if (scaleFromX > scaleMax)
-    {
-        scaleFromX = scaleMax;
-    }
-    if (scaleFromX < scaleMin)
-    {
-        scaleFromX = scaleMin;
-    };
-    
-    CATransform3D scale = CATransform3DScale(CATransform3DIdentity, 0.91, 0.27, 1);
-    
-    return scale;
-}
-
-- (void)animateTransition:(nonnull id<UIViewControllerContextTransitioning>)transitionContext
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
+    DAZPartiesTableViewController *origin = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     DAZPartyDetailsViewControllers *destination = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIView *containerView = transitionContext.containerView;
     
     [containerView addSubview:destination.view];
     
-    self.cellTransform = [self animateCell:self.cellFrame];
-    
     // Начаальное состояние
     
     CATransform3D translate = CATransform3DMakeTranslation(self.cellFrame.origin.x, self.cellFrame.origin.y, 0.0);
-    CATransform3D transform = CATransform3DConcat(translate, self.cellTransform);
     
-    destination.view.layer.transform = transform;
-    destination.view.layer.zPosition = 999;
+    destination.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.cellFrame), CGRectGetHeight(self.cellFrame));
+    destination.view.layer.masksToBounds = YES;
     destination.view.layer.cornerRadius = 10;
+    destination.view.layer.transform = translate;
     
-    [destination.scrollView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@343);
-        make.height.equalTo(@180);
-    }];
+//    destination.view.layer.transform = translate;
+//    destination.view.layer.zPosition = 999;
+//    destination.view.layer.cornerRadius = 10;
     
     [containerView layoutIfNeeded];
     
-    destination.scrollView.layer.cornerRadius = 14;
-    destination.scrollView.layer.shadowOpacity = 0.25;
-    destination.scrollView.layer.shadowOffset = CGSizeMake(0, 10);
-    destination.scrollView.layer.shadowRadius = 20;
-    
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:1
-                                                                           dampingRatio:0.7
+                                                                           dampingRatio:0.6
                                                                              animations:^{
         // Финальное состояние
-        destination.view.layer.transform = CATransform3DIdentity;
+        //destination.view.layer.transform = CATransform3DIdentity;
+       destination.view.frame = origin.view.frame;
+       destination.view.layer.cornerRadius = 5;
 //
-//        [destination.view layoutIfNeeded];
+    [destination.view layoutIfNeeded];
+                                                                                 
+        CGRect navigationBarFrame = origin.navigationController.navigationBar.frame;
+        origin.navigationController.navigationBar.transform =
+            CGAffineTransformMakeTranslation(0, -(CGRectGetHeight(navigationBarFrame) + 20));
+
+        CGRect tabBarFrame = origin.tabBarController.tabBar.frame;
+        origin.tabBarController.tabBar.transform =
+            CGAffineTransformMakeTranslation(0, CGRectGetHeight(tabBarFrame));
 //
 //         destination.scrollView.layer.cornerRadius = 0;
     }];
@@ -85,8 +68,9 @@
     [animator startAnimation];
 }
 
-- (NSTimeInterval)transitionDuration:(nullable id<UIViewControllerContextTransitioning>)transitionContext {
-    return 1;
+- (NSTimeInterval)transitionDuration:(nullable id<UIViewControllerContextTransitioning>)transitionContext
+{
+    return 0.6;
 }
 
 - (void)foo{

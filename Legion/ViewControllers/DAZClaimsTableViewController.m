@@ -91,6 +91,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     DAZInfoView *footerView = [[DAZInfoView alloc] init];
     footerView.infoLabel.text = @"Подтверждение заявки отправляет гостю полный адрес";
     tableView.tableFooterView = footerView;
+    tableView.tableFooterView.hidden = YES;
     
     [self.view addSubview:tableView];
     

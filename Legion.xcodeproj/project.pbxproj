@@ -12,6 +12,7 @@
 		2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */; };
 		2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */; };
 		232056B120307C690004015C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 232056B020307C680004015C /* Assets.xcassets */; };
+		232056B42031A3DB0004015C /* DAZProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232056B32031A3DB0004015C /* DAZProfileViewController.m */; };
 		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
 		2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */; };
@@ -25,12 +26,9 @@
 		2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */; };
 		2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA16202243AA000A97C8 /* NSError+Domains.m */; };
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
-		239101C4202B3592001E8DE1 /* DAZProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101C3202B3592001E8DE1 /* DAZProfileTableViewController.m */; };
 		239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */; };
 		239101D8202C918F001E8DE1 /* DAZClaimTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101D7202C918F001E8DE1 /* DAZClaimTableViewCell.m */; };
 		239101DB202CBED6001E8DE1 /* DAZInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101DA202CBED6001E8DE1 /* DAZInfoView.m */; };
-		239101DE202CE6A0001E8DE1 /* DAZProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101DD202CE6A0001E8DE1 /* DAZProfileTableViewCell.m */; };
-		239101E1202CE6B1001E8DE1 /* DAZLogoutTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101E0202CE6B1001E8DE1 /* DAZLogoutTableViewCell.m */; };
 		239D696620168F2300672DC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 239D696520168F2300672DC0 /* GoogleService-Info.plist */; };
 		239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */; };
 		239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239F48DE2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m */; };
@@ -71,6 +69,8 @@
 		2303452C202B3214004CF6C8 /* UINavigationBar+Shadow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Shadow.h"; sourceTree = "<group>"; };
 		2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Shadow.m"; sourceTree = "<group>"; };
 		232056B020307C680004015C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		232056B22031A3DB0004015C /* DAZProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZProfileViewController.h; sourceTree = "<group>"; };
+		232056B32031A3DB0004015C /* DAZProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProfileViewController.m; sourceTree = "<group>"; };
 		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
 		2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationMediator.h; sourceTree = "<group>"; };
 		2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediator.m; sourceTree = "<group>"; };
@@ -98,8 +98,6 @@
 		2354FA16202243AA000A97C8 /* NSError+Domains.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Domains.m"; sourceTree = "<group>"; };
 		2354FA182023F450000A97C8 /* DAZPartyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyTableViewCell.h; sourceTree = "<group>"; };
 		2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyTableViewCell.m; sourceTree = "<group>"; };
-		239101C2202B3592001E8DE1 /* DAZProfileTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZProfileTableViewController.h; sourceTree = "<group>"; };
-		239101C3202B3592001E8DE1 /* DAZProfileTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProfileTableViewController.m; sourceTree = "<group>"; };
 		239101C5202B363C001E8DE1 /* DAZClaimsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZClaimsTableViewController.h; sourceTree = "<group>"; };
 		239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZClaimsTableViewController.m; sourceTree = "<group>"; };
 		239101CE202B55B7001E8DE1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -107,10 +105,6 @@
 		239101D7202C918F001E8DE1 /* DAZClaimTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZClaimTableViewCell.m; sourceTree = "<group>"; };
 		239101D9202CBED6001E8DE1 /* DAZInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZInfoView.h; sourceTree = "<group>"; };
 		239101DA202CBED6001E8DE1 /* DAZInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZInfoView.m; sourceTree = "<group>"; };
-		239101DC202CE6A0001E8DE1 /* DAZProfileTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZProfileTableViewCell.h; sourceTree = "<group>"; };
-		239101DD202CE6A0001E8DE1 /* DAZProfileTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProfileTableViewCell.m; sourceTree = "<group>"; };
-		239101DF202CE6B1001E8DE1 /* DAZLogoutTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZLogoutTableViewCell.h; sourceTree = "<group>"; };
-		239101E0202CE6B1001E8DE1 /* DAZLogoutTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZLogoutTableViewCell.m; sourceTree = "<group>"; };
 		239D696520168F2300672DC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CAGradientLayer+Gradients.h"; sourceTree = "<group>"; };
 		239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CAGradientLayer+Gradients.m"; sourceTree = "<group>"; };
@@ -265,17 +259,6 @@
 			name = Claim;
 			sourceTree = "<group>";
 		};
-		239101E2202CE6B5001E8DE1 /* DAZProfileTableViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				239101DC202CE6A0001E8DE1 /* DAZProfileTableViewCell.h */,
-				239101DD202CE6A0001E8DE1 /* DAZProfileTableViewCell.m */,
-				239101DF202CE6B1001E8DE1 /* DAZLogoutTableViewCell.h */,
-				239101E0202CE6B1001E8DE1 /* DAZLogoutTableViewCell.m */,
-			);
-			name = DAZProfileTableViewCells;
-			sourceTree = "<group>";
-		};
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -288,8 +271,8 @@
 				23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */,
 				23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */,
 				23D9D1AC202736ED00E25EA9 /* DAZSelectionScreenViewController */,
-				239101C2202B3592001E8DE1 /* DAZProfileTableViewController.h */,
-				239101C3202B3592001E8DE1 /* DAZProfileTableViewController.m */,
+				232056B22031A3DB0004015C /* DAZProfileViewController.h */,
+				232056B32031A3DB0004015C /* DAZProfileViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -344,7 +327,6 @@
 				2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */,
 				239101D6202C918F001E8DE1 /* DAZClaimTableViewCell.h */,
 				239101D7202C918F001E8DE1 /* DAZClaimTableViewCell.m */,
-				239101E2202CE6B5001E8DE1 /* DAZProfileTableViewCells */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -650,14 +632,12 @@
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
 				2346B739201E74F50039DF3F /* DAZNetworkService.m in Sources */,
-				239101DE202CE6A0001E8DE1 /* DAZProfileTableViewCell.m in Sources */,
 				23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */,
 				239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */,
 				23EA6672202E10840083303E /* DAZUserProfile.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
 				23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */,
-				239101C4202B3592001E8DE1 /* DAZProfileTableViewController.m in Sources */,
 				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
 				2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */,
@@ -673,10 +653,10 @@
 				2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */,
 				23EA6678202F10D10083303E /* UIImage+Cache.m in Sources */,
 				2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */,
-				239101E1202CE6B1001E8DE1 /* DAZLogoutTableViewCell.m in Sources */,
 				23EA666C202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m in Sources */,
 				2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */,
 				239101DB202CBED6001E8DE1 /* DAZInfoView.m in Sources */,
+				232056B42031A3DB0004015C /* DAZProfileViewController.m in Sources */,
 				239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */,
 				2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */,
 				23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */,

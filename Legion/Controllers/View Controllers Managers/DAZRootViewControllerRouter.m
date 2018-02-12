@@ -11,7 +11,7 @@
 #import "DAZAuthorizationViewController.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZClaimsTableViewController.h"
-#import "DAZProfileTableViewController.h"
+#import "DAZProfileViewController.h"
 
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
@@ -112,12 +112,16 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (UIViewController *)thirdViewController
 {
+    DAZProfileViewController *profileViewController = [[DAZProfileViewController alloc] init];
     UINavigationController *navigationController =
-    [[UINavigationController alloc] initWithRootViewController:[[DAZProfileTableViewController alloc] init]];
+        [[UINavigationController alloc] initWithRootViewController:profileViewController];
     
-    [navigationController.navigationBar sh_customShadow];
+    profileViewController.navigationItem.title = @"Профиль";
     
-    navigationController.navigationBar.prefersLargeTitles = YES;
+    navigationController.navigationBar.shadowImage = [UIImage new];
+    navigationController.navigationBar.translucent = NO;
+    
+    //navigationController.navigationBar.prefersLargeTitles = YES;
     
     navigationController.tabBarItem.title = @"Профиль";
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Profile Icon"];

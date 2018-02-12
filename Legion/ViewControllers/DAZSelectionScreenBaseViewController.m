@@ -88,7 +88,7 @@
     [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).with.offset(16);
         make.right.equalTo(self.view.mas_right).with.offset(-16);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-16);
+        make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).with.offset(-16);
         make.height.equalTo(@48);
     }];
 }
