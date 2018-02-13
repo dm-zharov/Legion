@@ -1,5 +1,5 @@
 //
-//  VKUserProfile.h
+//  DAZUserProfile.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 09.02.2018.
@@ -13,6 +13,7 @@
 @interface DAZUserProfile : NSObject
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;
+@property (nonatomic, getter=isLoggedIn, assign) BOOL loggedIn;
 
 @property (nonatomic, readonly) NSString* fullName;
 
@@ -21,5 +22,7 @@
 @property (nonatomic) NSString *lastName;
 @property (nonatomic) NSString *email;
 @property (nonatomic) NSURL *photoURL;
+
++ (void)resetUserProfile;
 
 @end

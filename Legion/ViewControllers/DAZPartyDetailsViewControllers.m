@@ -11,16 +11,29 @@
 #import "UIImage+Overlay.h"
 #import "UIColor+Colors.h"
 #import "UIImage+Cache.h"
+#import "UINavigationBar+Shadow.h"
 
 #import <Masonry.h>
 
-@interface DAZPartyDetailsViewControllers ()
+@interface DAZPartyDetailsViewControllers () <UINavigationBarDelegate, UIScrollViewDelegate>
+
+@property (nonatomic, assign) BOOL viewAppeared;
+
+@property (nonatomic, weak) UIView *editingView;
+@property (nonatomic, weak) UIButton *editButton;
+@property (nonatomic, weak) UIButton *deleteButton;
+
+@property (nonatomic, weak) UINavigationBar *navigationBar;
+@property (nonatomic, weak) UIView *navigationBackground;
 
 @property (nonatomic, weak) UIView *contentView;
+@property (nonatomic, weak) UIView *headerView;
 
 @property (nonatomic, weak) UILabel *navigationLabel;
 @property (nonatomic, weak) UIImageView *avatarImageView;
 @property (nonatomic, weak) UIButton *closeButton;
+
+@property (nonatomic, weak) UILabel *nameLabel;
 
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, weak) UIView *detailsView;
@@ -52,14 +65,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
-    purpleLayer.frame = self.view.bounds;
-    [self.view.layer addSublayer:purpleLayer];
+    [self setNeedsStatusBarAppearanceUpdate];
     
+    [self setupBackgroundLayer];
     [self setupScrollView];
+    [self setupNavigationBar];
     [self setupCloseButton];
     
     [self setContentWithParty:self.party];
+    
+    self.viewAppeared = YES;
+    [self preferredStatusBarStyle];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self setNeedsStatusBarAppearanceUpdate];
+    }];
     // Do any additional setup after loading the view.
 }
 
@@ -70,14 +89,100 @@
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame));
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.viewAppeared = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (!self.viewAppeared)
+        return UIStatusBarStyleDefault;
+    else
+        return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - Setup UI
+
+- (void)setupBackgroundLayer
+{
+    CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
+    purpleLayer.frame = self.view.bounds;
+    
+    [self.view.layer addSublayer:purpleLayer];
+}
+
+- (void)setupNavigationBar
+{
+    UINavigationBar *navigationBar = [[UINavigationBar alloc] init];
+    navigationBar.items = @[self.navigationItem];
+    [navigationBar pushNavigationItem:self.navigationItem animated:NO];
+    navigationBar.delegate = self;
+    navigationBar.tintColor = [UIColor whiteColor];
+    navigationBar.alpha = 0;
+    
+    // Делаем навигационный бар полностью прозрачным
+    [navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    navigationBar.shadowImage = [UIImage new];
+    navigationBar.translucent = YES;
+    
+    self.navigationItem.title = @"Подробности";
+    self.navigationItem.hidesBackButton = YES;
+    
+    [self.view addSubview:navigationBar];
+    
+    self.navigationBar = navigationBar;
+    
+    [navigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        make.left.and.right.equalTo(self.view);
+        make.height.equalTo(@44);
+    }];
+    
+    self.navigationBar = navigationBar;
+    
+    UIView *navigationBackground = [[UIView alloc] init];
+    navigationBackground.backgroundColor = [UIColor whiteColor];
+    navigationBackground.layer.shadowColor = [UIColor blackColor].CGColor;
+    navigationBackground.layer.shadowOpacity = 0.15;
+    navigationBackground.layer.shadowOffset = CGSizeMake(0, 2);
+    navigationBackground.layer.shadowRadius = 2.0;
+    navigationBackground.alpha = 0;
+    
+    [self.view insertSubview:navigationBackground belowSubview:navigationBar];
+    
+    self.navigationBackground = navigationBackground;
+
+    [navigationBackground mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.and.right.equalTo(self.view);
+        make.bottom.equalTo(navigationBar);
+    }];
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar
+{
+    return UIBarPositionTopAttached;
+}
 
 - (void)setupScrollView
 {
     UIScrollView *scrollView = [[UIScrollView alloc] init];
+    scrollView.backgroundColor = [UIColor clearColor];
     scrollView.scrollEnabled = YES;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.delegate = self;
+    
+    scrollView.layer.masksToBounds = NO;
+    
+//    CAGradientLayer *purpleLayer = [CAGradientLayer gr_purpleGradientLayer];
+//    purpleLayer.frame = CGRectMake(0, -400, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) + 400);
+//
+//    [scrollView.layer addSublayer:purpleLayer];
     
     [self.view addSubview:scrollView];
     
@@ -93,6 +198,7 @@
 - (void)setupContentView
 {
     UIView *contentView = [[UIView alloc] init];
+    contentView.backgroundColor = [UIColor clearColor];
     
     [self.scrollView addSubview:contentView];
     
@@ -103,67 +209,46 @@
         make.width.equalTo(self.scrollView);
     }];
     
-    [self setupNavigationLabel];
-    [self setupAvatarImageView];
-    [self setupImageView];
+    [self setupHeaderView];
     [self setupDetailsView];
+    [self setupEditingView];
     
+}
+
+- (void)setupHeaderView
+{
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor clearColor];
+    
+    [self.contentView addSubview:headerView];
+    
+    self.headerView = headerView;
+    
+    [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView);
+        make.width.equalTo(self.contentView);
+        make.height.equalTo(@160);
+    }];
+    
+    [self setupNavigationLabel];
 }
 
 - (void)setupNavigationLabel
 {
-    
     UILabel *navigationLabel = [[UILabel alloc] init];
     navigationLabel.textColor = [UIColor whiteColor];
     navigationLabel.font = [UIFont systemFontOfSize:34 weight:UIFontWeightBold];
-    navigationLabel.text = @"Подробности";
+    navigationLabel.text = @"Бардак";
     
-    [self.contentView addSubview:navigationLabel];
+    [self.headerView addSubview:navigationLabel];
     
     self.navigationLabel = navigationLabel;
     
     [self.navigationLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).with.offset(64);
-        make.left.equalTo(self.contentView).with.offset(16);
-        make.right.equalTo(self.contentView).with.offset(-16);
+        make.top.equalTo(self.headerView).with.offset(64);
+        make.left.equalTo(self.headerView).with.offset(16);
+        make.right.equalTo(self.headerView).with.offset(-16);
     }];
-}
-
-- (void)setupAvatarImageView
-{
-    UIImageView *avatarImageView = [[UIImageView alloc] init];
-    avatarImageView.backgroundColor = [UIColor whiteColor];
-    
-    [self.contentView addSubview:avatarImageView];
-    
-    self.avatarImageView = avatarImageView;
-    
-    [self.avatarImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.equalTo(@36);
-        make.right.equalTo(self.contentView.mas_right).with.offset(-16);
-        make.bottom.equalTo(self.navigationLabel.mas_lastBaseline);
-    }];
-}
-
-- (void)setupImageView
-{
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.backgroundColor = [UIColor whiteColor];
-    imageView.layer.cornerRadius = 10;
-    imageView.layer.masksToBounds = YES;
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
-    
-    [self.contentView addSubview:imageView];
-    
-    self.imageView = imageView;
-    
-    [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.navigationLabel.mas_bottom).with.offset(16);
-        make.left.equalTo(self.contentView).with.offset(16);
-        make.right.equalTo(self.contentView).with.offset(-16);
-        make.height.equalTo(@180);
-    }];
-    
 }
 
 #pragma mark - Content UI
@@ -172,56 +257,64 @@
 {
     UIView *detailsView = [[UIView alloc] init];
     detailsView.backgroundColor = [UIColor whiteColor];
-    detailsView.layer.cornerRadius = 10;
-    detailsView.layer.masksToBounds = NO;
     
     [self.contentView addSubview:detailsView];
     
     self.detailsView = detailsView;
+
+    [self.detailsView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.headerView.mas_bottom);
+        //make.left.and.bottom.and.right.equalTo(self.contentView);
+        make.left.and.right.equalTo(self.contentView);
+    }];
     
-    if (self.imageView)
-    {
-        [self.detailsView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.imageView.mas_bottom).with.offset(16);
-            make.left.equalTo(self.contentView).with.offset(16);
-            make.right.equalTo(self.contentView).with.offset(-16);
-            make.bottom.equalTo(self.contentView.mas_bottom).with.offset(-16);
-        }];
-    }
-    else
-    {
-        [self.detailsView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.navigationLabel.mas_bottom).with.offset(16);
-            make.left.equalTo(self.contentView).with.offset(16);
-            make.right.equalTo(self.contentView).with.offset(-16);
-            make.bottom.equalTo(self.contentView.mas_bottom).with.offset(-16);
-        }];
-    }
-    
+    [self setupAvatarImageView];
+    [self setupDetailsAuthorName];
     [self setupDetailsHeader];
+    [self setupDetailsDescription];
     [self setupDetailsClaimButton];
     [self setupDetailsInviteButton];
-    [self setupDetailsDescription];
     [self setupDetailsAddress];
     [self setupDetailsMembers];
 }
 
+- (void)setupAvatarImageView
+{
+    UIImageView *avatarImageView = [[UIImageView alloc] init];
+    avatarImageView.backgroundColor = [UIColor whiteColor];
+    avatarImageView.layer.cornerRadius = 32;
+    avatarImageView.layer.masksToBounds = YES;
+
+    [self.detailsView addSubview:avatarImageView];
+
+    self.avatarImageView = avatarImageView;
+
+    [self.avatarImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.detailsView.mas_top);
+        make.size.equalTo(@64);
+        make.left.equalTo(self.detailsView).with.offset(16);
+    }];
+}
+
+- (void)setupDetailsAuthorName
+{
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.textColor = [UIColor whiteColor];
+    nameLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
+    nameLabel.text = @"Дмитрий Жаров";
+    
+    [self.headerView addSubview:nameLabel];
+    
+    self.nameLabel = nameLabel;
+    
+    [self.nameLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.avatarImageView.mas_right).with.offset(8);
+        make.bottom.equalTo(self.detailsView.mas_top).with.offset(-4);
+    }];
+}
+
 - (void)setupDetailsHeader
 {
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
-    titleLabel.textColor = [UIColor cl_darkPurpleColor];
-    
-    [self.detailsView addSubview:titleLabel];
-    
-    self.titleLabel = titleLabel;
-    
-    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.detailsView).with.offset(16);
-        make.left.equalTo(self.detailsView).with.offset(16);
-        make.right.equalTo(self.detailsView).with.offset(-16);
-    }];
-
     UILabel *dateLabel = [[UILabel alloc] init];
     dateLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
     
@@ -230,58 +323,9 @@
     self.dateLabel = dateLabel;
     
     [self.dateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(8);
-        make.left.equalTo(self.detailsView).with.offset(16);
+        make.top.equalTo(self.detailsView).with.offset(4);
+        make.left.equalTo(self.avatarImageView.mas_right).with.offset(8);
         make.right.equalTo(self.detailsView).with.offset(-16);
-    }];
-}
-
-- (void)setupDetailsClaimButton
-{
-    UIButton *claimButton = [[UIButton alloc] init];
-    claimButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
-    claimButton.layer.cornerRadius = 10;
-    claimButton.layer.masksToBounds = YES;
-    
-    claimButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-    [claimButton setTitle:@"Хочу пойти!" forState:UIControlStateNormal];
-    [claimButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[claimButton addTarget:self action:@selector(actionClaimButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.detailsView addSubview:claimButton];
-    
-    self.claimButton = claimButton;
-    
-    [self.claimButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.dateLabel.mas_bottom).with.offset(16);
-        make.left.equalTo(self.detailsView).with.offset(16);
-        make.height.equalTo(@48);
-    }];
-}
-
-- (void)setupDetailsInviteButton
-{
-    UIButton *inviteButton = [[UIButton alloc] init];
-    inviteButton.backgroundColor = [UIColor whiteColor];
-    inviteButton.layer.borderColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0].CGColor;
-    inviteButton.layer.borderWidth = 2.0f;
-    inviteButton.layer.cornerRadius = 10;
-    inviteButton.layer.masksToBounds = YES;
-    
-    inviteButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-    [inviteButton setTitle:@"Позвать друга" forState:UIControlStateNormal];
-    [inviteButton setTitleColor:[UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0] forState:UIControlStateNormal];
-    //[inviteButton addTarget:self action:@selector(actionInviteButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.detailsView addSubview:inviteButton];
-    
-    self.inviteButton = inviteButton;
-    
-    [self.inviteButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.and.bottom.equalTo(self.claimButton);
-        make.left.equalTo(self.claimButton.mas_right).with.offset(16);
-        make.right.equalTo(self.detailsView).with.offset(-16);
-        make.width.equalTo(self.claimButton);
     }];
 }
 
@@ -296,7 +340,7 @@
     self.descriptionHeading = descriptionHeading;
     
     [self.descriptionHeading mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.claimButton.mas_bottom).with.offset(16);
+        make.top.equalTo(self.avatarImageView.mas_bottom).with.offset(16);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
     }];
@@ -328,6 +372,55 @@
     }];
 }
 
+- (void)setupDetailsClaimButton
+{
+    UIButton *claimButton = [[UIButton alloc] init];
+    claimButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    claimButton.layer.cornerRadius = 10;
+    claimButton.layer.masksToBounds = YES;
+    
+    claimButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [claimButton setTitle:@"" forState:UIControlStateNormal];
+    [claimButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[claimButton addTarget:self action:@selector(actionClaimButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.detailsView addSubview:claimButton];
+    
+    self.claimButton = claimButton;
+    
+    [self.claimButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(16);
+        make.left.equalTo(self.detailsView).with.offset(16);
+        make.height.equalTo(@48);
+    }];
+}
+
+- (void)setupDetailsInviteButton
+{
+    UIButton *inviteButton = [[UIButton alloc] init];
+    inviteButton.backgroundColor = [UIColor whiteColor];
+    inviteButton.layer.borderColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0].CGColor;
+    inviteButton.layer.borderWidth = 2.0f;
+    inviteButton.layer.cornerRadius = 10;
+    inviteButton.layer.masksToBounds = YES;
+    
+    inviteButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [inviteButton setTitle:@"Позвать друга" forState:UIControlStateNormal];
+    [inviteButton setTitleColor:[UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0] forState:UIControlStateNormal];
+    //[inviteButton addTarget:self action:@selector(actionInviteButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.detailsView addSubview:inviteButton];
+    
+    self.inviteButton = inviteButton;
+    
+    [self.inviteButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.and.bottom.equalTo(self.claimButton);
+        make.left.equalTo(self.claimButton.mas_right).with.offset(16);
+        make.right.equalTo(self.detailsView).with.offset(-16);
+        make.width.equalTo(self.claimButton);
+    }];
+}
+
 - (void)setupDetailsAddress
 {
     UILabel *addressHeading = [[UILabel alloc] init];
@@ -339,7 +432,7 @@
     self.addressHeading = addressHeading;
     
     [self.addressHeading mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.descriptionLabel.mas_bottom).with.offset(16);
+        make.top.equalTo(self.claimButton.mas_bottom).with.offset(16);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
     }];
@@ -426,6 +519,75 @@
     }];
 }
 
+#pragma mark Editing
+
+- (void)setupEditingView
+{
+    UIView *editingView = [[UIView alloc] init];
+    editingView.backgroundColor = [UIColor clearColor];
+    
+    [self.contentView addSubview:editingView];
+    
+    self.editingView = editingView;
+    
+    [self.editingView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.detailsView.mas_bottom).with.offset(16);
+        make.left.and.bottom.and.right.equalTo(self.contentView);
+    }];
+    
+    [self setupEditButton];
+    [self setupDeleteButton];
+}
+
+- (void)setupEditButton
+{
+    UIButton *editButton = [[UIButton alloc] init];
+    editButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    editButton.layer.cornerRadius = 10;
+    editButton.layer.masksToBounds = YES;
+    
+    editButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [editButton setTitle:@"Редактировать" forState:UIControlStateNormal];
+    [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[claimButton addTarget:self action:@selector(actionClaimButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.editingView addSubview:editButton];
+    
+    self.editButton = editButton;
+    
+    [self.editButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.editingView).with.offset(16);
+        make.left.equalTo(self.editingView).with.offset(16);
+        make.right.equalTo(self.editingView).with.offset(-16);
+        make.height.equalTo(@48);
+    }];
+}
+
+- (void)setupDeleteButton
+{
+    UIButton *deleteButton = [[UIButton alloc] init];
+    deleteButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    deleteButton.layer.cornerRadius = 10;
+    deleteButton.layer.masksToBounds = YES;
+    
+    deleteButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    [deleteButton setTitle:@"Удалить" forState:UIControlStateNormal];
+    [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //[claimButton addTarget:self action:@selector(actionClaimButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.editingView addSubview:deleteButton];
+    
+    self.deleteButton = deleteButton;
+    
+    [self.deleteButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.editButton.mas_bottom).with.offset(16);
+        make.left.equalTo(self.editingView).with.offset(16);
+        make.right.equalTo(self.editingView).with.offset(-16);
+        make.height.equalTo(@48);
+        make.bottom.equalTo(self.editingView).with.offset(-16);
+    }];
+}
+
 - (void)setupCloseButton
 {
     UIButton *closeButton = [[UIButton alloc] init];
@@ -487,24 +649,54 @@
     }];
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UIScrollViewDelegate
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    
+    // Прячем заголовок тусовки
+    CGFloat navigationBarMinY = CGRectGetMinY(self.navigationLabel.frame) - CGRectGetMinY(self.navigationBar.frame);
+    if (currentOffset >= navigationBarMinY)
+    {
+        [UIView animateWithDuration:0.1 animations:^{
+            self.navigationLabel.alpha = 0;
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.1 animations:^{
+            self.navigationLabel.alpha = 1;
+        }];
+    }
+    
+    // Покаказываем навигационную панель
+    CGFloat navigationBarMaxY = CGRectGetMaxY(self.headerView.frame) - CGRectGetMaxY(self.navigationBackground.frame);
+    if (currentOffset >= navigationBarMaxY)
+    {
+        self.viewAppeared = NO;
+        [UIView animateWithDuration:0.05 animations:^{
+            self.navigationBar.alpha = 1;
+            self.navigationBackground.alpha = 1;
+            [self setNeedsStatusBarAppearanceUpdate];
+        }];
+    }
+    else
+    {
+        self.viewAppeared = YES;
+        [UIView animateWithDuration:0.05 animations:^{
+            self.navigationBar.alpha = 0;
+            self.navigationBackground.alpha = 0;
+            [self setNeedsStatusBarAppearanceUpdate];
+        }];
+    }
+    
+    NSLog(@"%f", currentOffset);
 }
-*/
 
 @end

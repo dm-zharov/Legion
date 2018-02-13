@@ -10,6 +10,7 @@
 #import "DAZProfileViewController.h"
 #import "CAGradientLayer+Gradients.h"
 #import "DAZUserProfile.h"
+#import "DAZRootViewControllerRouter.h"
 #import "UIImageView+Cache.h"
 #import "UIColor+Colors.h"
 #import "UIViewController+Alerts.h"
@@ -46,14 +47,14 @@
 #endif
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
-    // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self setValuesWithUserProfile];
 }
-
 
 #pragma mark - Setup UI
 
@@ -97,10 +98,7 @@
 
 - (void)setupAvatarImageView
 {
-    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-    
-    UIImageView *avatarImageView = [[UIImageView alloc] init];
-    [avatarImageView ch_imageWithContentsOfURL:profile.photoURL];
+    UIImageView *avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Purple Avatar"]];
     
     avatarImageView.layer.cornerRadius = 72.5;
     avatarImageView.layer.masksToBounds = YES;
@@ -120,7 +118,6 @@
 {
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = [UIFont systemFontOfSize:34 weight:UIFontWeightBold];
-    nameLabel.text = @"Дмитрий Жаров";
     
     [self.headerView addSubview:nameLabel];
     
@@ -137,7 +134,6 @@
     UILabel *emailLabel = [[UILabel alloc] init];
     emailLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
     emailLabel.textColor = [UIColor lightGrayColor];
-    emailLabel.text = @"zharov.1512@gmail.com";
     
     [self.headerView addSubview:emailLabel];
     
@@ -187,7 +183,7 @@
     self.signOutButton = signOutButton;
     
     self.signOutButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.signOutButton.layer.shadowOpacity = 0.25;
+    self.signOutButton.layer.shadowOpacity = 0.15;
     self.signOutButton.layer.shadowOffset = CGSizeMake(0, 2);
     self.signOutButton.layer.shadowRadius = 2.0;
     
@@ -203,7 +199,28 @@
 
 - (void)actionSignOut:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
+}
+
+#pragma mark - Accessors
+- (void)setValuesWithUserProfile
+{
+    DAZUserProfile *profile = [[DAZUserProfile alloc] init];
     
+    if (profile.photoURL)
+    {
+        [self.avatarImageView ch_imageWithContentsOfURL:profile.photoURL];
+    }
+    
+    if (profile.fullName)
+    {
+        self.nameLabel.text = profile.fullName;
+    }
+    
+    if (profile.email)
+    {
+        self.emailLabel.text = profile.email;
+    }
 }
 
 #pragma mark - Debug Target Only

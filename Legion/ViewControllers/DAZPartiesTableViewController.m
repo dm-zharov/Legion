@@ -178,9 +178,12 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     
     DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
     partyDetailsViewController.party = self.partiesArray[indexPath.row];
-    partyDetailsViewController.modalPresentationStyle = UIModalPresentationCustom;
+    //partyDetailsViewController.modalPresentationStyle = UIModalPresentationCustom;
     partyDetailsViewController.transitioningDelegate = self;
-
+    
+    CGFloat navigationBarHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
+    NSLog(@"%f", navigationBarHeight);
+    
     [self presentViewController:partyDetailsViewController animated:YES completion:nil];
     self.statusBarHidden = YES;
     [UIView animateWithDuration:0.5 animations:^{

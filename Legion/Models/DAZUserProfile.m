@@ -1,5 +1,5 @@
 //
-//  VKUserProfile.m
+//  DAZUserProfile.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 09.02.2018.
@@ -9,6 +9,7 @@
 #import "DAZUserProfile.h"
 
 static NSString *const DAZUserAuthorizationTypeKey = @"authorizationType";
+static NSString *const DAZUserLoggedIn = @"authorizationType";
 static NSString *const DAZUserIDKey = @"userID";
 static NSString *const DAZUserFirstNameKey = @"firstName";
 static NSString *const DAZUserLastNameKey = @"lastName";
@@ -31,6 +32,17 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
     return [NSUserDefaults standardUserDefaults];
 }
 
++ (void)resetUserProfile
+{
+    NSUserDefaults *userDefaults = [self userDefaults];
+    [userDefaults removeObjectForKey:DAZUserAuthorizationTypeKey];
+    [userDefaults removeObjectForKey:DAZUserIDKey];
+    [userDefaults removeObjectForKey:DAZUserFirstNameKey];
+    [userDefaults removeObjectForKey:DAZUserLastNameKey];
+    [userDefaults removeObjectForKey:DAZUserEmailKey];
+    [userDefaults removeObjectForKey:DAZUserPhotoURLKey];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -45,6 +57,11 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
 - (void)setAuthorizationType:(DAZAuthorizationType)authorizationType
 {
     [self.userDefaults setInteger:authorizationType forKey:DAZUserAuthorizationTypeKey];
+}
+
+- (void)setLoggedIn:(BOOL)loggedIn
+{
+    [self.userDefaults setBool:loggedIn forKey:DAZUserLoggedIn];
 }
 
 - (void)setUserID:(NSString *)userID
@@ -77,6 +94,11 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
 - (DAZAuthorizationType)authorizationType
 {
     return [self.userDefaults integerForKey:DAZUserAuthorizationTypeKey];
+}
+
+- (BOOL)isLoggedIn
+{
+    return [self.userDefaults boolForKey:DAZUserLoggedIn];
 }
 
 - (NSString *)fullName

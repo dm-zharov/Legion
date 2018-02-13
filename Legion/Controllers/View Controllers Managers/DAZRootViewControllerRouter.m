@@ -12,6 +12,7 @@
 #import "DAZPartiesTableViewController.h"
 #import "DAZClaimsTableViewController.h"
 #import "DAZProfileViewController.h"
+#import "DAZUserProfile.h"
 
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
@@ -151,13 +152,13 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
-    
     [self setRootViewController:[self rootViewController] animated:YES];
 }
 
 - (void)authorizationTokenExpired:(NSNotification *)notification
 {
-    [NSUserDefaults resetStandardUserDefaults];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
+    [DAZUserProfile resetUserProfile];
     
     [self setRootViewController:[self rootViewController] animated:YES];
 }
