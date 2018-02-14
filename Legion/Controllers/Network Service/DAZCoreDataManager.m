@@ -125,8 +125,11 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
     //fetchRequest.fetchLimit = 1;
     
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
-    [fetchRequest setSortDescriptors:@[sort]];
+    if (entityName == [PartyMO entityName])
+    {
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
+        [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    }
     
     NSError *error;
     NSArray *results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];

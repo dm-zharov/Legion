@@ -37,7 +37,7 @@
 - (void)deleteParty:(NSDictionary *)partyDictionary;
 
 - (void)downloadClaims;
-- (void)sendClaim:(NSDictionary *)claimDictionary;
+- (void)sendClaimForParty:(NSDictionary *)partyDictionary;
 - (void)updateClaim:(NSDictionary *)claimDictionary;
 - (void)deleteClaim:(NSDictionary *)claimDictionary;
 

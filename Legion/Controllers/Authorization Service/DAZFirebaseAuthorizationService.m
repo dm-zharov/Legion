@@ -94,6 +94,29 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     [customTokenTask resume];
 }
 
+- (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
+{
+    if (!displayName)
+    {
+        return;
+    }
+    
+    FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
+    changeRequest.displayName = displayName;
+    
+    if (url)
+    {
+        changeRequest.photoURL = url;
+    }
+    
+    [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
+        if (error)
+        {
+            NSLog(@"Ошибка обновления данных пользователя %@", error.localizedDescription);
+        }
+    }];
+}
+
 
 #pragma mark - Private
 
@@ -132,29 +155,6 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         [self completedSignInWithResult:profile error:nil];
     });
     
-}
-
-- (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
-{
-    if (!displayName)
-    {
-        return;
-    }
-    
-    FIRUserProfileChangeRequest *changeRequest = [[FIRAuth auth].currentUser profileChangeRequest];
-    changeRequest.displayName = displayName;
-    
-    if (url)
-    {
-        changeRequest.photoURL = url;
-    }
-    
-    [changeRequest commitChangesWithCompletion:^(NSError *_Nullable error) {
-        if (error)
-        {
-            NSLog(@"Ошибка обновления данных пользователя %@", error.localizedDescription);
-        }
-    }];
 }
 
 - (void)signInAnonymously

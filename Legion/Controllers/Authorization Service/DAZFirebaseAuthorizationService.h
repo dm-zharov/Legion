@@ -23,4 +23,6 @@
 
 - (void)signOut;
 
+- (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url;
+
 @end

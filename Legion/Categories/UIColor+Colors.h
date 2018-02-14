@@ -12,5 +12,6 @@
 
 + (UIColor *)cl_lightPurpleColor;
 + (UIColor *)cl_darkPurpleColor;
++ (UIColor *)cl_lightBlueColor;
 
 @end

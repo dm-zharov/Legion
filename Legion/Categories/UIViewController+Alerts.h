@@ -11,5 +11,6 @@
 @interface UIViewController (Alerts)
 
 - (void)al_presentAlertViewControllerWithTitle:(NSString *)title message:(NSString *)message;
+- (void)al_presentOfflineModeAlertViewController;
 
 @end

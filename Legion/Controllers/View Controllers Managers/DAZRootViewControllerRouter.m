@@ -14,12 +14,14 @@
 #import "DAZProfileViewController.h"
 #import "DAZUserProfile.h"
 
+
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
 NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTokenExpiredNotification";
 
 
 @interface DAZRootViewControllerRouter ()
 
+// Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;
 
@@ -147,7 +149,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     }
 }
 
-#pragma mark - Private
+#pragma mark - NSNotificationCenter Observers
 
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {

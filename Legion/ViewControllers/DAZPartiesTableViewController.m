@@ -14,6 +14,8 @@
 #import "DAZPartyDetailsViewControllers.h"
 #import "DAZPresentPartyDetailsTransitionController.h"
 #import "DAZProxyService.h"
+#import "DAZPlaceholderView.h"
+#import "UIViewController+Alerts.h"
 
 #import "CAGradientLayer+Gradients.h"
 #import "PartyMO+CoreDataClass.h"
@@ -28,12 +30,11 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, nullable, copy) NSArray *partiesArray;
 
-@property (nonatomic, getter=isStatusBarHidden, assign) BOOL statusBarHidden;
-
 @property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) DAZPlaceholderView *placeholderView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
-@property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreateViewController;
+@property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreationViewController;
 @property (nonatomic, strong) DAZPresentPartyDetailsTransitionController *presentDetailsViewController;
 
 @end
@@ -46,21 +47,27 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     [super viewDidLoad];
     
+    [self setupNetworkService];
+    
     [self setupNavigationBar];
     [self setupTableView];
+    [self setupPlaceholderView];
     [self setupRefreshControl];
-    [self setupNetworkService];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.networkService getParties];
-    
-    self.statusBarHidden = NO;
-    [UIView animateWithDuration:0.5 animations:^{
-        [self setNeedsStatusBarAppearanceUpdate];
-    }];
+}
+
+
+#pragma mark - Network Service
+
+- (void)setupNetworkService
+{
+    self.networkService  = [[DAZProxyService alloc] init];
+    self.networkService.delegate = self;
 }
 
 #pragma mark - Setup UI
@@ -100,6 +107,21 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     }];
 }
 
+- (void)setupPlaceholderView
+{
+    DAZPlaceholderView *placeholderView = [[DAZPlaceholderView alloc]
+        initWithTitle:@"Тусовок нет" message:@"Организуйте тусовку и будьте первым!"];
+
+    [self.view addSubview:placeholderView];
+    
+    self.placeholderView = placeholderView;
+    self.placeholderView.hidden = YES;
+    
+    [self.placeholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+}
+
 - (void)setupRefreshControl
 {
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -107,11 +129,6 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.tableView.refreshControl = refreshControl;
 }
 
-- (void)setupNetworkService
-{
-    self.networkService  = [[DAZProxyService alloc] init];
-    self.networkService.delegate = self;
-}
 
 #pragma mark - Actions
 
@@ -130,16 +147,21 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)actionCreateParty:(id)sender
 {
-    self.partyCreateViewController = [[DAZPartyCreationViewControllersAssembly alloc] init];
+    self.partyCreationViewController = [[DAZPartyCreationViewControllersAssembly alloc] init];
     
-    UIViewController *partyCreateViewController = [self.partyCreateViewController partyCreateViewController];
+    UIViewController *partyCreateViewController = [self.partyCreationViewController partyCreationViewController];
     
     [self presentViewController:partyCreateViewController animated:YES completion:nil];
 }
 
-- (void)actionShowParty:(id)sender
+
+#pragma mark - Custom Accessors
+
+- (void)setOfflineMode
 {
+    [self al_presentOfflineModeAlertViewController];
     
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 #pragma mark - UITableViewDataSource
@@ -177,18 +199,10 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.presentDetailsViewController.cellFrame = cellFrame;
     
     DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
-    partyDetailsViewController.party = self.partiesArray[indexPath.row];
-    //partyDetailsViewController.modalPresentationStyle = UIModalPresentationCustom;
+    [partyDetailsViewController setContentWithParty:self.partiesArray[indexPath.row]];
     partyDetailsViewController.transitioningDelegate = self;
     
-    CGFloat navigationBarHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
-    NSLog(@"%f", navigationBarHeight);
-    
     [self presentViewController:partyDetailsViewController animated:YES completion:nil];
-    self.statusBarHidden = YES;
-    [UIView animateWithDuration:0.5 animations:^{
-        [self setNeedsStatusBarAppearanceUpdate];
-    }];
 }
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
@@ -196,32 +210,8 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     return self.presentDetailsViewController;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle
+- (void)reloadTableView
 {
-    if ([self isStatusBarHidden])
-    {
-        return UIStatusBarStyleLightContent;
-    }
-    else
-    {
-        return UIStatusBarStyleDefault;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    cell.layer.opacity = 0;
-//    [UIView animateWithDuration:0.75 animations:^{
-//        cell.layer.opacity = 1;
-//    }];
-}
-
-#pragma mark - DAZProxyServiceDelegate
-
-
-- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status
-{
-    self.partiesArray = parties;
-    
     if (![self.tableView.refreshControl isRefreshing])
     {
         [self.tableView reloadData];
@@ -230,7 +220,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     {
         [self.tableView performBatchUpdates:^{
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                          withRowAnimation:UITableViewRowAnimationNone];
+                          withRowAnimation:UITableViewRowAnimationFade];
         } completion:^(BOOL finished) {
             if (finished)
             {
@@ -238,6 +228,29 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
             }
         }];
     }
+}
+
+
+#pragma mark - DAZProxyServiceDelegate
+
+- (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status
+{
+    self.partiesArray = parties;
+    
+    self.tableView.hidden = (self.partiesArray.count == 0);
+    self.placeholderView.hidden = (![self.tableView isHidden]);
+    
+    [self reloadTableView];
+    
+    if (status == DAZNetworkOffline)
+    {
+        [self setOfflineMode];
+    }
+}
+
+- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
+{
+    [self reloadTableView];
 }
 
 @end

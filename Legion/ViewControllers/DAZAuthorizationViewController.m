@@ -37,6 +37,8 @@
 {
     [super viewDidLoad];
     
+    [self setupAuthorizationService];
+    
     [self setupBackgroundLayer];
     [self setupGreetingLabel];
     [self setupAuthorizeLabel];
@@ -44,8 +46,15 @@
     [self setupAnonymousInButton];
     
     [self setupActivityIndicatorView];
-    
-    [self setupAuthorizationService];
+}
+
+
+#pragma mark - Authorization Service
+
+- (void)setupAuthorizationService
+{
+    self.authorizationMediator = [[DAZAuthorizationMediator alloc] init];
+    self.authorizationMediator.delegate = self;
 }
 
 
@@ -182,13 +191,6 @@
     [self.activityIndicatorView stopAnimating];
 }
 
-#pragma mark - DAZAuthorizationService
-
-- (void)setupAuthorizationService
-{
-    self.authorizationMediator = [[DAZAuthorizationMediator alloc] init];
-    self.authorizationMediator.delegate = self;
-}
 
 #pragma mark - DAZAuthotizationServiceDelegate
 

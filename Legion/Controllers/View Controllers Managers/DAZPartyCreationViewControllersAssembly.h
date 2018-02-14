@@ -10,12 +10,12 @@
 #import <Foundation/Foundation.h>
 #import "PartyMO+CoreDataClass.h"
 
-// Сборщик экранов создания новой тусовки.
 
+// Сборщик экранов создания новой тусовки
 @interface DAZPartyCreationViewControllersAssembly : NSObject
 
 @property (nonatomic, strong) PartyMO *party;
 
-- (UIViewController *)partyCreateViewController;
+- (UIViewController *)partyCreationViewController;
 
 @end

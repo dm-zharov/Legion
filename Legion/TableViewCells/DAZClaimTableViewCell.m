@@ -46,7 +46,6 @@
     if (self) {
         _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]]; // UIImage ImageNamed
         _avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
-        //_avatarImageView.layer.cornerRadius = _avatarImageView.frame.size.height /2;
         _avatarImageView.layer.masksToBounds = YES;
         _avatarImageView.clipsToBounds = YES;
         [self.contentView addSubview:_avatarImageView];

@@ -23,4 +23,11 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)al_presentOfflineModeAlertViewController
+{
+    return [self al_presentAlertViewControllerWithTitle:@"Офлайн-режим"
+                                                message:@"Наблюдаются проблемы с сетевым подключением, будут "
+                                                            "отображены последние сохраненные данные"];
+}
+
 @end

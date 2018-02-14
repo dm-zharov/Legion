@@ -34,4 +34,16 @@
     return lightPurpleColor;
 }
 
++ (UIColor *)cl_lightBlueColor
+{
+    static UIColor *lightBlueColor;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        lightBlueColor = [UIColor colorWithRed:241/255.0 green:244/255.0 blue:246/255.0 alpha:1.0];
+    });
+    
+    return lightBlueColor;
+}
+
 @end

@@ -32,7 +32,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 @property (nonatomic, weak) UIApplication *application;
 
-- (BOOL)isServerReachable;
 - (void)dataTaskWithFunction:(NSString *)function
                   dictionary:(NSDictionary * _Nullable)parameters
             completionHanler:(URLSessionCompletionBlock)completionHandler;
@@ -154,8 +153,10 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
+    NSDictionary *parameters = @{ @"partyID" : partyDictionary[@"partyID"] };
+    
     [self dataTaskWithFunction:DAZFunctionDeleteParty
-                    dictionary:partyDictionary
+                    dictionary:parameters
               completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
@@ -171,6 +172,8 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         }
     }];
 }
+
+#pragma mark - Claims Accessors
 
 - (void)downloadClaims
 {
@@ -201,12 +204,14 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     }];
 }
 
-- (void)sendClaim:(NSDictionary *)claimDictionary
+- (void)sendClaimForParty:(NSDictionary *)partyDictionary
 {
-    if (!claimDictionary)
+    if (!partyDictionary)
     {
         return;
     }
+    
+    NSDictionary *claimDictionary = @{ @"partyID" : partyDictionary[@"partyID"]};
     
     [self dataTaskWithFunction:DAZFunctionSendClaim
                     dictionary:claimDictionary

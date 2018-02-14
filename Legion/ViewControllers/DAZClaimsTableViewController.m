@@ -11,21 +11,32 @@
 #import "DAZClaimTableViewCell.h"
 #import "DAZProxyService.h"
 #import "DAZUserProfile.h"
+#import "DAZPlaceholderView.h"
 #import "DAZInfoView.h"
+#import "UIViewController+Alerts.h"
 #import "UIColor+Colors.h"
 #import "ClaimMO+CoreDataClass.h"
 
+
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
+
 
 @interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, getter=isIncome, assign) BOOL income;
+
 @property (nonatomic, strong) DAZProxyService *networkService;
-@property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
 @property (nonatomic, weak) UISegmentedControl *segmentedControl;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
+@property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
+@property (nonatomic, copy) NSArray<DAZPlaceholderView *> *placeholdersArray;
+
+@property (nonatomic, assign) NSInteger selectedSegment;
+
 @end
+
 
 @implementation DAZClaimsTableViewController
 
@@ -34,19 +45,34 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupNetworkService];
+    
     [self setupNavigationBar];
     [self setupSegmentedControl];
+    
     [self setupTableView];
+    [self setupPlaceholdersViews];
+    
     [self setupRefreshControl];
-    [self setupNetworkService];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     [self.networkService getClaims];
 }
+
+
+#pragma mark - Network Service
+
+- (void)setupNetworkService
+{
+    self.networkService  = [[DAZProxyService alloc] init];
+    self.networkService.delegate = self;
+}
+
 
 #pragma mark - Setup UI
 
@@ -63,13 +89,32 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     
     self.navigationItem.titleView = segmentedControl;
     
-    
     self.segmentedControl = segmentedControl;
+}
+
+- (void)setupPlaceholdersViews
+{
+    DAZPlaceholderView *outboxPlaceholderView = [[DAZPlaceholderView alloc]
+        initWithTitle:@"Запросов нет" message:@"Все отправленные вами запросы на получение адресов тусовок будут "
+                                                        "отображены здесь"];
+    outboxPlaceholderView.hidden = YES;
+    [self.view addSubview:outboxPlaceholderView];
     
-//    [self.segmentedControl mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.view).with.offset(16);
-//        make.right.equalTo(self.view).with.offset(-16);
-//    }];
+    [outboxPlaceholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    DAZPlaceholderView *inboxPlaceholderView = [[DAZPlaceholderView alloc]
+        initWithTitle:@"Запросов нет" message:@"Организуйте тусовку и управляйте входящими запросами на место "
+                                                        "проведения здесь!"];
+    inboxPlaceholderView.hidden = YES;
+    [self.view addSubview:inboxPlaceholderView];
+    
+    [inboxPlaceholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
+    self.placeholdersArray = @[outboxPlaceholderView, inboxPlaceholderView];
 }
 
 - (void)setupTableView
@@ -100,7 +145,6 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-
 }
 
 - (void)setupRefreshControl
@@ -110,11 +154,6 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     self.tableView.refreshControl = refreshControl;
 }
 
-- (void)setupNetworkService
-{
-    self.networkService  = [[DAZProxyService alloc] init];
-    self.networkService.delegate = self;
-}
 
 #pragma mark - Actions
 
@@ -125,11 +164,15 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
         if (segmentedControl.selectedSegmentIndex == 0)
         {
+            self.income = NO;
             self.tableView.tableFooterView.hidden = YES;
+            self.placeholdersArray[1].hidden = YES;
         }
         else if (segmentedControl.selectedSegmentIndex == 1)
         {
+            self.income = YES;
             self.tableView.tableFooterView.hidden = NO;
+            self.placeholdersArray[0].hidden = YES;
         }
     }
     
@@ -138,16 +181,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.segmentedControl.selectedSegmentIndex == 0)
-    {
-        return NO;
-    }
-    else if (self.segmentedControl.selectedSegmentIndex == 1)
-    {
-        return YES;
-    }
-    
-    return NO;
+    return [self isIncome];
 }
 
 - (void)actionRefreshClaims:(id)sender
@@ -159,40 +193,39 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     }
     else
     {
-        [self.networkService getParties];
+        [self.networkService getClaims];
     }
+}
+
+
+#pragma mark - Custom Accessors
+
+- (void)setOfflineMode
+{
+    [self al_presentOfflineModeAlertViewController];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.segmentedControl.selectedSegmentIndex == 0)
-    {
-        return self.claimsArray[0].count;
-    }
-    else if (self.segmentedControl.selectedSegmentIndex == 1) {
-        return self.claimsArray[1].count;
-    }
+    NSInteger index = [self isIncome] ? 1 : 0;
     
-    return 0;
+    self.tableView.hidden = (self.claimsArray[index].count == 0);
+    self.placeholdersArray[index].hidden = (![self.tableView isHidden]);
+    
+    return self.claimsArray[index].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger index = [self isIncome] ? 1 : 0;
+    
     DAZClaimTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DAZClaimTableViewCellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    if (self.segmentedControl.selectedSegmentIndex == 0)
-    {
-        ClaimMO *claim = self.claimsArray[0][indexPath.row];
-        [cell setWithClaim:claim isIncome:NO];
-    }
-    else if (self.segmentedControl.selectedSegmentIndex == 1) {
-        ClaimMO *claim = self.claimsArray[1][indexPath.row];
-        [cell setWithClaim:claim isIncome:YES];
-    }
-    
+    ClaimMO *claim = self.claimsArray[index][indexPath.row];
+    [cell setWithClaim:claim isIncome:[self isIncome]];
     
     return cell;
 }
@@ -206,13 +239,13 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSInteger index = [self isIncome] ? 1 : 0;
     
     UIContextualAction *confirmAction = [UIContextualAction
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Подтвердить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
-        ClaimMO *item = self.claimsArray[1][indexPath.row];
+        ClaimMO *item = self.claimsArray[index][indexPath.row];
         [item setClaimStatus:DAZClaimStatusConfirmed];
         [self.networkService updateClaim:item];
         completionHandler(YES);
@@ -227,11 +260,13 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+        NSInteger index = [self isIncome] ? 1 : 0;
+    
     UIContextualAction *declineAction = [UIContextualAction
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Отклонить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
-        ClaimMO *item = self.claimsArray[1][indexPath.row];
+        ClaimMO *item = self.claimsArray[index][indexPath.row];
         [item setClaimStatus:DAZClaimStatusClosed];
         [self.networkService updateClaim:item];
         completionHandler(YES);
@@ -247,15 +282,16 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 {
     DAZUserProfile *profile = [[DAZUserProfile alloc] init];
     
-    // Автор заявки совпадает с авторизованным пользователем
+    // Идентификатор отправишего запрос совпадает с авторизованным пользователем
     NSPredicate *outboxPredicate = [NSPredicate predicateWithFormat:@"authorID == %@", profile.userID];
     NSArray *outboxArray = [claims filteredArrayUsingPredicate:outboxPredicate];
     
+    // Заявки, отправленные авторизованному пользователю
     NSPredicate *inboxPredicate = [NSPredicate predicateWithFormat:@"authorID != %@", profile.userID];
     NSArray *inboxArray = [claims filteredArrayUsingPredicate:inboxPredicate];
     
-    
     NSArray *claimsArray = @[outboxArray, inboxArray];
+    
     self.claimsArray = claimsArray;
     
     if (![self.tableView.refreshControl isRefreshing])
@@ -273,6 +309,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
                 [self.tableView.refreshControl endRefreshing];
             }
         }];
+    }
+    
+    if (status == DAZNetworkOffline)
+    {
+        [self setOfflineMode];
     }
 }
 

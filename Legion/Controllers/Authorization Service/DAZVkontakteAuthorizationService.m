@@ -18,20 +18,24 @@ static NSString *const DAZVkontakteApplicationScheme = @"vkauthorize://";
 static NSString *const DAZVkontakteRelativeString =
     @"authorize?"
      "revoke=1"
-     "&response_type=token"
+     "&response_type=token" // Ожидаемый формат callback'а
      "&display=mobile"
-     "&scope=friends%2Cemail%2Coffline"
+     "&scope=friends%2Cemail%2Coffline" // Параметры запрашиваемых данных
      "&v=5.40"
-     "&redirect_uri=vk6347345%3A%2F%2Fauthorize"
-     "&client_id=6347345";
+     "&redirect_uri=vk6347345%3A%2F%2Fauthorize" // Схема приложения для обратного редиректа
+     "&client_id=6347345"; // ID приложения
+
+static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/users.get?"
+"access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23" // Сервисный токен приложения
+"&fields=photo_200" // Разрешение запрашиваемой аватарки
+"&name_case=Nom" // Форматирование имени и фамилии
+"&v=v5.71" // Версия используемого API
+"&user_ids="; // Идентификатор пользователя (!)
 
 
 @interface DAZVkontakteAuthorizationService ()
 
 @property (nonatomic, strong) SFAuthenticationSession *session;
-
-- (void)signInWithVkontakteApplication;
-- (void)signInWithSafariAuthorizationSession;
 
 @end
 
@@ -199,13 +203,14 @@ static NSString *const DAZVkontakteRelativeString =
     profile.userID = dictionary[@"user_id"];
     profile.email = dictionary[@"email"];
     
-    NSString *absoluteURL = [NSString stringWithFormat:@"https://api.vk.com/method/users.get?user_ids=%@&access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23&fields=photo_200&name_case=Nom&v=v5.71", profile.userID];
+    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZVkontakteProfileBaseURL, profile.userID];
     
     NSURL *url = [NSURL URLWithString:absoluteURL];
     
     NSURLSession *session = [NSURLSession sharedSession];;
     
-    NSURLSessionDataTask *profileDataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *profileDataTask = [session dataTaskWithURL:url
+                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
         {
             NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

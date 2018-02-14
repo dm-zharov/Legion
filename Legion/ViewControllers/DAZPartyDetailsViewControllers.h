@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PartyMO+CoreDataClass.h"
 
-#import "DAZPartiesTableViewController.h"
+@class PartyMO;
 
 @interface DAZPartyDetailsViewControllers : UIViewController
 
-@property (nonatomic, weak) UIScrollView *scrollView;
+@property (nonatomic, weak, readonly) UIScrollView *scrollView;
 
-@property (nonatomic, strong) PartyMO *party;
+- (void)setContentWithParty:(PartyMO *)party;
 
 @end

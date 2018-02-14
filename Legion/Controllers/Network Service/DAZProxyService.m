@@ -87,10 +87,11 @@
     if ([self isServerReachable])
     {
         [self.networkService deleteParty:[party dictionary]];
+        [party deleteParty];
     }
 }
 
-#pragma mark - Claims
+#pragma mark - Claims Accessors
 
 - (void)getClaims
 {
@@ -109,11 +110,11 @@
     }
 }
 
-- (void)sendClaim:(ClaimMO *)claim
+- (void)sendClaimForParty:(PartyMO *)party
 {
     if ([self isServerReachable])
     {
-        [self.networkService sendClaim:[claim dictionaryFromClaim]];
+        [self.networkService sendClaimForParty:[party dictionary]];
     }
 }
 
@@ -131,6 +132,8 @@
     {
         [self.networkService deleteClaim:[claim dictionaryFromClaim]];
     }
+    
+    [claim deleteClaim];
 }
 
 
@@ -151,6 +154,7 @@
 
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
 {
+    [self.coreDataManager removeClaims];
     NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByDictionariesArray:claims];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
@@ -159,6 +163,14 @@
     }
     
     [self.coreDataManager saveContext];
+}
+
+- (void)networkServiceDidFinishDeleteParty
+{
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOnline];
+    }
 }
 
 @end
