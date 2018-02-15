@@ -36,6 +36,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) DAZPresentPartyDetailsTransitionController *presentDetailsViewController;
+@property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreationViewControllerAssembly;
 
 @end
 
@@ -148,9 +149,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)actionCreateParty:(id)sender
 {
-    DAZPartyCreationViewControllersAssembly *partyCreationAssembly = [[DAZPartyCreationViewControllersAssembly alloc] init];
+    self.partyCreationViewControllerAssembly = [[DAZPartyCreationViewControllersAssembly alloc] init];
     
-    UIViewController *partyCreationViewController = [partyCreationAssembly partyCreationViewController];
+    UIViewController *partyCreationViewController = [self.partyCreationViewControllerAssembly partyCreationViewController];
     
     [self presentViewController:partyCreationViewController animated:YES completion:nil];
 }
