@@ -18,6 +18,9 @@
 
 @implementation DAZActivityButton
 
+
+#pragma mark - Lifecycle
+
 - (instancetype)init
 {
     self = [super init];
@@ -28,6 +31,9 @@
     }
     return self;
 }
+
+
+#pragma mark - Public
 
 - (void)startSpinning
 {
@@ -41,6 +47,9 @@
     [self.activityIndicatorView stopAnimating];
     [self setTitle:self.textString forState:UIControlStateNormal];
 }
+
+
+#pragma mark - UIView
 
 - (void)updateConstraints
 {

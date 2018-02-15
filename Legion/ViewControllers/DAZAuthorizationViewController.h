@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DAZAuthorizationMediator.h"
 
-
 @interface DAZAuthorizationViewController : UIViewController
 
 @property (nonatomic, strong) DAZAuthorizationMediator *authorizationMediator;

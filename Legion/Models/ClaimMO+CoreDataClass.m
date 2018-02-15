@@ -10,6 +10,7 @@
 
 @implementation ClaimMO
 
+
 #pragma mark - Static Properties
 
 + (NSString *)entityName
@@ -17,26 +18,38 @@
     return @"Claim";
 }
 
-+ (instancetype)claimWithContext:(NSManagedObjectContext *)context {
-    ClaimMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
-                                                  inManagedObjectContext:context];
+
+#pragma mark - Creation
+
++ (instancetype)claimWithContext:(NSManagedObjectContext *)context
+{
+    ClaimMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:context];
     
     return item;
 }
 
-+ (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary {
++ (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary
+{
     ClaimMO *item = [self claimWithContext:context];
     
-    item.authorID = dictionary[@"authorID"];
-
-    item.partyID = dictionary[@"partyID"];
-    item.partyTitle = dictionary[@"partyTitle"];
-    item.status = dictionary[@"status"];
-    
-    if (dictionary[@"photoURL"])
+    if (dictionary[@"authorID"])
     {
-        NSURL *photoURL = [NSURL URLWithString:dictionary[@"photoURL"]];
-        item.photoURL = photoURL;
+        item.authorID = dictionary[@"authorID"];
+    }
+
+    if (dictionary[@"partyID"])
+    {
+        item.partyID = dictionary[@"partyID"];
+    }
+    
+    if (dictionary[@"partyTitle"])
+    {
+        item.partyTitle = dictionary[@"partyTitle"];
+    }
+    
+    if (dictionary[@"status"])
+    {
+        item.status = dictionary[@"status"];
     }
     
     if (dictionary[@"authorName"])
@@ -44,11 +57,22 @@
         item.authorName = dictionary[@"authorName"];
     }
     
-    NSTimeInterval date = [dictionary[@"date"] doubleValue];
-    item.date = [NSDate dateWithTimeIntervalSince1970:date];
+    if (dictionary[@"photoURL"])
+    {
+        NSURL *photoURL = [NSURL URLWithString:dictionary[@"photoURL"]];
+        item.photoURL = photoURL;
+    }
+    
+    if (dictionary[@"date"])
+    {
+        NSTimeInterval date = [dictionary[@"date"] doubleValue];
+        item.date = [NSDate dateWithTimeIntervalSince1970:date];
+    }
     
     return item;
 }
+
+#pragma mark - Instance Accesors
 
 + (NSDictionary *)dictionaryFromClaim:(ClaimMO *)claim
 {
@@ -57,16 +81,6 @@
     if (claim.authorID)
     {
         dictionary[@"authorID"] = claim.authorID;
-    }
-    
-    if (claim.authorName)
-    {
-        dictionary[@"authorName"] = claim.authorName;
-    }
-    
-    if (claim.photoURL)
-    {
-        dictionary[@"photoURL"] = [claim.photoURL absoluteString];
     }
     
     if (claim.partyID)
@@ -84,6 +98,16 @@
         dictionary[@"status"] = claim.status;
     }
     
+    if (claim.authorName) 
+    {
+        dictionary[@"authorName"] = claim.authorName;
+    }
+    
+    if (claim.photoURL)
+    {
+        dictionary[@"photoURL"] = [claim.photoURL absoluteString];
+    }
+    
     if (claim.date)
     {
         dictionary[@"date"] = [@(claim.date.timeIntervalSince1970) stringValue];
@@ -92,7 +116,6 @@
     return dictionary;
 }
 
-// Instance Accessors
 + (NSString *)stringFromStatus:(DAZClaimStatus)status
 {
     return @[@"Подтверждено", @"Запрошено", @"Отклонено"][status];
@@ -100,18 +123,25 @@
 
 + (DAZClaimStatus)statusFromString:(NSString *)status
 {
-    if ([@"Подтверждено" isEqualToString:status]) {
+    if ([@"Подтверждено" isEqualToString:status])
+    {
         return DAZClaimStatusConfirmed;
-    } else if ([@"Запрошено" isEqualToString:status]) {
+    }
+    else if ([@"Запрошено" isEqualToString:status])
+    {
         return DAZClaimStatusRequested;
-    } else if ([@"Отклонено" isEqualToString:status]) {
+    }
+    else if ([@"Отклонено" isEqualToString:status])
+    {
         return DAZClaimStatusClosed;
     }
     
     return NSNotFound;
 }
 
-// Accessors
+
+#pragma mark - Custom Accessors
+
 - (DAZClaimStatus)claimStatus
 {
     return [ClaimMO statusFromString:self.status];
@@ -122,10 +152,11 @@
     self.status = [ClaimMO stringFromStatus:status];
 }
 
-// Coding
+
 - (NSDictionary *)dictionaryFromClaim {
     return [ClaimMO dictionaryFromClaim:self];
 }
+
 
 #pragma mark - Basic
 

@@ -12,7 +12,6 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
-
 @interface DAZCoreDataManager ()
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName;

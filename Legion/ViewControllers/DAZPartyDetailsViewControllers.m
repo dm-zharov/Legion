@@ -21,7 +21,6 @@
 
 #import "PartyMO+CoreDataClass.h"
 
-
 @interface DAZPartyDetailsViewControllers () <DAZProxyServiceDelegate, UINavigationBarDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, getter=isStatusBarLight, assign) BOOL statusBarLight;
@@ -56,7 +55,6 @@
 @property (nonatomic, weak) UIButton *closeButton;
 
 @end
-
 
 @implementation DAZPartyDetailsViewControllers
 

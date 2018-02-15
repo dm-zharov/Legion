@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-
 @interface DAZPresentPartyDetailsTransitionController : NSObject <UIViewControllerAnimatedTransitioning>
 
 @property (nonatomic, assign) CGRect cellFrame;

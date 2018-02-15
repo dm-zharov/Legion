@@ -17,10 +17,14 @@
 
 @implementation DAZInfoView
 
+
+#pragma mark - UIView
+
 + (BOOL)requiresConstraintBasedLayout
 {
     return YES;
 }
+
 
 #pragma mark - Lifecycle
 

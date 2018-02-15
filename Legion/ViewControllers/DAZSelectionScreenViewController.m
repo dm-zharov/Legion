@@ -33,6 +33,7 @@
 
 @implementation DAZSelectionScreenViewController
 
+
 #pragma mark - Lifecycle
 
 - (instancetype)initWithType:(DAZSelectionScreenType)type message:(NSString *)message
@@ -98,6 +99,7 @@
     [self selectionCompleted];
 }
 
+
 #pragma mark - DAZSelectionScreenDatePicker
 
 - (void)setupDatePicker
@@ -134,6 +136,7 @@
     }];
 }
 
+
 #pragma mark DAZSelectionScreenPickerView
 
 - (void)setupPickerView
@@ -156,6 +159,7 @@
     }];
 }
 
+
 #pragma mark UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -175,6 +179,7 @@
 {
     return self.pickerData[row];
 }
+
 
 #pragma mark - DAZSelectionScreenTextField
 
@@ -202,6 +207,7 @@
         make.bottom.equalTo(self.contentView.mas_centerY);
     }];
 }
+
 
 #pragma mark UITextFieldDelegate
 
@@ -231,6 +237,7 @@
     
     return YES;
 }
+
 
 #pragma mark - DAZSelectionScreenTextView
 
@@ -262,6 +269,7 @@
     }];
 }
 
+
 #pragma mark UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -274,6 +282,7 @@
     
     return YES;
 }
+
 
 #pragma mark Actions
 
@@ -288,6 +297,7 @@
         [self.textView becomeFirstResponder];
     }
 }
+
 
 #pragma mark - DAZSelectionScreenSlider
 
@@ -335,6 +345,7 @@
     sender.value = (float)membersCount;
     self.membersLabel.text = [NSString stringWithFormat:@"%@", @(membersCount)];
 }
+
 
 #pragma mark - DAZSelectionScreenDelegate
 

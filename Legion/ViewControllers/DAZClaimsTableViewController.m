@@ -13,16 +13,14 @@
 
 #import "DAZProxyService.h"
 #import "DAZUserProfile.h"
-#import "DAZEmptyViewPlaceholder.h"
+#import "DAZPlaceholderView.h"
 #import "DAZInfoView.h"
 
 #import "UIViewController+Alerts.h"
 #import "UIColor+Colors.h"
 #import "ClaimMO+CoreDataClass.h"
 
-
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
-
 
 @interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -34,7 +32,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
 @property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
-@property (nonatomic, copy) NSArray<DAZEmptyViewPlaceholder *> *placeholdersArray;
+@property (nonatomic, copy) NSArray<DAZPlaceholderView *> *placeholdersArray;
 
 @property (nonatomic, assign) NSInteger selectedSegment;
 
@@ -97,7 +95,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (void)setupPlaceholdersViews
 {
-    DAZEmptyViewPlaceholder *outboxPlaceholderView = [[DAZEmptyViewPlaceholder alloc]
+    DAZPlaceholderView *outboxPlaceholderView = [[DAZPlaceholderView alloc]
         initWithTitle:@"Запросов нет" message:@"Все отправленные вами запросы на получение адресов тусовок будут "
                                                         "отображены здесь"];
     outboxPlaceholderView.hidden = YES;
@@ -107,7 +105,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         make.edges.equalTo(self.view);
     }];
     
-    DAZEmptyViewPlaceholder *inboxPlaceholderView = [[DAZEmptyViewPlaceholder alloc]
+    DAZPlaceholderView *inboxPlaceholderView = [[DAZPlaceholderView alloc]
         initWithTitle:@"Запросов нет" message:@"Организуйте тусовку и управляйте входящими запросами на место "
                                                         "проведения здесь!"];
     inboxPlaceholderView.hidden = YES;

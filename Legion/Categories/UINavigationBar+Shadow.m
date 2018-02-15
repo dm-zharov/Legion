@@ -10,6 +10,9 @@
 
 @implementation UINavigationBar (Shadow)
 
+
+#pragma mark - Public
+
 - (void)sh_customShadow
 {
     self.shadowImage = [UIImage new];

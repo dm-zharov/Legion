@@ -12,6 +12,4 @@
 
 + (UIImage *)ov_tintedImageFrom:(UIImage *)source WithColor:(UIColor *)color;
 
-- (UIImage *)ov_tintedImage;
-
 @end

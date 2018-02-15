@@ -24,21 +24,23 @@
 
 @implementation DAZClaimTableViewCell
 
+
+#pragma mark - Instance Accessors
+
 + (CGFloat)height
 {
     return 80;
 }
+
+
+#pragma mark - UIKit
 
 + (BOOL)requiresConstraintBasedLayout
 {
     return YES;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
+#pragma mark - Lifecycle
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -77,6 +79,9 @@
     [super updateConstraints];
 }
 
+
+#pragma mark - Custom Mutators
+
 - (void)setWithClaim:(ClaimMO *)claim isIncome:(BOOL)income;
 {
     self.claim = claim;
@@ -108,16 +113,27 @@
     if (income)
     {
         message = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@",
-                                authorString, partyString, dateString];
+                       authorString, partyString, dateString];
     }
     else
     {
-        message = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@", authorString, partyString, dateString];
+        DAZClaimStatus status = [ClaimMO statusFromString:claim.status];
+        switch (status)
+        {
+            case DAZClaimStatusConfirmed:
+                message = [NSString stringWithFormat:@"%@ подтвердил вашу заявку на посещение тусовки %@ %@",
+                            authorString, partyString, dateString];
+                break;
+            case DAZClaimStatusRequested:
+                message = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@",
+                            authorString, partyString, dateString];
+                break;
+            case DAZClaimStatusClosed:
+                message = [NSString stringWithFormat:@"%@ отклонил вашу заявку на посещение тусовки %@ %@",
+                            authorString, partyString, dateString];
+                break;
+        }
     }
-    
-    NSRange authorRange = [message rangeOfString:authorString];
-    NSRange partyRange = [message rangeOfString:partyString];
-    NSRange dateRange = [message rangeOfString:dateString];
     
     NSMutableAttributedString *attributedMessage = [[NSMutableAttributedString alloc] initWithString:message];
     
@@ -131,9 +147,23 @@
        NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightRegular]
        };
     
-    [attributedMessage addAttributes:purpleTextAttributes range:authorRange];
-    [attributedMessage addAttributes:purpleTextAttributes range:partyRange];
-    [attributedMessage addAttributes:grayTextAttributes range:dateRange];
+    if (authorString)
+    {
+        NSRange authorRange = [message rangeOfString:authorString];
+        [attributedMessage addAttributes:purpleTextAttributes range:authorRange];
+    }
+    
+    if (partyString)
+    {
+        NSRange partyRange = [message rangeOfString:partyString];
+        [attributedMessage addAttributes:purpleTextAttributes range:partyRange];
+    }
+    
+    if (dateString)
+    {
+        NSRange dateRange = [message rangeOfString:dateString];
+        [attributedMessage addAttributes:grayTextAttributes range:dateRange];
+    }
     
     self.messageLabel.attributedText = attributedMessage;
 }

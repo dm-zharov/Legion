@@ -10,7 +10,6 @@
 #import <Foundation/Foundation.h>
 #import "PartyMO+CoreDataClass.h"
 
-
 /* Сборщик экранов создания новой тусовки
  */
 @interface DAZPartyCreationViewControllersAssembly : NSObject

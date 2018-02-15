@@ -9,10 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
 @class PartyMO;
 @class ClaimMO;
-
 
 @interface DAZCoreDataManager : NSObject
 

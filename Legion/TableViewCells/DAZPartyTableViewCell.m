@@ -20,7 +20,7 @@
 
 @property (nonatomic, getter=isFlipped, assign) BOOL flipped;
 
-// Front surface
+// Передняя поверхность карточки
 
 @property (nonatomic, strong) UIView *frontCardView;
 @property (nonatomic, strong) CAGradientLayer *frontCardLayer;
@@ -37,7 +37,7 @@
 @property (nonatomic, strong) UILabel *capacityLabel;
 @property (nonatomic, strong) UILabel *membersLabel;
 
-// Back surface
+// Задняя поверхность карточки
 
 @property (nonatomic, strong) UIView *backCardView;
 @property (nonatomic, strong) CAGradientLayer *backCardLayer;
@@ -49,10 +49,16 @@
 
 @implementation DAZPartyTableViewCell
 
+
+#pragma mark - Instance Accessors
+
 + (CGFloat)height
 {
     return 196;
 }
+
+
+#pragma mark - UIKit
 
 + (BOOL)requiresConstraintBasedLayout
 {
@@ -69,7 +75,8 @@
     {
         _flipped = NO;
         
-        // Подложка с фиолетовым слоем
+        /* Передняя сторона карточки
+         */
         _frontCardView = [[UIView alloc] init];
         _frontCardView.layer.cornerRadius = 14;
         _frontCardView.layer.masksToBounds = YES;
@@ -79,21 +86,21 @@
         _frontCardLayer = [CAGradientLayer gr_purpleGradientLayer];
         [_frontCardView.layer addSublayer:_frontCardLayer];
 
-        // Заголовок
+        // Заголовок тусовки
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:25 weight:UIFontWeightBold];
         _titleLabel.textColor = [UIColor whiteColor];
         [_frontCardView addSubview:_titleLabel];
         
-        // Дата и время старта
+        // Дата и время начала
         _dateLabel = [[UILabel alloc] init];
         _dateLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
         _dateLabel.textColor = [UIColor whiteColor];
         [_frontCardView addSubview:_dateLabel];
         
-        // Место проведения
+        // Общежитие
         _addressLabel = [[UILabel alloc] init];
-        _addressLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+        _addressLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
         _addressLabel.textColor = [UIColor whiteColor];
         [_frontCardView addSubview:_addressLabel];
         
@@ -104,9 +111,8 @@
         [_frontCardView addSubview:_apartmentLabel];
         
         // Аватарка пользователя
-        _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]]; // UIImage ImageNamed
+        _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Clear Avatar"]];
         _avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
-        //_avatarImageView.layer.cornerRadius = _avatarImageView.frame.size.height /2;
         _avatarImageView.layer.masksToBounds = YES;
         _avatarImageView.clipsToBounds = YES;
         [_frontCardView addSubview:_avatarImageView];
@@ -117,17 +123,21 @@
         _authorLabel.textColor = [UIColor whiteColor];
         [_frontCardView addSubview:_authorLabel];
         
+        // Количество участников
         _membersLabel = [[UILabel alloc] init];
         _membersLabel.font = [UIFont systemFontOfSize:24 weight:UIFontWeightSemibold];
         _membersLabel.textColor = [UIColor whiteColor];
         [_frontCardView addSubview:_membersLabel];
         
+        // Надпись "мест"
         _capacityLabel = [[UILabel alloc] init];
         _capacityLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
         _capacityLabel.textColor = [UIColor whiteColor];
         _capacityLabel.text = @"мест";
         [_frontCardView addSubview:_capacityLabel];
         
+        /* Задняя поверхность карточки
+         */
         _backCardView = [[UIView alloc] init];
         _backCardView.layer.cornerRadius = 10;
         _backCardView.layer.masksToBounds = YES;
@@ -137,14 +147,14 @@
         _backCardLayer = [CAGradientLayer gr_purpleGradientLayer];
         [_backCardView.layer addSublayer:_backCardLayer];
         
-        // "Сообщение"
+        // "Описание"
         _messageLabel = [[UILabel alloc] init];
         _messageLabel.font = [UIFont systemFontOfSize:13 weight:UIFontWeightRegular];
         _messageLabel.textColor = [UIColor whiteColor];
         _messageLabel.text = @"Сообщение";
         [_backCardView addSubview:_messageLabel];
         
-        // Содержимое сообщения
+        // Текст с описанием тусовки
         _descriptionLabel = [[UILabel alloc] init];
         _descriptionLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
         _descriptionLabel.textColor = [UIColor whiteColor];
@@ -156,10 +166,16 @@
     return self;
 }
 
+
+#pragma mark - Accessors
+
 - (UIView *)cardView
 {
     return self.frontCardView;
 }
+
+
+#pragma mark - UIView
 
 - (void)updateConstraints
 {
@@ -200,6 +216,7 @@
     [self.authorLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.avatarImageView.mas_bottom);
         make.left.equalTo(self.avatarImageView.mas_right).with.offset(8);
+        make.width.equalTo(self.frontCardView.mas_width).multipliedBy(0.75);
     }];
     
     [self.capacityLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -230,12 +247,14 @@
     [super updateConstraints];
 }
 
--(void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
     
     self.frontCardLayer.frame = self.backCardLayer.frame = self.contentView.bounds;
 }
+
+#pragma mark - UITableViewCell
 
 - (void)prepareForReuse
 {
@@ -245,14 +264,7 @@
     [self.contentView insertSubview:self.frontCardView aboveSubview:self.backCardView];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
-#pragma mark - Accessors
+#pragma mark - Mutators
 
 - (void)setWithParty:(PartyMO *)party
 {
@@ -263,10 +275,8 @@
     
     self.party = party;
     
-    // For future release
-    //self.avatarImageView;
-    
-    // Top-left
+    /* Верхний левый угол
+     */
     self.titleLabel.text = party.title;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -274,7 +284,8 @@
     dateFormatter.timeStyle = NSDateFormatterShortStyle;
     self.dateLabel.text = [dateFormatter stringFromDate:party.date];
     
-    // Top-right
+    /* Верхний правый угол
+     */
     self.addressLabel.text = party.address;
     
     if (party.apartment)
@@ -282,9 +293,8 @@
         self.apartmentLabel.text = party.apartment;
     }
     
-    // Bottom-left
-    // In future release
-    //self.avatarImageView;
+    /* Нижний левый угол
+     */
     
     if (party.photoURL)
     {
@@ -301,7 +311,6 @@
         self.avatarImageView.layer.masksToBounds = YES;
     }
     
-    
     if (party.authorName)
     {
         self.authorLabel.text = party.authorName;
@@ -311,15 +320,19 @@
         self.authorLabel.text = party.authorID;
     }
     
-    // Bottom-right
+    /* Нижний правый угол
+     */
     self.membersLabel.text = [NSString stringWithFormat:@"%d", party.members];
     
     self.descriptionLabel.text = party.desc;
+    
+    [self setNeedsUpdateConstraints];
 }
 
 #pragma mark - UIGestureRecognizer
 
-// Необходим для анимации в стиле AppStore на iOS 11
+/* Необходим для анимации проседания карточки в стиле AppStore на iOS 11
+ */
 - (void)setupGestureRecognizers
 {
     UILongPressGestureRecognizer *gestureRecognizer =
@@ -343,6 +356,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
     return YES;
 }
 
+
+#pragma mark - Actions
+
 - (void)cardPressed:(UILongPressGestureRecognizer *)sender
 {
     
@@ -351,8 +367,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
         [UIView animateWithDuration:0.2
                               delay:0
                             options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                                self.contentView.transform = CGAffineTransformMakeScale(0.95, 0.95);
-                            } completion:nil];
+            self.contentView.transform = CGAffineTransformMakeScale(0.95, 0.95);
+        } completion:nil];
     }
     
     if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled)
@@ -360,8 +376,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
         [UIView animateWithDuration:0.2
                               delay:0
                             options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                                self.contentView.transform = CGAffineTransformIdentity;
-                            } completion:nil];
+            self.contentView.transform = CGAffineTransformIdentity;
+        } completion:nil];
     }
 }
 
@@ -374,7 +390,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
                           duration:0.6
                            options:UIViewAnimationOptionTransitionFlipFromRight
                         animations:^{
-            if (!self.flipped)
+            if (![self isFlipped])
             {
                 [self.contentView insertSubview:self.backCardView aboveSubview:self.frontCardView];
             }

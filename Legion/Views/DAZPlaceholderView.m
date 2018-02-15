@@ -1,5 +1,5 @@
 //
-//  DAZEmptyViewPlaceholder.m
+//  DAZPlaceholderView.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 14.02.2018.
@@ -7,16 +7,19 @@
 //
 
 #import <Masonry.h>
-#import "DAZEmptyViewPlaceholder.h"
+#import "DAZPlaceholderView.h"
 
-@interface DAZEmptyViewPlaceholder ()
+@interface DAZPlaceholderView ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *messageLabel;
 
 @end
 
-@implementation DAZEmptyViewPlaceholder
+@implementation DAZPlaceholderView
+
+
+#pragma mark - Lifecycle
 
 - (instancetype)init
 {
@@ -48,6 +51,9 @@
     }
     return self;
 }
+
+
+#pragma mark - UIView
 
 - (void)updateConstraints
 {

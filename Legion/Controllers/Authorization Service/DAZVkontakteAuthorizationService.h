@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
-
 @interface DAZVkontakteAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
 
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;

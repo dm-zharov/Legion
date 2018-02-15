@@ -12,14 +12,12 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
-
 @interface DAZProxyService () <DAZNetworkServiceDelegate>
 
 @property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
 
 @end
-
 
 @implementation DAZProxyService
 

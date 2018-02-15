@@ -19,13 +19,12 @@
     }
     
     [UIImage ch_imageWithContentsOfURL:url completion:^(UIImage *image) {
-        
         [UIView transitionWithView:self
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
             self.image = image;
-                      } completion:nil];
+        } completion:nil];
         
     }];
 }

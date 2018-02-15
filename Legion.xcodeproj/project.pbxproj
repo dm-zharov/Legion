@@ -13,7 +13,7 @@
 		2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */; };
 		232056B120307C690004015C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 232056B020307C680004015C /* Assets.xcassets */; };
 		232056B42031A3DB0004015C /* DAZProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232056B32031A3DB0004015C /* DAZProfileViewController.m */; };
-		233E689A2034A23400F01B30 /* DAZEmptyViewPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 233E68992034A23400F01B30 /* DAZEmptyViewPlaceholder.m */; };
+		233E689A2034A23400F01B30 /* DAZPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 233E68992034A23400F01B30 /* DAZPlaceholderView.m */; };
 		233E689D2034D98D00F01B30 /* DAZActivityButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 233E689C2034D98D00F01B30 /* DAZActivityButton.m */; };
 		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
@@ -73,8 +73,8 @@
 		232056B020307C680004015C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		232056B22031A3DB0004015C /* DAZProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZProfileViewController.h; sourceTree = "<group>"; };
 		232056B32031A3DB0004015C /* DAZProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProfileViewController.m; sourceTree = "<group>"; };
-		233E68982034A23400F01B30 /* DAZEmptyViewPlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZEmptyViewPlaceholder.h; sourceTree = "<group>"; };
-		233E68992034A23400F01B30 /* DAZEmptyViewPlaceholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZEmptyViewPlaceholder.m; sourceTree = "<group>"; };
+		233E68982034A23400F01B30 /* DAZPlaceholderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPlaceholderView.h; sourceTree = "<group>"; };
+		233E68992034A23400F01B30 /* DAZPlaceholderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPlaceholderView.m; sourceTree = "<group>"; };
 		233E689B2034D98D00F01B30 /* DAZActivityButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZActivityButton.h; sourceTree = "<group>"; };
 		233E689C2034D98D00F01B30 /* DAZActivityButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZActivityButton.m; sourceTree = "<group>"; };
 		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 				2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */,
 				23D9D1AD20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.h */,
 				23D9D1AE20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m */,
+				23EA666A202DDA170083303E /* DAZPresentPartyDetailsTransitionController.h */,
+				23EA666B202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m */,
 			);
 			path = "View Controllers Managers";
 			sourceTree = "<group>";
@@ -266,8 +268,8 @@
 			children = (
 				239101D9202CBED6001E8DE1 /* DAZInfoView.h */,
 				239101DA202CBED6001E8DE1 /* DAZInfoView.m */,
-				233E68982034A23400F01B30 /* DAZEmptyViewPlaceholder.h */,
-				233E68992034A23400F01B30 /* DAZEmptyViewPlaceholder.m */,
+				233E68982034A23400F01B30 /* DAZPlaceholderView.h */,
+				233E68992034A23400F01B30 /* DAZPlaceholderView.m */,
 				233E689B2034D98D00F01B30 /* DAZActivityButton.h */,
 				233E689C2034D98D00F01B30 /* DAZActivityButton.m */,
 			);
@@ -331,8 +333,6 @@
 				2346B732201E66E40039DF3F /* Authorization Service */,
 				2346B733201E730F0039DF3F /* Network Service */,
 				234EBCC7202890E100FB83C6 /* View Controllers Managers */,
-				23EA666A202DDA170083303E /* DAZPresentPartyDetailsTransitionController.h */,
-				23EA666B202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -623,7 +623,7 @@
 				239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */,
 				2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */,
 				2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */,
-				233E689A2034A23400F01B30 /* DAZEmptyViewPlaceholder.m in Sources */,
+				233E689A2034A23400F01B30 /* DAZPlaceholderView.m in Sources */,
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				233E689D2034D98D00F01B30 /* DAZActivityButton.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,

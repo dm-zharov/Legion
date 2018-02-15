@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)entityName;
 
-//// Creation
+// Creation
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context;
 + (instancetype)claimWithContext:(NSManagedObjectContext *)context dictionary:(NSDictionary *)dictionary;
 

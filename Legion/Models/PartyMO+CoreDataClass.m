@@ -18,12 +18,12 @@
     return @"Party";
 }
 
+
 #pragma mark - Instance Accessors
 
 + (instancetype)partyWithContext:(NSManagedObjectContext *)context
 {
-    PartyMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
-                                                  inManagedObjectContext:context];
+    PartyMO *item = [NSEntityDescription insertNewObjectForEntityForName:[self entityName] inManagedObjectContext:context];
     
     return item;
 }
@@ -32,11 +32,25 @@
 {
     PartyMO *item = [self partyWithContext:context];
     
-    item.partyID = dictionary[@"partyID"];
+    if (dictionary[@"partyID"])
+    {
+        item.partyID = dictionary[@"partyID"];
+    }
     
-    item.authorID = dictionary[@"authorID"];
+    if (dictionary[@"title"])
+    {
+        item.title = dictionary[@"title"];
+    }
     
-    item.ownership = [dictionary[@"ownership"] boolValue];
+    if (dictionary[@"authorID"])
+    {
+        item.authorID = dictionary[@"authorID"];
+    }
+    
+    if (dictionary[@"ownership"])
+    {
+        item.ownership = [dictionary[@"ownership"] boolValue];
+    }
     
     if (dictionary[@"authorName"])
     {
@@ -49,23 +63,36 @@
         item.photoURL = photoURL;
     }
     
-    item.title = dictionary[@"title"];
-    item.address = dictionary[@"address"];
-    item.apartment = dictionary[@"apartment"];
+    if (dictionary[@"address"])
+    {
+        item.address = dictionary[@"address"];
+    }
+
+    if (dictionary[@"apartment"])
+    {
+        item.apartment = dictionary[@"apartment"];
+    }
     
-    NSTimeInterval created = [dictionary[@"created"] doubleValue];
+    NSTimeInterval created = dictionary[@"created"] ? [dictionary[@"created"] doubleValue] : 0;
     item.created = [NSDate dateWithTimeIntervalSince1970:created];
     
-    NSTimeInterval closed = [dictionary[@"closed"] doubleValue];
+    NSTimeInterval closed = dictionary[@"closed"] ? [dictionary[@"closed"] doubleValue] : 0;
     item.closed = [NSDate dateWithTimeIntervalSince1970:closed];
     
-    NSTimeInterval date = [dictionary[@"date"] doubleValue];
+    NSTimeInterval date = dictionary[@"date"] ? [dictionary[@"date"] doubleValue] : 0;
     item.date = [NSDate dateWithTimeIntervalSince1970:date];
     
-    item.desc = dictionary[@"desc"];
-    item.members = [dictionary[@"members"] intValue];
+    if (dictionary[@"desc"])
+    {
+        item.desc = dictionary[@"desc"];
+    }
+
+    item.members = dictionary[@"members"] ? [dictionary[@"members"] intValue] : 0;
     
-    item.status = dictionary[@"status"];
+    if (dictionary[@"status"])
+    {
+        item.status = dictionary[@"status"];
+    }
     
     return item;
 }
@@ -79,15 +106,17 @@
         dictionary[@"partyID"] = party.partyID;
     }
     
+    if (party.title)
+    {
+        dictionary[@"title"] = party.title;
+    }
+    
     if (party.authorID)
     {
         dictionary[@"authorID"] = party.authorID;
     }
     
-    if (party.ownership)
-    {
-        dictionary[@"ownership"] = [NSString stringWithFormat:@"%d", party.ownership];
-    }
+    dictionary[@"ownership"] = [NSString stringWithFormat:@"%d", party.ownership];
     
     if (party.authorName)
     {
@@ -96,11 +125,6 @@
     if (party.photoURL)
     {
         dictionary[@"photoURL"] = party.photoURL;
-    }
-    
-    if (party.title)
-    {
-        dictionary[@"title"] = party.title;
     }
     
     if (party.address)
@@ -146,6 +170,7 @@
     return dictionary;
 }
 
+
 #pragma mark - Creation
 
 + (NSString *)stringFromStatus:(DAZPartyStatus)status
@@ -153,17 +178,22 @@
     return @[@"Открыто", @"Закрыто"][status];
 }
 
-+ (DAZPartyStatus)statusFromString:(NSString *)status {
-    if ([@"Открыто" isEqualToString:status]) {
++ (DAZPartyStatus)statusFromString:(NSString *)status
+{
+    if ([@"Открыто" isEqualToString:status])
+    {
         return DAZPartyStatusOpen;
-    } else if ([@"Закрыто" isEqualToString:status]) {
+    } else if ([@"Закрыто" isEqualToString:status])
+    {
         return DAZPartyStatusClosed;
     }
     
     return NSNotFound;
 }
 
+
 #pragma mark - Accessors
+
 - (DAZPartyStatus)partyStatus
 {
     return [PartyMO statusFromString:self.status];
@@ -174,10 +204,13 @@
     self.status = [PartyMO stringFromStatus:status];
 }
 
+
 #pragma mark - Coding
+
 - (NSDictionary *)dictionary {
     return [PartyMO dictionaryFromParty:self];
 }
+
 
 #pragma mark - Basic
 

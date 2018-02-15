@@ -15,7 +15,6 @@
 #import "UIColor+Colors.h"
 #import "UIViewController+Alerts.h"
 
-
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
@@ -26,7 +25,6 @@
 @property (nonatomic, weak) UIButton *anonymousInButton;
 
 @end
-
 
 @implementation DAZAuthorizationViewController
 

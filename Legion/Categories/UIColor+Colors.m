@@ -10,6 +10,9 @@
 
 @implementation UIColor (Colors)
 
+
+#pragma mark - Convenience methods
+
 + (UIColor *)cl_lightPurpleColor
 {
     static UIColor *lightPurpleColor;

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface DAZPartiesTableViewController : UIViewController
 
 @end

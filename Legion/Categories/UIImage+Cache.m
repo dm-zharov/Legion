@@ -10,6 +10,8 @@
 
 @implementation UIImage (Cache)
 
+#pragma mark - Instance Accessors
+
 + (void)ch_imageWithContentsOfURL:(NSURL *)url completion:(void (^)(UIImage *))completion
 {
     if (!url)
@@ -32,7 +34,7 @@
     });
 }
 
-#pragma mark - Private Static
+#pragma mark - Private
 
 + (void)ch_saveData:(NSData*)data ForUrl: (NSURL*)url
 {

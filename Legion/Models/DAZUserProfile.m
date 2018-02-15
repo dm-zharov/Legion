@@ -27,11 +27,6 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
 
 #pragma mark - Instance Accessors
 
-+ (NSUserDefaults *)userDefaults
-{
-    return [NSUserDefaults standardUserDefaults];
-}
-
 + (void)resetUserProfile
 {
     NSUserDefaults *userDefaults = [self userDefaults];
@@ -43,6 +38,17 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
     [userDefaults removeObjectForKey:DAZUserPhotoURLKey];
 }
 
+
+#pragma mark - Static Properties
+
++ (NSUserDefaults *)userDefaults
+{
+    return [NSUserDefaults standardUserDefaults];
+}
+
+
+#pragma mark - Lifecycle
+
 - (instancetype)init
 {
     self = [super init];
@@ -52,7 +58,8 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
     return self;
 }
 
-#pragma mark - Setters
+
+#pragma mark - Mutators
 
 - (void)setAuthorizationType:(DAZAuthorizationType)authorizationType
 {
@@ -89,7 +96,8 @@ static NSString *const DAZUserPhotoURLKey = @"photoURL";
     [self.userDefaults setURL:photoURL forKey:DAZUserPhotoURLKey];
 }
 
-#pragma mark - Getters
+
+#pragma mark - Accessors
 
 - (DAZAuthorizationType)authorizationType
 {

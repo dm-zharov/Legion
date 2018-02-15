@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
-
 @interface DAZUserProfile : NSObject
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;
+
 @property (nonatomic, getter=isLoggedIn, assign) BOOL loggedIn;
 
 @property (nonatomic, readonly) NSString* fullName;

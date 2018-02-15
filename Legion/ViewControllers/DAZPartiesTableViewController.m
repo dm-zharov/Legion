@@ -14,13 +14,12 @@
 #import "DAZPartyCreationViewControllersAssembly.h"
 #import "DAZPartyDetailsViewControllers.h"
 #import "DAZPresentPartyDetailsTransitionController.h"
-#import "DAZEmptyViewPlaceholder.h"
+#import "DAZPlaceholderView.h"
 
 #import "UIViewController+Alerts.h"
 #import "CAGradientLayer+Gradients.h"
 
 #import "PartyMO+CoreDataClass.h"
-
 
 static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
@@ -31,7 +30,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, nullable, copy) NSArray *partiesArray;
 
-@property (nonatomic, weak) DAZEmptyViewPlaceholder *placeholderView;
+@property (nonatomic, weak) DAZPlaceholderView *placeholderView;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
@@ -111,7 +110,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)setupPlaceholderView
 {
-    DAZEmptyViewPlaceholder *placeholderView = [[DAZEmptyViewPlaceholder alloc]
+    DAZPlaceholderView *placeholderView = [[DAZPlaceholderView alloc]
         initWithTitle:@"Тусовок нет" message:@"Организуйте тусовку и будьте первым!"];
     placeholderView.hidden = YES;
 

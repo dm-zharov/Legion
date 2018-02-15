@@ -38,7 +38,11 @@
 
 @implementation DAZProfileViewController
 
-- (void)viewDidLoad {
+
+#pragma mark - Lifecycle
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.tabBarController.tabBar.translucent = NO;
@@ -46,6 +50,7 @@
     [self setupHeaderView];
     [self setupFooterView];
     [self setupSignOutButton];
+    
 #ifdef DEBUG
     [self setupDebugView];
 #endif
@@ -59,6 +64,7 @@
     
     [self setValuesWithUserProfile];
 }
+
 
 #pragma mark - Setup UI
 
@@ -206,7 +212,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenExpiredNotification object:nil];
 }
 
-#pragma mark - Accessors
+
+#pragma mark - Custom Mutators
+
 - (void)setValuesWithUserProfile
 {
     DAZUserProfile *profile = [[DAZUserProfile alloc] init];
