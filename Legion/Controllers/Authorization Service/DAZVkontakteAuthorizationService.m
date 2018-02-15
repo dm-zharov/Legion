@@ -69,6 +69,11 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
         return;
     }
     
+    [self signIn];
+}
+
+- (void)signIn
+{
     BOOL vkAppAvailable = [self isVkontakteApplicationAvailable];
     
     if (vkAppAvailable)
@@ -141,7 +146,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 - (void)signInWithVkontakteApplication
 {
-    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZVkontakteResourceScheme, DAZVkontakteRelativeString];
+    NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZVkontakteApplicationScheme, DAZVkontakteRelativeString];
     NSURL *url = [NSURL URLWithString:absoluteURL];
     
     NSError *error = [[NSError alloc] initWithDomain:DAZVkontakteOpenURLErrorDomain code:NSURLErrorUnknown userInfo:nil];

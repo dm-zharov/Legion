@@ -42,14 +42,11 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    if (authorizationType != DAZAuthorizationAnonymously)
-    {
-        return;
-    }
-    else
+    if (authorizationType == DAZAuthorizationAnonymously)
     {
         [self signInAnonymously];
     }
+    // else ...
 }
 
 

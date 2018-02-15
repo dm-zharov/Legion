@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @class PartyMO;
 
 typedef NS_ENUM(NSInteger, DAZPartyDetailsState) {
@@ -21,6 +20,7 @@ typedef NS_ENUM(NSInteger, DAZPartyDetailsState) {
 @property (nonatomic, readonly) UIScrollView *scrollView;
 
 - (instancetype)initWithState:(DAZPartyDetailsState)state;
+
 - (void)setContentWithParty:(PartyMO *)party;
 
 @end

@@ -205,7 +205,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.presentDetailsViewController = [[DAZPresentPartyDetailsTransitionController alloc] init];
     self.presentDetailsViewController.cellFrame = cellFrame;
     
-    DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] initWithState:DAZPartyDetailsGuest];
+    PartyMO *party = self.partiesArray[indexPath.row];
+    DAZPartyDetailsState state = party.ownership;
+    DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] initWithState:state];
     [partyDetailsViewController setContentWithParty:self.partiesArray[indexPath.row]];
     partyDetailsViewController.transitioningDelegate = self;
     

@@ -271,7 +271,6 @@
 {
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = [UIFont systemFontOfSize:21 weight:UIFontWeightBold];
-    nameLabel.text = @"Дмитрий Жаров";
     
     [self.detailsView addSubview:nameLabel];
     
@@ -701,10 +700,17 @@
         self.dateLabel.text = [dateFormatter stringFromDate:party.date];
     }
     
+    self.nameLabel.text = party.authorName ? party.authorName : nil;
     self.descriptionLabel.text = party.desc ? party.desc : nil;
     self.addressLabel.text = party.address ? party.address : nil;
     self.apartmentLabel.text = party.apartment ? party.apartment : nil;
     self.membersLabel.text = [NSString stringWithFormat:@"%d", party.members];
+    
+    if (![party.apartment isEqualToString:@"Скрыто"])
+    {
+        self.claimButton.enabled = NO;
+        [self.claimButton setTitle:@"Адрес получен" forState:UIControlStateDisabled];
+    }
 }
 
 #pragma mark - Actions

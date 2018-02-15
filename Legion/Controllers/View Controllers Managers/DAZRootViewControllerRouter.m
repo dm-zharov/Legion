@@ -23,6 +23,8 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @interface DAZRootViewControllerRouter ()
 
+@property (nonatomic, strong) DAZUserProfile *profile;
+
 // Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;
@@ -37,8 +39,16 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:DAZAuthorizationTokenReceivedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:DAZAuthorizationTokenExpiredNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _profile = [[DAZUserProfile alloc] init];
+    }
+    return self;
 }
 
 

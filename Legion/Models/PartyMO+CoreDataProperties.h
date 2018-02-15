@@ -2,7 +2,7 @@
 //  PartyMO+CoreDataProperties.h
 //  
 //
-//  Created by Дмитрий Жаров on 11.02.2018.
+//  Created by Дмитрий Жаров on 15.02.2018.
 //
 //
 
@@ -25,9 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *desc;
 @property (nonatomic) int32_t members;
 @property (nullable, nonatomic, copy) NSString *partyID;
+@property (nullable, nonatomic, copy) NSURL *photoURL;
 @property (nullable, nonatomic, copy) NSString *status;
 @property (nullable, nonatomic, copy) NSString *title;
-@property (nullable, nonatomic, copy) NSURL *photoURL;
+@property (nonatomic) BOOL ownership;
 @property (nullable, nonatomic, retain) ClaimMO *claim;
 
 @end

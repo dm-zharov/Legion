@@ -36,6 +36,8 @@
     
     item.authorID = dictionary[@"authorID"];
     
+    item.ownership = [dictionary[@"ownership"] boolValue];
+    
     if (dictionary[@"authorName"])
     {
         item.authorName = dictionary[@"authorName"];
@@ -80,6 +82,11 @@
     if (party.authorID)
     {
         dictionary[@"authorID"] = party.authorID;
+    }
+    
+    if (party.ownership)
+    {
+        dictionary[@"ownership"] = [NSString stringWithFormat:@"%d", party.ownership];
     }
     
     if (party.authorName)

@@ -221,17 +221,6 @@
 			path = "View Controllers Managers";
 			sourceTree = "<group>";
 		};
-		2354FA052020CB5C000A97C8 /* Party */ = {
-			isa = PBXGroup;
-			children = (
-				2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */,
-				2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */,
-				2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */,
-				2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */,
-			);
-			name = Party;
-			sourceTree = "<group>";
-		};
 		2354FA092020CBB9000A97C8 /* Mediated Authorization Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,17 +241,6 @@
 				2346B738201E74F50039DF3F /* DAZNetworkService.m */,
 			);
 			name = "Services Under Proxy";
-			sourceTree = "<group>";
-		};
-		2354FA0C2020F61D000A97C8 /* Claim */ = {
-			isa = PBXGroup;
-			children = (
-				2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */,
-				2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */,
-				2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */,
-				2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */,
-			);
-			name = Claim;
 			sourceTree = "<group>";
 		};
 		23AFB4B7201B35C400260C11 /* ViewControllers */ = {
@@ -324,8 +302,14 @@
 			children = (
 				23EA6670202E10840083303E /* DAZUserProfile.h */,
 				23EA6671202E10840083303E /* DAZUserProfile.m */,
-				2354FA052020CB5C000A97C8 /* Party */,
-				2354FA0C2020F61D000A97C8 /* Claim */,
+				2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */,
+				2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */,
+				2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */,
+				2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */,
+				2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */,
+				2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */,
+				2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */,
+				2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";

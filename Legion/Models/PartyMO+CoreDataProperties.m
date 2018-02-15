@@ -2,7 +2,7 @@
 //  PartyMO+CoreDataProperties.m
 //  
 //
-//  Created by Дмитрий Жаров on 11.02.2018.
+//  Created by Дмитрий Жаров on 15.02.2018.
 //
 //
 
@@ -24,9 +24,10 @@
 @dynamic desc;
 @dynamic members;
 @dynamic partyID;
+@dynamic photoURL;
 @dynamic status;
 @dynamic title;
-@dynamic photoURL;
+@dynamic ownership;
 @dynamic claim;
 
 @end

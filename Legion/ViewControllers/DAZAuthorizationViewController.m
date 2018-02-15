@@ -202,7 +202,7 @@
         [self.activityIndicatorView startAnimating];
         [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
     }];
-    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Отмена" style:UIAlertActionStyleCancel handler:nil];
     
     [alert addAction:cancelAction];
     [alert addAction:agreeAction];

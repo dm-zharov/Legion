@@ -215,7 +215,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         return;
     }
     
-    NSDictionary *claimDictionary = @{ @"partyID" : partyDictionary[@"partyID"]};
+    NSDictionary *claimDictionary = @{ @"partyID" : partyDictionary[@"partyID"] };
     
     [self dataTaskWithFunction:DAZFunctionSendClaim
                     dictionary:claimDictionary
