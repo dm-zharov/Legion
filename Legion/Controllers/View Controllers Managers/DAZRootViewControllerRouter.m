@@ -7,12 +7,14 @@
 //
 
 #import "DAZRootViewControllerRouter.h"
-#import "UINavigationBar+Shadow.h"
 #import "DAZAuthorizationViewController.h"
+#import "DAZUserProfile.h"
+
 #import "DAZPartiesTableViewController.h"
 #import "DAZClaimsTableViewController.h"
 #import "DAZProfileViewController.h"
-#import "DAZUserProfile.h"
+
+#import "UINavigationBar+Shadow.h"
 
 
 NSString *const DAZAuthorizationTokenReceivedNotification = @"DAZAuthorizationTokenReceivedNotification";
@@ -27,6 +29,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @end
 
+
 @implementation DAZRootViewControllerRouter
 
 
@@ -39,7 +42,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 }
 
 
-#pragma mark - Accessors
+#pragma mark - Custom Accessors
 
 - (UIViewController *)rootViewController
 {
@@ -71,14 +74,28 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     }
 }
 
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
+{
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    if (animated)
+    {
+        [UIView transitionWithView:window
+                          duration:0.75
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        animations:^{
+                            window.rootViewController = rootViewController;
+                        } completion:nil];
+    }
+}
+
 
 #pragma mark - RootViewController Assembly
 
 - (UITabBarController *)tabBarController
 {
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers =
-        @[self.firstViewController, self.secondViewController, self.thirdViewController];
+    tabBarController.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController];
     
     return tabBarController;
 }
@@ -130,23 +147,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Profile Icon"];
     
     return navigationController;
-}
-
-#pragma mark - Public
-
-- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
-{
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    
-    if (animated)
-    {
-        [UIView transitionWithView:window
-                          duration:0.75
-                           options:UIViewAnimationOptionTransitionFlipFromRight
-                        animations:^{
-            window.rootViewController = rootViewController;
-                        } completion:nil];
-    }
 }
 
 #pragma mark - NSNotificationCenter Observers

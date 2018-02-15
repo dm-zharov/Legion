@@ -1,5 +1,5 @@
 //
-//  DAZPlaceholderView.m
+//  DAZEmptyViewPlaceholder.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 14.02.2018.
@@ -7,16 +7,16 @@
 //
 
 #import <Masonry.h>
-#import "DAZPlaceholderView.h"
+#import "DAZEmptyViewPlaceholder.h"
 
-@interface DAZPlaceholderView ()
+@interface DAZEmptyViewPlaceholder ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *messageLabel;
 
 @end
 
-@implementation DAZPlaceholderView
+@implementation DAZEmptyViewPlaceholder
 
 - (instancetype)init
 {

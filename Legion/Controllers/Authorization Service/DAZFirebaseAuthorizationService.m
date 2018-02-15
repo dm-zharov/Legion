@@ -1,5 +1,5 @@
 //
-//  DAZFirebaseAuthService.m
+//  DAZFirebaseAuthorizationService.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
@@ -8,8 +8,8 @@
 
 #import <Firebase.h>
 #import "DAZFirebaseAuthorizationService.h"
-#import "NSError+Domains.h"
 #import "DAZUserProfile.h"
+#import "NSError+Domains.h"
 
 
 static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";
@@ -17,6 +17,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 
 @implementation DAZFirebaseAuthorizationService
+
 
 #pragma mark - Lifecycle
 
@@ -36,13 +37,17 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     return self;
 }
 
+
 #pragma mark - DAZAuthorizationServiceProtocol
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    if (authorizationType != DAZAuthorizationAnonymously) {
+    if (authorizationType != DAZAuthorizationAnonymously)
+    {
         return;
-    } else if (authorizationType == DAZAuthorizationAnonymously) {
+    }
+    else
+    {
         [self signInAnonymously];
     }
 }
@@ -64,6 +69,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     if (!bodyData)
     {
         [self completedSignInWithResult:nil error:error];
+        return;
     }
     
     NSURLSession *session = [NSURLSession sharedSession];
@@ -136,13 +142,14 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     }];
 }
 
+/**
+ * Обновляем данные пользователя на сервере "Firebase" с помощью данных профиля, так как
+ * после последней авторизации они могли претерпеть изменения. На данном этапе авторизация уже завершена.
+ */
 - (void)processSignInWithCustomToken
 {
-    /**
-     * Обновляем данные пользователя на сервере "Firebase" с помощью данных профиля, так как
-     * после последней авторизации они могли претерпеть изменения. На данном этапе авторизация уже завершена.
-     */
     DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+    // "Firebase" не различает способы авторизации: разница состоит лишь количестве получаемых персональных данных.
     profile.authorizationType = DAZAuthorizationAnonymously;
     
     if (profile.fullName)
@@ -150,7 +157,6 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         [self setDisplayName:profile.fullName avatarURL:profile.photoURL];
     }
     
-    // Сообщаем делегату, что авторизация завершена.
     dispatch_async(dispatch_get_main_queue(), ^{
         [self completedSignInWithResult:profile error:nil];
     });
@@ -159,11 +165,10 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 - (void)signInAnonymously
 {
-    [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *_Nullable user, NSError *_Nullable error) {
+    [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *user, NSError *error) {
         if (!error)
         {
             DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-            // Будет доработано в будущем релизе.
             profile.authorizationType = DAZAuthorizationAnonymously;
             profile.firstName = @"Анонимный";
             profile.lastName = @"пользователь";
@@ -171,7 +176,9 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self completedSignInWithResult:profile error:nil];
             });
-        } else {
+        }
+        else
+        {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self completedSignInWithResult:nil error:error];
             });

@@ -15,6 +15,11 @@
 
 @interface DAZCoreDataManager ()
 
+- (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName;
+- (void)removeObjectsWithEntityName:(NSString *)entityName;
+- (void)saveObjects:(NSArray *)objects;
+- (void)deleteObjects:(NSArray *)objects;
+
 @end
 
 @implementation DAZCoreDataManager
@@ -71,6 +76,7 @@
     return claimsArray;
 }
 
+
 #pragma mark - Lifecycle
 
 - (instancetype)init
@@ -82,8 +88,7 @@
     return self;
 }
 
-
-#pragma mark - Parties Selectors
+#pragma mark - Parties Accessors
 
 - (NSArray<PartyMO *> *)fetchParties
 {
@@ -100,7 +105,7 @@
     [self removeObjectsWithEntityName:[PartyMO entityName]];
 }
 
-#pragma mark - Claims Selectors
+#pragma mark - Claims Accessors
 
 - (NSArray<ClaimMO *> *)fetchClaims
 {
@@ -117,13 +122,11 @@
     [self removeObjectsWithEntityName:[ClaimMO entityName]];
 }
 
-#pragma mark - CoreData Accessors
+#pragma mark - CoreData Object Accessors
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName
 {
-
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
-    //fetchRequest.fetchLimit = 1;
     
     if (entityName == [PartyMO entityName])
     {
@@ -151,6 +154,8 @@
         [self.coreDataContext deleteObject:object];
     }
 }
+
+#pragma mark Basic
 
 - (void)saveObjects:(NSArray *)objects
 {

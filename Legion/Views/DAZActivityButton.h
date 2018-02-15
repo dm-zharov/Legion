@@ -1,5 +1,5 @@
 //
-//  DAZPlaceholderView.h
+//  DAZActivityButton.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 14.02.2018.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DAZPlaceholderView : UIView
+@interface DAZActivityButton : UIButton
 
-- (instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
+- (void)startSpinning;
+- (void)stopSpinning;
 
 @end

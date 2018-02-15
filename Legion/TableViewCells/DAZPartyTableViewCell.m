@@ -270,7 +270,6 @@
     self.titleLabel.text = party.title;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterShortStyle;
     self.dateLabel.text = [dateFormatter stringFromDate:party.date];

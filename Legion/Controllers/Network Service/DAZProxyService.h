@@ -18,15 +18,24 @@ typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
 @protocol DAZProxyServiceDelegate <NSObject>
 
 @optional
+
 - (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status;
-- (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims networkStatus:(DAZNetworkStatus)status;
+//- (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status;
+//- (void)proxyServiceDidFinishUpdatePartyWithNetworkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status;
+
+- (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims networkStatus:(DAZNetworkStatus)status;
+- (void)proxyServiceDidFinishSendClaimWithNetworkStatus:(DAZNetworkStatus)status;
+//- (void)proxyServiceDidFinishUpdateClaimWithNetworkStatus:(DAZNetworkStatus)status;
+//- (void)proxyServiceDidFinishDeleteClaimWithNetworkStatus:(DAZNetworkStatus)status;
 
 @end
 
 @interface DAZProxyService : NSObject
 
 @property (nonatomic, weak) id <DAZProxyServiceDelegate> delegate;
+
+- (BOOL)isServerReachable;
 
 - (void)getParties;
 - (void)addParty:(PartyMO *)party;

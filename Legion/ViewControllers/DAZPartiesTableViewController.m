@@ -8,16 +8,17 @@
 
 #import <Masonry/Masonry.h>
 
+#import "DAZProxyService.h"
 #import "DAZPartiesTableViewController.h"
 #import "DAZPartyTableViewCell.h"
 #import "DAZPartyCreationViewControllersAssembly.h"
 #import "DAZPartyDetailsViewControllers.h"
 #import "DAZPresentPartyDetailsTransitionController.h"
-#import "DAZProxyService.h"
-#import "DAZPlaceholderView.h"
-#import "UIViewController+Alerts.h"
+#import "DAZEmptyViewPlaceholder.h"
 
+#import "UIViewController+Alerts.h"
 #import "CAGradientLayer+Gradients.h"
+
 #import "PartyMO+CoreDataClass.h"
 
 
@@ -30,16 +31,16 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, nullable, copy) NSArray *partiesArray;
 
+@property (nonatomic, weak) DAZEmptyViewPlaceholder *placeholderView;
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) DAZPlaceholderView *placeholderView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
-@property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreationViewController;
 @property (nonatomic, strong) DAZPresentPartyDetailsTransitionController *presentDetailsViewController;
 
 @end
 
 @implementation DAZPartiesTableViewController
+
 
 #pragma mark - Lifecycle
 
@@ -88,8 +89,8 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     tableView.delegate = self;
     tableView.dataSource = self;
     
-    tableView.layer.masksToBounds = NO;
     tableView.clipsToBounds = NO;
+    tableView.layer.masksToBounds = NO;
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.contentInset = UIEdgeInsetsMake(0, 0, 16, 0);
@@ -109,13 +110,13 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)setupPlaceholderView
 {
-    DAZPlaceholderView *placeholderView = [[DAZPlaceholderView alloc]
+    DAZEmptyViewPlaceholder *placeholderView = [[DAZEmptyViewPlaceholder alloc]
         initWithTitle:@"Тусовок нет" message:@"Организуйте тусовку и будьте первым!"];
+    placeholderView.hidden = YES;
 
     [self.view addSubview:placeholderView];
     
     self.placeholderView = placeholderView;
-    self.placeholderView.hidden = YES;
     
     [self.placeholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -147,21 +148,27 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)actionCreateParty:(id)sender
 {
-    self.partyCreationViewController = [[DAZPartyCreationViewControllersAssembly alloc] init];
+    DAZPartyCreationViewControllersAssembly *partyCreationAssembly = [[DAZPartyCreationViewControllersAssembly alloc] init];
     
-    UIViewController *partyCreateViewController = [self.partyCreationViewController partyCreationViewController];
+    UIViewController *partyCreationViewController = [partyCreationAssembly partyCreationViewController];
     
-    [self presentViewController:partyCreateViewController animated:YES completion:nil];
+    [self presentViewController:partyCreationViewController animated:YES completion:nil];
 }
 
 
 #pragma mark - Custom Accessors
 
-- (void)setOfflineMode
+- (void)setViewStateWithNetworkStatus:(DAZNetworkStatus)status;
 {
-    [self al_presentOfflineModeAlertViewController];
+    BOOL isOnline = status == DAZNetworkOnline ? YES: NO;
     
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = isOnline;
+    self.tableView.allowsSelection = isOnline;
+
+    if (!isOnline)
+    {
+        [self al_presentOfflineModeAlertViewController];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -198,7 +205,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.presentDetailsViewController = [[DAZPresentPartyDetailsTransitionController alloc] init];
     self.presentDetailsViewController.cellFrame = cellFrame;
     
-    DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] init];
+    DAZPartyDetailsViewControllers *partyDetailsViewController = [[DAZPartyDetailsViewControllers alloc] initWithState:DAZPartyDetailsGuest];
     [partyDetailsViewController setContentWithParty:self.partiesArray[indexPath.row]];
     partyDetailsViewController.transitioningDelegate = self;
     
@@ -237,20 +244,21 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     self.partiesArray = parties;
     
+    /* Если массив пуст, показываем плейсхолдер.
+     */
     self.tableView.hidden = (self.partiesArray.count == 0);
     self.placeholderView.hidden = (![self.tableView isHidden]);
     
     [self reloadTableView];
     
-    if (status == DAZNetworkOffline)
-    {
-        [self setOfflineMode];
-    }
+    [self setViewStateWithNetworkStatus:status];
 }
 
 - (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
 {
     [self reloadTableView];
+    
+    [self setViewStateWithNetworkStatus:status];
 }
 
 @end

@@ -15,6 +15,10 @@
 #import "UIColor+Colors.h"
 #import "UIViewController+Alerts.h"
 
+#ifdef DEBUG
+#import "DAZNetworkService.h"
+#endif
+
 @interface DAZProfileViewController ()
 #ifdef DEBUG
 <UIGestureRecognizerDelegate>
@@ -319,8 +323,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
     {
         [self al_presentAlertViewControllerWithTitle:@"Готово" message:@"Теперь в вашем распоряжении порядочное "
                                                                         "количество данных. Приятного тестирования!"];
-        NSURL *url = [NSURL URLWithString:@"https://us-central1-legion-svc.cloudfunctions.net/setTestData"];
-        [NSData dataWithContentsOfURL:url];
+        DAZNetworkService *networkService = [[DAZNetworkService alloc] init];
+        [networkService setTestData];
     
         sender.enabled = NO;
     }

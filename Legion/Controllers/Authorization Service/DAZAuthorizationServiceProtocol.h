@@ -11,14 +11,10 @@
 
 @class DAZUserProfile;
 
-
 typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
-    /// Авторизация с помощью "ВКонтакте"
     DAZAuthorizationVkontakte = 1,
-    /// Авторизация с помощью "Firebase" (анонимная)
     DAZAuthorizationAnonymously
 };
-
 
 @protocol DAZAuthorizationServiceProtocol <NSObject>
 
@@ -26,7 +22,6 @@ typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
 - (void)signOut;
 
 @end
-
 
 @protocol DAZAuthorizationServiceDelegate <NSObject>
 

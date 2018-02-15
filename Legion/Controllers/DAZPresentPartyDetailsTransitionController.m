@@ -45,7 +45,7 @@
     
     [containerView layoutIfNeeded];
     
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.65
                                                                            dampingRatio:0.9
                                                                              animations:^{
         // Финальное состояние
@@ -67,6 +67,6 @@
 
 - (NSTimeInterval)transitionDuration:(nullable id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.5;
+    return 0.65;
 }
 @end

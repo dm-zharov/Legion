@@ -7,12 +7,15 @@
 //
 
 #import <Masonry.h>
+
 #import "DAZClaimsTableViewController.h"
 #import "DAZClaimTableViewCell.h"
+
 #import "DAZProxyService.h"
 #import "DAZUserProfile.h"
-#import "DAZPlaceholderView.h"
+#import "DAZEmptyViewPlaceholder.h"
 #import "DAZInfoView.h"
+
 #import "UIViewController+Alerts.h"
 #import "UIColor+Colors.h"
 #import "ClaimMO+CoreDataClass.h"
@@ -23,7 +26,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 @interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, getter=isIncome, assign) BOOL income;
+@property (nonatomic, getter=isInbox, assign) BOOL inbox;
 
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, weak) UISegmentedControl *segmentedControl;
@@ -31,7 +34,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 
 @property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
-@property (nonatomic, copy) NSArray<DAZPlaceholderView *> *placeholdersArray;
+@property (nonatomic, copy) NSArray<DAZEmptyViewPlaceholder *> *placeholdersArray;
 
 @property (nonatomic, assign) NSInteger selectedSegment;
 
@@ -39,6 +42,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 
 @implementation DAZClaimsTableViewController
+
 
 #pragma mark - Lifecycle
 
@@ -54,7 +58,6 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     [self setupPlaceholdersViews];
     
     [self setupRefreshControl];
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,7 +97,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (void)setupPlaceholdersViews
 {
-    DAZPlaceholderView *outboxPlaceholderView = [[DAZPlaceholderView alloc]
+    DAZEmptyViewPlaceholder *outboxPlaceholderView = [[DAZEmptyViewPlaceholder alloc]
         initWithTitle:@"Запросов нет" message:@"Все отправленные вами запросы на получение адресов тусовок будут "
                                                         "отображены здесь"];
     outboxPlaceholderView.hidden = YES;
@@ -104,7 +107,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         make.edges.equalTo(self.view);
     }];
     
-    DAZPlaceholderView *inboxPlaceholderView = [[DAZPlaceholderView alloc]
+    DAZEmptyViewPlaceholder *inboxPlaceholderView = [[DAZEmptyViewPlaceholder alloc]
         initWithTitle:@"Запросов нет" message:@"Организуйте тусовку и управляйте входящими запросами на место "
                                                         "проведения здесь!"];
     inboxPlaceholderView.hidden = YES;
@@ -164,24 +167,19 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
         if (segmentedControl.selectedSegmentIndex == 0)
         {
-            self.income = NO;
+            self.inbox = NO;
             self.tableView.tableFooterView.hidden = YES;
             self.placeholdersArray[1].hidden = YES;
         }
         else if (segmentedControl.selectedSegmentIndex == 1)
         {
-            self.income = YES;
+            self.inbox = YES;
             self.tableView.tableFooterView.hidden = NO;
             self.placeholdersArray[0].hidden = YES;
         }
     }
     
     [self.tableView reloadData];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self isIncome];
 }
 
 - (void)actionRefreshClaims:(id)sender
@@ -197,19 +195,35 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     }
 }
 
+- (void)actionConfirmClaim:(ClaimMO *)claim
+{
+    [claim setClaimStatus:DAZClaimStatusConfirmed];
+    [self.networkService updateClaim:claim];
+}
+
+- (void)actionDeclineClaim:(ClaimMO *)claim
+{
+    [claim setClaimStatus:DAZClaimStatusClosed];
+    [self.networkService updateClaim:claim];
+}
+
 
 #pragma mark - Custom Accessors
 
-- (void)setOfflineMode
+- (void)setViewStateWithNetworkStatus:(DAZNetworkStatus)status
 {
-    [self al_presentOfflineModeAlertViewController];
+    if (status == DAZNetworkOffline)
+    {
+        [self al_presentOfflineModeAlertViewController];
+    }
 }
+
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger index = [self isIncome] ? 1 : 0;
+    NSInteger index = [self isInbox] ? 1 : 0;
     
     self.tableView.hidden = (self.claimsArray[index].count == 0);
     self.placeholdersArray[index].hidden = (![self.tableView isHidden]);
@@ -219,16 +233,22 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger index = [self isIncome] ? 1 : 0;
+    NSInteger index = [self isInbox] ? 1 : 0;
     
     DAZClaimTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DAZClaimTableViewCellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     ClaimMO *claim = self.claimsArray[index][indexPath.row];
-    [cell setWithClaim:claim isIncome:[self isIncome]];
+    [cell setWithClaim:claim isIncome:[self isInbox]];
     
     return cell;
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self isInbox];
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -239,17 +259,16 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger index = [self isIncome] ? 1 : 0;
-    
     UIContextualAction *confirmAction = [UIContextualAction
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Подтвердить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
+        NSInteger index = [self isInbox] ? 1 : 0;
+                              
         ClaimMO *item = self.claimsArray[index][indexPath.row];
-        [item setClaimStatus:DAZClaimStatusConfirmed];
-        [self.networkService updateClaim:item];
+        [self actionConfirmClaim:item];
         completionHandler(YES);
-        }];
+    }];
     confirmAction.backgroundColor = [UIColor cl_lightPurpleColor];
     
     UISwipeActionsConfiguration *swipeActionsConfiguration = [UISwipeActionsConfiguration configurationWithActions:@[confirmAction]];
@@ -260,21 +279,21 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        NSInteger index = [self isIncome] ? 1 : 0;
-    
     UIContextualAction *declineAction = [UIContextualAction
         contextualActionWithStyle:UIContextualActionStyleDestructive
                             title:@"Отклонить"
                           handler:^(UIContextualAction *action, UIView *sourceView, void (^ completionHandler)(BOOL)) {
+        NSInteger index = [self isInbox] ? 1 : 0;
+                            
         ClaimMO *item = self.claimsArray[index][indexPath.row];
-        [item setClaimStatus:DAZClaimStatusClosed];
-        [self.networkService updateClaim:item];
+        [self actionDeclineClaim:item];
         completionHandler(YES);
     }];
     declineAction.backgroundColor = [UIColor redColor];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[declineAction]];
 }
+
 
 #pragma mark - DAZProxyServiceDelegate
 
@@ -313,7 +332,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     
     if (status == DAZNetworkOffline)
     {
-        [self setOfflineMode];
+        [self setViewStateWithNetworkStatus:status];
     }
 }
 

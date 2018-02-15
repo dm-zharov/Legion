@@ -10,7 +10,6 @@
 
 #import "DAZAuthorizationViewController.h"
 #import "DAZRootViewControllerRouter.h"
-#import "DAZPartiesTableViewController.h"
 
 #import "CAGradientLayer+Gradients.h"
 #import "UIColor+Colors.h"
@@ -19,14 +18,15 @@
 
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
+@property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
+
 @property (nonatomic, weak) UILabel *greetingLabel;
 @property (nonatomic, weak) UILabel *authorizeLabel;
 @property (nonatomic, weak) UIButton *signInButton;
 @property (nonatomic, weak) UIButton *anonymousInButton;
 
-@property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
-
 @end
+
 
 @implementation DAZAuthorizationViewController
 
@@ -86,7 +86,7 @@
     
     [self.greetingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.mas_centerY).with.offset(-60);
-        make.leading.equalTo(self.view.mas_leading).with.offset(16);
+        make.left.equalTo(self.view).with.offset(16);
         make.width.equalTo(@325);
     }];
 }
@@ -105,8 +105,8 @@
     
     [self.authorizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.greetingLabel.mas_bottom).with.offset(20);
-        make.leading.equalTo(self.view.mas_leading).with.offset(16);
-        make.trailing.equalTo(self.view.mas_trailing).with.offset(-20);
+        make.left.equalTo(self.view).with.offset(16);
+        make.right.equalTo(self.view).with.offset(-20);
     }];
 }
 
@@ -115,10 +115,13 @@
     UIButton *signInButton = [[UIButton alloc] init];
     
     signInButton.backgroundColor = [UIColor whiteColor];
-    signInButton.layer.cornerRadius = 10;
     [signInButton setTitle:@"Авторизоваться через ВК" forState:UIControlStateNormal];
     [signInButton setTitleColor:[UIColor cl_darkPurpleColor] forState:UIControlStateNormal];
+    [signInButton setTitleColor:[[UIColor cl_darkPurpleColor] colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
     [signInButton addTarget:self action:@selector(actionSignIn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    signInButton.layer.cornerRadius = 14;
+    signInButton.layer.masksToBounds = YES;
     
     [self.view addSubview:signInButton];
     
@@ -138,6 +141,7 @@
     anonymousInButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightLight];
     [anonymousInButton setTitle:@"Продолжить без авторизации" forState:UIControlStateNormal];
     [anonymousInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [anonymousInButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
     [anonymousInButton addTarget:self action:@selector(actionAnonymousIn:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:anonymousInButton];
@@ -159,7 +163,7 @@
 {
     
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     
     [self.view addSubview:activityIndicatorView];
     
@@ -182,8 +186,28 @@
 
 - (void)actionAnonymousIn:(id)sender
 {
-    [self.activityIndicatorView startAnimating];
-    [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
+    
+    NSString *title = @"Внимание";
+    NSString *message = @"Работа приложения без авторизации не была в должной степени протестирована, а также "
+        "имеет весьма урезанную функциональность. \n\n"
+        "Настоятельно рекомендуем осуществить вход через \"ВКонтакте\", например с помощью предоставленных данных!";
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Продолжить"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action) {
+        [self.activityIndicatorView startAnimating];
+        [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
+    }];
+    UIAlertAction *agreeAction = [UIAlertAction actionWithTitle:@"Хорошо" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:cancelAction];
+    [alert addAction:agreeAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)stopActivityIndicator
@@ -197,6 +221,7 @@
 - (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
 {
     [self.activityIndicatorView stopAnimating];
+    
     if (!error)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:DAZAuthorizationTokenReceivedNotification object:nil];

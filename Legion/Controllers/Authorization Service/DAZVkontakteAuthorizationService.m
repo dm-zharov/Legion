@@ -26,11 +26,11 @@ static NSString *const DAZVkontakteRelativeString =
      "&client_id=6347345"; // ID приложения
 
 static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/users.get?"
-"access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23" // Сервисный токен приложения
-"&fields=photo_200" // Разрешение запрашиваемой аватарки
-"&name_case=Nom" // Форматирование имени и фамилии
-"&v=v5.71" // Версия используемого API
-"&user_ids="; // Идентификатор пользователя (!)
+    "access_token=07dfb4b107dfb4b107dfb4b14807bf6ee0007df07dfb4b15db54152fe0c7dda75a0eb23" // Сервисный токен приложения
+    "&fields=photo_200" // Разрешение запрашиваемой аватарки
+    "&name_case=Nom" // Форматирование имени и фамилии
+    "&v=v5.71" // Версия используемого API
+    "&user_ids="; // Идентификатор пользователя (!)
 
 
 @interface DAZVkontakteAuthorizationService ()
@@ -83,6 +83,8 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 - (void)signOut
 {
+    [DAZUserProfile resetUserProfile];
+    
     [self completedSignOut];
 }
 
@@ -96,7 +98,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     {
         NSString *absoluteURL = [url absoluteString];
         
-        // Поиск места, с которого начинаются ключи параметров
+        // Поиск позиции в строке, с которой начинаются ключи параметров
         NSRange rangeOfHash = [absoluteURL rangeOfString:@"#"];
         
         if (rangeOfHash.location == NSNotFound)
@@ -134,6 +136,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     return NO;
 }
 
+
 #pragma mark - Private
 
 - (void)signInWithVkontakteApplication
@@ -146,7 +149,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     
     if ([application respondsToSelector:@selector(openURL:options:completionHandler:)])
     {
-        NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly: @NO };
+        NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly : @NO };
         
         [application openURL:url options:options completionHandler:^(BOOL success) {
             if (!success)
@@ -165,7 +168,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     SFAuthenticationSession *session =
         [[SFAuthenticationSession alloc] initWithURL:url
                                    callbackURLScheme:@"vk6347345://"
-                                   completionHandler:^(NSURL * _Nullable callbackURL, NSError * _Nullable error) {
+                                   completionHandler:^(NSURL *callbackURL, NSError *error) {
             [self.session cancel];
 
             if (!error)
@@ -252,6 +255,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 {
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:DAZVkontakteApplicationScheme]];
 }
+
 
 #pragma mark - DAZAuthorizationServiceDelegate
 

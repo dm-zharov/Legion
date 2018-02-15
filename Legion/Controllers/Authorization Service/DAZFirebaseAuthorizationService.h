@@ -1,5 +1,5 @@
 //
-//  DAZFirebaseAuthService.h
+//  DAZFirebaseAuthorizationService.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
@@ -12,8 +12,9 @@
 
 @interface DAZFirebaseAuthorizationService : NSObject <DAZAuthorizationServiceProtocol>
 
-@property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
+
+@property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
@@ -23,6 +24,8 @@
 
 - (void)signOut;
 
+/* Обновляет личные данные пользователя на сервере "Firebase".
+ */
 - (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url;
 
 @end

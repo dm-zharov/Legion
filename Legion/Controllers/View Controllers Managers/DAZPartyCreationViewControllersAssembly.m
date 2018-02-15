@@ -22,8 +22,8 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 
 @interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenDelegate>
 
-@property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) DAZProxyService *networkService;
+@property (nonatomic, strong) UINavigationController *navigationController;
 
 @property (nonatomic, assign) NSInteger currentItem;
 @property (nonatomic, copy) NSArray *chainArray;
@@ -44,6 +44,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     return self;
 }
 
+
 #pragma mark - Public
 
 - (UIViewController *)partyCreationViewController
@@ -54,12 +55,12 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     
     // Цепочка экранов, порядок которой можно изменять и дополнять
     self.chainArray = @[
-                        @[@(DAZSelectionScreenDatePicker), DAZPartyMessageDate],
-                        @[@(DAZSelectionScreenPickerView), DAZPartyMessageAddress],
-                        @[@(DAZSelectionScreenTextField), DAZPartyMessageApartment],
-                        @[@(DAZSelectionScreenSlider), DAZPartyMessageMembers],
-                        @[@(DAZSelectionScreenTextView), DAZPartyMessage],
-                        @[@(DAZSelectionScreenTextField), DAZPartyMessageTitle]
+                            @[@(DAZSelectionScreenDatePicker), DAZPartyMessageDate],
+                            @[@(DAZSelectionScreenPickerView), DAZPartyMessageAddress],
+                            @[@(DAZSelectionScreenTextField), DAZPartyMessageApartment],
+                            @[@(DAZSelectionScreenSlider), DAZPartyMessageMembers],
+                            @[@(DAZSelectionScreenTextView), DAZPartyMessage],
+                            @[@(DAZSelectionScreenTextField), DAZPartyMessageTitle]
                        ];
     
     self.navigationController =
@@ -104,19 +105,21 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     
 }
 
-// Дополнительная настройка первого экрана цепочки
+/* Надстройка первого экрана цепочки
+ */
 - (DAZSelectionScreenViewController *)tuneFirstViewController:(DAZSelectionScreenViewController *)viewController
 {
     viewController.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle:@"Отменить"
                                          style:UIBarButtonItemStylePlain
                                         target:self
-                                        action:@selector(cancelButtonPressed:)];
+                                        action:@selector(cancelButtonPressed)];
     
     return viewController;
 }
 
-// Дополнительная настройка последнего экрана цепочки
+/* Надстройка последнего экрана цепочки
+ */
 - (DAZSelectionScreenViewController *)tuneLastViewController:(DAZSelectionScreenViewController *)viewController
 {
     [viewController.actionButton setTitle:@"Завершить" forState:UIControlStateNormal];
@@ -142,10 +145,11 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     }
 }
 
-- (void)cancelButtonPressed:(id)sender
+- (void)cancelButtonPressed
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 #pragma mark - DAZSelectionScreenDelegate
 

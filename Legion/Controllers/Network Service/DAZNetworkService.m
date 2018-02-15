@@ -38,7 +38,9 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 @end
 
+
 @implementation DAZNetworkService
+
 
 #pragma mark - Lifecycle
 
@@ -51,7 +53,8 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     return self;
 }
 
-#pragma mark - Server Reachable
+
+#pragma mark - Reachability Testing
 
 - (BOOL)isServerReachable
 {
@@ -64,6 +67,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     return data ? YES : NO;
 }
+
 
 #pragma mark - Parties Accessors
 
@@ -280,6 +284,20 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         }
     }];
 }
+
+#ifdef DEBUG
+- (void)setTestData
+{
+    [self dataTaskWithFunction:@"setTestData"
+                    dictionary:nil
+              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+                  NSLog(@"Тестовые данные установлены!");
+              }];
+}
+#endif
+
+
+#pragma mark - Private
 
 - (void)dataTaskWithFunction:(NSString *)function
                      dictionary:(NSDictionary * _Nullable)parameters

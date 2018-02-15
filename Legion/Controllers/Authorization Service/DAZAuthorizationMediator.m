@@ -7,12 +7,10 @@
 //
 
 #import <Firebase.h>
-
 #import "DAZAuthorizationMediator.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 #import "DAZUserProfile.h"
-
 
 @interface DAZAuthorizationMediator () <DAZAuthorizationServiceDelegate>
 
@@ -20,7 +18,6 @@
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
 
 @end
-
 
 @implementation DAZAuthorizationMediator
 

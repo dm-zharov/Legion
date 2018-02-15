@@ -9,7 +9,6 @@
 #import "DAZProxyService.h"
 #import "DAZCoreDataManager.h"
 #import "DAZNetworkService.h"
-
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
@@ -116,6 +115,13 @@
     {
         [self.networkService sendClaimForParty:[party dictionary]];
     }
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOffline];
+        }
+    }
 }
 
 - (void)updateClaim:(ClaimMO *)claim
@@ -141,7 +147,9 @@
 
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
 {
+    // Мы получили новые данные, кешированные в базу данных тусовки могли утратить актуальность
     [self.coreDataManager removeParties];
+    
     NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByDictionariesArray:parties];
     
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
@@ -149,19 +157,7 @@
         [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOnline];
     }
     
-    [self.coreDataManager saveContext];
-}
-
-- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
-{
-    [self.coreDataManager removeClaims];
-    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByDictionariesArray:claims];
-    
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
-    {
-        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOnline];
-    }
-    
+    // Сохраняем обновленные тусовки
     [self.coreDataManager saveContext];
 }
 
@@ -170,6 +166,30 @@
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
     {
         [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOnline];
+    }
+}
+
+- (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
+{
+    // Мы получили новые данные, кешированные в базу данных запросы могли утратить актуальность
+    [self.coreDataManager removeClaims];
+    
+    NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByDictionariesArray:claims];
+    
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOnline];
+    }
+    
+    // Сохраняем обновленные запросы
+    [self.coreDataManager saveContext];
+}
+
+- (void)networkServiceDidFinishSendClaim
+{
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOnline];
     }
 }
 

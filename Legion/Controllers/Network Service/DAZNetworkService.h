@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 
-
 @protocol DAZNetworkServiceDelegate <NSObject>
 
 @optional
+
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties;
 - (void)networkServiceDidFinishAddParty;
 - (void)networkServiceDidFinishUpdateParty;
@@ -24,6 +24,7 @@
 - (void)networkServiceDidFinishDeleteClaim;
 
 @end
+
 
 @interface DAZNetworkService : NSObject
 
@@ -40,5 +41,9 @@
 - (void)sendClaimForParty:(NSDictionary *)partyDictionary;
 - (void)updateClaim:(NSDictionary *)claimDictionary;
 - (void)deleteClaim:(NSDictionary *)claimDictionary;
+
+#ifdef DEBUG
+- (void)setTestData;
+#endif
 
 @end
