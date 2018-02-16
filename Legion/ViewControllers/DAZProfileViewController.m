@@ -99,6 +99,7 @@
     
     [self.profileView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.headerView);
+        make.left.and.right.equalTo(self.view);
     }];
     
     [self setupAvatarImageView];
@@ -128,6 +129,9 @@
 {
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = [UIFont systemFontOfSize:34 weight:UIFontWeightBold];
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    nameLabel.numberOfLines = 1;
     
     [self.headerView addSubview:nameLabel];
     
@@ -135,6 +139,8 @@
     
     [self.nameLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.avatarImageView.mas_bottom).with.offset(16);
+        make.left.equalTo(self.profileView).with.offset(16);
+        make.right.equalTo(self.profileView).with.offset(-16);
         make.centerX.equalTo(self.profileView);
     }];
 }
@@ -228,6 +234,7 @@
     if (profile.fullName)
     {
         self.nameLabel.text = profile.fullName;
+        self.nameLabel.text = @"Анонимный пользователь";
     }
     
     if (profile.email)

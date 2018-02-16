@@ -282,14 +282,14 @@
         make.left.equalTo(self.avatarImageView.mas_right).with.offset(12);
     }];
     
-    UILabel *ratingLabel = [[UILabel alloc] init];
-    ratingLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-    ratingLabel.textColor = [UIColor lightGrayColor];
-    ratingLabel.text = @"Организатор";
+    UILabel *organizerLabel = [[UILabel alloc] init];
+    organizerLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
+    organizerLabel.textColor = [UIColor lightGrayColor];
+    organizerLabel.text = @"Организатор";
     
-    [self.detailsView addSubview:ratingLabel];
+    [self.detailsView addSubview:organizerLabel];
     
-    [ratingLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [organizerLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarImageView.mas_right).with.offset(12);
         make.right.equalTo(self.detailsView).with.offset(-16);
         make.bottom.equalTo(self.avatarImageView).with.offset(-8);
@@ -307,7 +307,7 @@
         make.top.equalTo(self.avatarImageView.mas_bottom).with.offset(16);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     UILabel *dateTitle = [[UILabel alloc] init];
@@ -348,7 +348,7 @@
         make.top.equalTo(self.dateLabel.mas_bottom).with.offset(16);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     UILabel *descriptionHeading = [[UILabel alloc] init];
@@ -458,7 +458,7 @@
         make.top.equalTo(self.shareButton.mas_bottom).with.offset(16);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     UILabel *addressHeading = [[UILabel alloc] init];
@@ -525,7 +525,7 @@
         make.top.equalTo(membersHeading.mas_bottom).with.offset(6);
         make.left.equalTo(self.detailsView).with.offset(16);
         make.right.equalTo(self.detailsView).with.offset(-16);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
     
     UILabel *membersLabel = [[UILabel alloc] init];
