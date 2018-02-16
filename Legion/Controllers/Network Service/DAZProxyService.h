@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
 @optional
 
 - (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status;
-//- (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status;
+- (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status;
 //- (void)proxyServiceDidFinishUpdatePartyWithNetworkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status;
 

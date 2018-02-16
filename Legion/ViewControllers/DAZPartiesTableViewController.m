@@ -25,7 +25,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 
 @interface DAZPartiesTableViewController () <UIViewControllerTransitioningDelegate, DAZProxyServiceDelegate,
-                                                UITableViewDataSource, UITableViewDelegate>
+                                                DAZPartyCreationViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, nullable, copy) NSArray *partiesArray;
@@ -54,14 +54,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self setupTableView];
     [self setupPlaceholderView];
     [self setupRefreshControl];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+    
     [self.networkService getParties];
 }
-
 
 #pragma mark - Network Service
 
@@ -149,6 +144,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 - (void)actionCreateParty:(id)sender
 {
     self.partyCreationViewControllerAssembly = [[DAZPartyCreationViewControllersAssembly alloc] init];
+    self.partyCreationViewControllerAssembly.delegate = self;
     
     UIViewController *partyCreationViewController = [self.partyCreationViewControllerAssembly partyCreationViewController];
     
@@ -256,11 +252,25 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self setViewStateWithNetworkStatus:status];
 }
 
-- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
+- (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status
 {
-    [self reloadTableView];
+    [self.networkService getParties];
     
     [self setViewStateWithNetworkStatus:status];
+}
+
+- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
+{
+    [self.networkService getParties];
+    
+    [self setViewStateWithNetworkStatus:status];
+}
+
+#pragma mark - DAZPartyCreationViewControllerDelegate
+
+- (void)partyCreationViewCompletedWorkWithParty:(PartyMO *)party
+{
+    [self.networkService addParty:party];
 }
 
 @end

@@ -159,6 +159,14 @@
     [self.coreDataManager saveContext];
 }
 
+- (void)networkServiceDidFinishAddParty
+{
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOnline];
+    }
+}
+
 - (void)networkServiceDidFinishDeleteParty
 {
     if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])

@@ -138,7 +138,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     }
     else
     {
-        [self.networkService addParty:self.party];
+        [self completedWorkWithParty:self.party];
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -198,6 +198,14 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     }
 
     [self continueButtonPressed];
+}
+
+- (void)completedWorkWithParty:(PartyMO *)party
+{
+    if ([self.delegate respondsToSelector:@selector(partyCreationViewCompletedWorkWithParty:)])
+    {
+        [self.delegate partyCreationViewCompletedWorkWithParty:party];
+    }
 }
     
 @end
