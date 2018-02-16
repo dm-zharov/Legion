@@ -52,7 +52,10 @@
         }
     }
     
-    return partiesArray;
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];    
+    NSArray *result = [partiesArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    return result;
 }
 
 + (NSArray<ClaimMO *> *)claimsArrayByDictionariesArray:(NSArray<NSDictionary *> *)claims
@@ -72,7 +75,10 @@
         }
     }
     
-    return claimsArray;
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    NSArray *result = [claimsArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    return result;
 }
 
 
@@ -130,11 +136,8 @@
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
     
-    if (entityName == [PartyMO entityName])
-    {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:YES];
-        [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    }
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
     NSError *error;
     NSArray *results = [self.coreDataContext executeFetchRequest:fetchRequest error:&error];
