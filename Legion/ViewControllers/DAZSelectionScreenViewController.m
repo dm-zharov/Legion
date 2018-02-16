@@ -228,6 +228,11 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if (textField.text.length < 2)
+    {
+        return NO;
+    }
+    
     if ([self.textField isFirstResponder])
     {
         [self.textField resignFirstResponder];

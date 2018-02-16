@@ -14,11 +14,7 @@ target 'Legion' do
     inherit! :search_paths
     # Pods for testing
     pod 'OCMock'
-  end
-
-  target 'LegionUITests' do
-    inherit! :search_paths
-    # Pods for testing
+    pod 'Expecta'
   end
 
 end

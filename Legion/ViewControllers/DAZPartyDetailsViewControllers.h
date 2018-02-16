@@ -9,18 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class PartyMO;
-
-typedef NS_ENUM(NSInteger, DAZPartyDetailsState) {
-    DAZPartyDetailsOwner = YES,
-    DAZPartyDetailsGuest = NO,
-};
+@protocol DAZProxyServiceDelegate;
 
 @interface DAZPartyDetailsViewControllers : UIViewController
 
-@property (nonatomic, readonly) UIScrollView *scrollView;
+@property (nonatomic, readonly) UIScrollView *scrollView; // Необходим для кастомной анимации
 
-- (instancetype)initWithState:(DAZPartyDetailsState)state;
+@property (nonatomic, weak) id <DAZProxyServiceDelegate> delegate;
 
-- (void)setContentWithParty:(PartyMO *)party;
+- (instancetype)initWithParty:(PartyMO *)party;
 
 @end

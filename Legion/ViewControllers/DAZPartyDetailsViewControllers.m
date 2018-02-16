@@ -61,11 +61,12 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithState:(DAZPartyDetailsState)state;
+- (instancetype)initWithParty:(PartyMO *)party
 {
     self = [super init];
     if (self) {
-        _owner = state;
+        _party = party;
+        _owner = party.ownership;
     }
     return self;
 }
@@ -753,8 +754,8 @@
 {
     if ([sender isKindOfClass:[UIButton class]])
     {
-        [self.networkService deleteParty:self.party];
         [self actionDismissViewController];
+        [self.networkService deleteParty:self.party];
     }
 }
 
@@ -807,6 +808,16 @@
     {
         [self al_presentOfflineModeAlertViewController];
         [self.claimButton setTitle:@"Ошибка" forState:UIControlStateDisabled];
+    }
+}
+
+- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
+{
+    [self actionDismissViewController];
+    
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:status];
     }
 }
 
