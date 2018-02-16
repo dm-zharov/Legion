@@ -42,10 +42,10 @@
     switch (authorizationType)
     {
         case DAZAuthorizationVkontakte:
-            [self.vkontakteAuthorizationService signInWithAuthorizationType:DAZAuthorizationVkontakte];
+            [self.vkontakteAuthorizationService signIn];
             break;
         case DAZAuthorizationAnonymously:
-            [self.firebaseAuthorizationService signInWithAuthorizationType:DAZAuthorizationAnonymously];
+            [self.firebaseAuthorizationService signInAnonymously];
             break;
         default:
         {

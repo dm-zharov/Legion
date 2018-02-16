@@ -62,6 +62,9 @@
     return self;
 }
 
+
+#pragma mark - UIView
+
 - (void)updateConstraints
 {
     UIEdgeInsets offsets = UIEdgeInsetsMake(16, 16, 16, -16);
@@ -78,6 +81,13 @@
     }];
     
     [super updateConstraints];
+}
+
+- (void)prepareForReuse
+{
+    self.avatarImageView.image = [UIImage imageNamed:@"Purple Avatar"];
+    
+    [super prepareForReuse];
 }
 
 

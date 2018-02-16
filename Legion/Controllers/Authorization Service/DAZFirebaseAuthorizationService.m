@@ -40,11 +40,28 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    if (authorizationType == DAZAuthorizationAnonymously)
+    if (authorizationType != DAZAuthorizationAnonymously)
+    {
+        NSError *error = [[NSError alloc]
+            initWithDomain:@"Ошибка авторизации: данный способ авторизации не поддерживается провайдером \"Firebase\"."
+                      code:0
+                  userInfo:nil];
+        [self completedSignInWithProfile:nil error:error];
+    }
+    else
     {
         [self signInAnonymously];
     }
-    // else ...
+}
+
+- (void)signOut
+{
+    NSError *error;
+    if ([[FIRAuth auth] signOut:&error]) {
+        [self completedSignOut];
+    } else {
+        NSLog(@"%@", error.domain);
+    }
 }
 
 
@@ -63,7 +80,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
     
     if (!bodyData)
     {
-        [self completedSignInWithResult:nil error:error];
+        [self completedSignInWithProfile:nil error:error];
         return;
     }
     
@@ -87,12 +104,29 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         }
         else
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self completedSignInWithResult:nil error:error];
-            });
+            [self completedSignInWithProfile:nil error:error];
         }
     }];
     [customTokenTask resume];
+}
+
+- (void)signInAnonymously
+{
+    [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *user, NSError *error) {
+        if (!error)
+        {
+            DAZUserProfile *profile = [[DAZUserProfile alloc] init];
+            profile.authorizationType = DAZAuthorizationAnonymously;
+            profile.firstName = @"Анонимный";
+            profile.lastName = @"пользователь";
+            
+            [self completedSignInWithProfile:profile error:nil];
+        }
+        else
+        {
+            [self completedSignInWithProfile:nil error:error];
+        }
+    }];
 }
 
 - (void)setDisplayName:(NSString *)displayName avatarURL:(NSURL *)url
@@ -130,9 +164,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         }
         else
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self completedSignInWithResult:nil error:error];
-            });
+            [self completedSignInWithProfile:nil error:error];
         }
     }];
 }
@@ -152,52 +184,20 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         [self setDisplayName:profile.fullName avatarURL:profile.photoURL];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self completedSignInWithResult:profile error:nil];
-    });
+    [self completedSignInWithProfile:profile error:nil];
     
 }
 
-- (void)signInAnonymously
-{
-    [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser *user, NSError *error) {
-        if (!error)
-        {
-            DAZUserProfile *profile = [[DAZUserProfile alloc] init];
-            profile.authorizationType = DAZAuthorizationAnonymously;
-            profile.firstName = @"Анонимный";
-            profile.lastName = @"пользователь";
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self completedSignInWithResult:profile error:nil];
-            });
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self completedSignInWithResult:nil error:error];
-            });
-        }
-    }];
-}
-
-- (void)signOut
-{
-    NSError *error;
-    if ([[FIRAuth auth] signOut:&error]) {
-        [self completedSignOut];
-    } else {
-        NSLog(@"%@", error.domain);
-    }
-}
 
 #pragma mark - DAZAuthorizationServiceDelegate
 
-- (void)completedSignInWithResult:(DAZUserProfile *)profile error:(NSError *)error
+- (void)completedSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error
 {
     if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
     {
-        [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        });
     }
 }
 
@@ -205,7 +205,9 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 {
     if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignOut)])
     {
-        [self.delegate authorizationServiceDidFinishSignOut];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate authorizationServiceDidFinishSignOut];
+        });
     }
 }
 

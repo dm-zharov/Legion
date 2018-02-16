@@ -19,7 +19,9 @@
 - (instancetype)initWithMediator:(id)mediator;
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
+
 - (void)signInWithUserID:(NSString *)userID;
+- (void)signInAnonymously;
 
 - (void)signOut;
 

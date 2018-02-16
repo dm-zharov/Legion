@@ -64,11 +64,25 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 {
     if (authorizationType != DAZAuthorizationVkontakte)
     {
-        return;
+        NSError *error = [[NSError alloc]
+            initWithDomain:@"Ошибка авторизации: данный способ авторизации не поддерживается провайдером \"ВКонтакте\"."
+                      code:0
+                  userInfo:nil];
+        [self completedSignInWithProfile:nil error:error];
     }
     
     [self signIn];
 }
+
+- (void)signOut
+{
+    [DAZUserProfile resetUserProfile];
+    
+    [self completedSignOut];
+}
+
+
+#pragma mark - Public
 
 - (void)signIn
 {
@@ -83,16 +97,6 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
         [self signInWithSafariAuthorizationSession];
     }
 }
-
-- (void)signOut
-{
-    [DAZUserProfile resetUserProfile];
-    
-    [self completedSignOut];
-}
-
-
-#pragma mark - Public
 
 - (BOOL)processAuthorizationURL:(NSURL *)url
 {
@@ -229,22 +233,16 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
                 NSURL *photoURL = [NSURL URLWithString:userData[@"photo_200"]];
                 profile.photoURL = photoURL;
             
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self completedSignInWithProfile:profile error:nil];
-                });
+                [self completedSignInWithProfile:profile error:nil];
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self completedSignInWithProfile:nil error:error];
-                });
+                [self completedSignInWithProfile:nil error:error];
             }
         }
         else
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self completedSignInWithProfile:nil error:error];
-            });
+            [self completedSignInWithProfile:nil error:error];
         }
     }];
     
@@ -266,7 +264,9 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 {
     if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
     {
-        [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:error];
+        });
     }
 }
 
@@ -274,7 +274,9 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 {
     if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignOut)])
     {
-        [self.delegate authorizationServiceDidFinishSignOut];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate authorizationServiceDidFinishSignOut];
+        });
     }
 }
 @end

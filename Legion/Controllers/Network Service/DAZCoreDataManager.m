@@ -124,7 +124,7 @@
 }
 
 
-#pragma mark - CoreData Object Accessors
+#pragma mark - CoreData Accessors
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName
 {

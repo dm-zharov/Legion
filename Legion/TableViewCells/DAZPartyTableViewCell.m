@@ -254,6 +254,7 @@
     self.frontCardLayer.frame = self.backCardLayer.frame = self.contentView.bounds;
 }
 
+
 #pragma mark - UITableViewCell
 
 - (void)prepareForReuse
@@ -262,7 +263,10 @@
     
     self.flipped = NO;
     [self.contentView insertSubview:self.frontCardView aboveSubview:self.backCardView];
+    
+    self.avatarImageView.image = [UIImage imageNamed:@"Clear Avatar"];
 }
+
 
 #pragma mark - Mutators
 

@@ -17,6 +17,7 @@
 - (instancetype)initWithMediator:(id)mediator;
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
+- (void)signIn;
 - (void)signOut;
 
 - (BOOL)processAuthorizationURL:(NSURL *)url;

@@ -36,7 +36,7 @@
 @property (nonatomic, weak) UIView *contentView;
 
 @property (nonatomic, weak) UIView *headerView;
-@property (nonatomic, weak) UILabel *navigationLabel;
+@property (nonatomic, weak) UILabel *titleLabel;
 
 @property (nonatomic, weak) UIView *detailsView;
 @property (nonatomic, weak) UIImageView *avatarImageView;
@@ -210,9 +210,9 @@
     
     [self.headerView addSubview:navigationLabel];
     
-    self.navigationLabel = navigationLabel;
+    self.titleLabel = navigationLabel;
     
-    [self.navigationLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.headerView).with.offset(64);
         make.left.equalTo(self.headerView).with.offset(16);
         make.right.equalTo(self.headerView).with.offset(-16);
@@ -688,7 +688,7 @@
     if (party.title)
     {
         self.navigationItem.title = party.title;
-        self.navigationLabel.text = party.title;
+        self.titleLabel.text = party.title;
     }
     
     if (party.date)
