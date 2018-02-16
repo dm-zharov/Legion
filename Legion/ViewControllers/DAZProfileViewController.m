@@ -234,7 +234,6 @@
     if (profile.fullName)
     {
         self.nameLabel.text = profile.fullName;
-        self.nameLabel.text = @"Анонимный пользователь";
     }
     
     if (profile.email)
