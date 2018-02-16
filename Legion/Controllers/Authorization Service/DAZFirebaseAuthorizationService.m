@@ -11,10 +11,8 @@
 #import "DAZUserProfile.h"
 #import "NSError+Domains.h"
 
-
 static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";
 static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
-
 
 @implementation DAZFirebaseAuthorizationService
 

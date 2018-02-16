@@ -176,6 +176,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     }];
 }
 
+
 #pragma mark - Claims Accessors
 
 - (void)downloadClaims
@@ -283,6 +284,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         }
     }];
 }
+
 
 #ifdef DEBUG
 - (void)setTestData

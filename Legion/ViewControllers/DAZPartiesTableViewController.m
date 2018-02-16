@@ -58,6 +58,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self.networkService getParties];
 }
 
+
 #pragma mark - Network Service
 
 - (void)setupNetworkService
@@ -65,6 +66,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     self.networkService  = [[DAZProxyService alloc] init];
     self.networkService.delegate = self;
 }
+
 
 #pragma mark - Setup UI
 
@@ -167,6 +169,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     }
 }
 
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -265,6 +268,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     
     [self setViewStateWithNetworkStatus:status];
 }
+
 
 #pragma mark - DAZPartyCreationViewControllerDelegate
 

@@ -87,6 +87,7 @@
     return self;
 }
 
+
 #pragma mark - Parties Accessors
 
 - (NSArray<PartyMO *> *)fetchParties
@@ -104,6 +105,7 @@
     [self removeObjectsWithEntityName:[PartyMO entityName]];
 }
 
+
 #pragma mark - Claims Accessors
 
 - (NSArray<ClaimMO *> *)fetchClaims
@@ -120,6 +122,7 @@
 {
     [self removeObjectsWithEntityName:[ClaimMO entityName]];
 }
+
 
 #pragma mark - CoreData Object Accessors
 
@@ -153,6 +156,7 @@
         [self.coreDataContext deleteObject:object];
     }
 }
+
 
 #pragma mark Basic
 

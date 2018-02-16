@@ -29,7 +29,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @end
 
-
 @implementation DAZRootViewControllerRouter
 
 
@@ -156,6 +155,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     return navigationController;
 }
+
 
 #pragma mark - NSNotificationCenter Observers
 

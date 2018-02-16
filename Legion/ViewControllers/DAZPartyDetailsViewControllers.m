@@ -141,6 +141,7 @@
     [self.view.layer addSublayer:purpleLayer];
 }
 
+
 #pragma mark - UIScrollView
 
 - (void)setupScrollView
@@ -217,6 +218,7 @@
         make.right.equalTo(self.headerView).with.offset(-16);
     }];
 }
+
 
 #pragma mark Content Details View
 
@@ -602,6 +604,7 @@
     }];
 }
 
+
 #pragma mark - UINavigationBar
 
 - (void)setupNavigationBar
@@ -711,6 +714,7 @@
     }
 }
 
+
 #pragma mark - Actions
 
 - (void)actionDismissViewController
@@ -762,6 +766,7 @@
     return UIBarPositionTopAttached;
 }
 
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -789,6 +794,7 @@
         }];
     }
 }
+
 
 #pragma mark - DAZProxyServiceDelegate
 

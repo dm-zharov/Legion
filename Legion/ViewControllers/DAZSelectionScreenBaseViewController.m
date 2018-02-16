@@ -20,6 +20,7 @@
 
 @implementation DAZSelectionScreenBaseViewController
 
+
 #pragma mark - Lifecycle
 
 - (instancetype)initWithMessage:(NSString *)message
@@ -41,6 +42,7 @@
     [self setupContentView];
     // Do any additional setup after loading the view.
 }
+
 
 #pragma mark - Setup UI
 
@@ -111,6 +113,7 @@
     
     [self setupContentInView:contentView];
 }
+
 
 #pragma mark - DAZSelectionScreenBaseViewControllerProtocol
 

@@ -70,6 +70,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     return self.navigationController;
 }
 
+
 #pragma mark - Private
 
 - (DAZSelectionScreenViewController *)nextViewController
@@ -124,6 +125,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     
     return viewController;
 }
+
 
 #pragma mark - Actions
 

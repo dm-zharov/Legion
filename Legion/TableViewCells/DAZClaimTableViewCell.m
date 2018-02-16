@@ -40,6 +40,7 @@
     return YES;
 }
 
+
 #pragma mark - Lifecycle
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

@@ -11,7 +11,6 @@
 #import "NSError+Domains.h"
 #import "DAZUserProfile.h"
 
-
 static NSString *const DAZVkontakteResourceScheme = @"https://oauth.vk.com/";
 static NSString *const DAZVkontakteApplicationScheme = @"vkauthorize://";
 
@@ -38,7 +37,6 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 @property (nonatomic, strong) SFAuthenticationSession *session;
 
 @end
-
 
 @implementation DAZVkontakteAuthorizationService
 

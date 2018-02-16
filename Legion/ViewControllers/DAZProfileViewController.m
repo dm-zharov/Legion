@@ -205,6 +205,7 @@
     }];
 }
 
+
 #pragma mark - Actions
 
 - (void)actionSignOut:(id)sender
@@ -235,6 +236,7 @@
     }
 }
 
+
 #pragma mark - Debug Target Only
 
 #ifdef DEBUG
@@ -262,8 +264,8 @@
     debugMessage.textAlignment = NSTextAlignmentCenter;
     debugMessage.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
     debugMessage.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
-    debugMessage.text = @"В данном режиме у вас есть возможность получить контроль над тестовыми тусовками и запросами "
-                            "с помощью простого пятикратного касания аватарки пользователя!";
+    debugMessage.text = @"В данном режиме у вас есть возможность получить выборку тестовых данных "
+                            "с помощью простого пятикратного нажатия по аватарке пользователя!";
     debugMessage.numberOfLines = 0;
     
     [self.footerView addSubview:debugMessage];
@@ -329,8 +331,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 {
     if (sender.state == UIGestureRecognizerStateRecognized)
     {
-        [self al_presentAlertViewControllerWithTitle:@"Готово" message:@"Теперь в вашем распоряжении порядочное "
-                                                                        "количество данных. Приятного тестирования!"];
+        [self al_presentAlertViewControllerWithTitle:@"Готово" message:@"Выборка данных получена. Приятного тестирования!"];
         DAZNetworkService *networkService = [[DAZNetworkService alloc] init];
         [networkService setTestData];
     
