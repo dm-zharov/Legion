@@ -40,6 +40,8 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     self = [super init];
     if (self) {
         _networkService = [[DAZProxyService alloc] init];
+        _currentItem = 0;
+        _party = [PartyMO partyWithContext:[DAZCoreDataManager coreDataContext]];
     }
     return self;
 }
@@ -49,10 +51,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 
 - (UIViewController *)partyCreationViewController
 {
-    self.currentItem = 0;
-    
-    self.party = [PartyMO partyWithContext:[DAZCoreDataManager coreDataContext]];
-    
     // Цепочка экранов, порядок которой можно изменять и дополнять
     self.chainArray = @[
                             @[@(DAZSelectionScreenDatePicker), DAZPartyMessageDate],
@@ -96,14 +94,12 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     {
         [self tuneFirstViewController:nextViewController];
     }
-    
-    if (self.currentItem == (self.chainArray.count - 1))
+    else if (self.currentItem == (self.chainArray.count - 1))
     {
         [self tuneLastViewController:nextViewController];
     }
         
     return nextViewController;
-    
 }
 
 /* Надстройка первого экрана цепочки

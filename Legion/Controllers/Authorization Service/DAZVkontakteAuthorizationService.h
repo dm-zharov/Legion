@@ -19,6 +19,8 @@
 - (void)signIn;
 - (void)signOut;
 
+/* Обрабатывает ответную строку от "ВКонтакте"
+ */
 - (BOOL)processAuthorizationURL:(NSURL *)url;
 
 @end

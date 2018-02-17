@@ -159,8 +159,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     navigationController.navigationBar.shadowImage = [UIImage new];
     navigationController.navigationBar.translucent = NO;
     
-    //navigationController.navigationBar.prefersLargeTitles = YES;
-    
     navigationController.tabBarItem.title = @"Профиль";
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Profile Icon"];
     

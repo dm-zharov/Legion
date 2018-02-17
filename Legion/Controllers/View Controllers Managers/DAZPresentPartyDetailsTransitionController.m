@@ -31,11 +31,11 @@
     [containerView addSubview:destination.view];
     
     // Начальное состояние, подстраиваемся под полученный фрейм
-    CATransform3D translate = CATransform3DMakeTranslation(self.cellFrame.origin.x, self.cellFrame.origin.y, 0.0);
+    CATransform3D translate = CATransform3DMakeTranslation(CGRectGetMinX(self.cellFrame), CGRectGetMinY(self.cellFrame), 0.0);
     
     destination.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.cellFrame), CGRectGetHeight(self.cellFrame));
     destination.view.layer.masksToBounds = YES;
-    destination.view.layer.cornerRadius = 10;
+    destination.view.layer.cornerRadius = 14;
     destination.view.layer.transform = translate;
     
     CATransform3D translateScrollView = CATransform3DMakeTranslation(0, CGRectGetHeight(origin.view.bounds), 0.0);

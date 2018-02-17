@@ -244,11 +244,6 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 {
     self.partiesArray = parties;
     
-    /* Если массив пуст, показываем плейсхолдер.
-     */
-    self.tableView.hidden = (self.partiesArray.count == 0);
-    self.placeholderView.hidden = (![self.tableView isHidden]);
-    
     [self reloadTableView];
     
     [self setViewStateWithNetworkStatus:status];
