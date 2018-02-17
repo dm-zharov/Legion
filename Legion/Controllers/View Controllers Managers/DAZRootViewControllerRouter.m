@@ -23,6 +23,10 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @property (nonatomic, strong) DAZUserProfile *profile;
 
+@property (nonatomic, readonly) UIViewController *firstViewController;
+@property (nonatomic, readonly) UIViewController *secondViewController;
+@property (nonatomic, readonly) UIViewController *thirdViewController;
+
 // Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;

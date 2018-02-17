@@ -18,8 +18,6 @@
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMediator:(id)mediator;
 
-- (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
-
 - (void)signInWithUserID:(NSString *)userID;
 - (void)signInAnonymously;
 

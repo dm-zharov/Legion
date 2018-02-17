@@ -21,13 +21,14 @@
 		2346B736201E742C0039DF3F /* DAZProxyService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B735201E742C0039DF3F /* DAZProxyService.m */; };
 		2346B739201E74F50039DF3F /* DAZNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B738201E74F50039DF3F /* DAZNetworkService.m */; };
 		2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B73B201E75090039DF3F /* DAZCoreDataManager.m */; };
-		2351BED5201F371E0065C1C1 /* PartyMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */; };
-		2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */; };
-		2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */; };
-		2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */; };
 		2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */; };
 		2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA16202243AA000A97C8 /* NSError+Domains.m */; };
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
+		236994E720384B8A0012C2BE /* ClaimMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994DE20384B870012C2BE /* ClaimMO+CoreDataProperties.m */; };
+		236994E820384B8A0012C2BE /* PartyMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994DF20384B880012C2BE /* PartyMO+CoreDataClass.m */; };
+		236994E920384B8A0012C2BE /* PartyMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994E020384B880012C2BE /* PartyMO+CoreDataProperties.m */; };
+		236994EA20384B8A0012C2BE /* DAZUserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994E220384B890012C2BE /* DAZUserProfile.m */; };
+		236994EB20384B8A0012C2BE /* ClaimMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994E320384B890012C2BE /* ClaimMO+CoreDataClass.m */; };
 		239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */; };
 		239101D8202C918F001E8DE1 /* DAZClaimTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101D7202C918F001E8DE1 /* DAZClaimTableViewCell.m */; };
 		239101DB202CBED6001E8DE1 /* DAZInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 239101DA202CBED6001E8DE1 /* DAZInfoView.m */; };
@@ -46,7 +47,6 @@
 		23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */; };
 		23EA666C202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EA666B202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m */; };
 		23EA666F202E0B250083303E /* UIViewController+Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EA666E202E0B250083303E /* UIViewController+Alerts.m */; };
-		23EA6672202E10840083303E /* DAZUserProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EA6671202E10840083303E /* DAZUserProfile.m */; };
 		23EA6678202F10D10083303E /* UIImage+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EA6677202F10D10083303E /* UIImage+Cache.m */; };
 		23EA667B202F143C0083303E /* UIImageView+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EA667A202F143C0083303E /* UIImageView+Cache.m */; };
 		C8EF0E914E4DD4EBB8C66C5E /* libPods-LegionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3912D243E638C9C75441C0EB /* libPods-LegionTests.a */; };
@@ -90,20 +90,22 @@
 		2346B738201E74F50039DF3F /* DAZNetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZNetworkService.m; sourceTree = "<group>"; };
 		2346B73A201E75090039DF3F /* DAZCoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZCoreDataManager.h; sourceTree = "<group>"; };
 		2346B73B201E75090039DF3F /* DAZCoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZCoreDataManager.m; sourceTree = "<group>"; };
-		2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PartyMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
-		2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataClass.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataClass.m"; sourceTree = "<absolute>"; };
-		2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PartyMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
-		2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataClass.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataClass.h"; sourceTree = "<absolute>"; };
-		2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PartyMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
-		2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PartyMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/PartyMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
-		2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClaimMO+CoreDataProperties.h"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.h"; sourceTree = "<absolute>"; };
-		2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ClaimMO+CoreDataProperties.m"; path = "/Users/dm_zharov/Documents/Разработка/Проекты/iOS/Objective-C/Legion/Legion/Models/ClaimMO+CoreDataProperties.m"; sourceTree = "<absolute>"; };
 		2354FA0D20221953000A97C8 /* DAZRootViewControllerRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZRootViewControllerRouter.h; sourceTree = "<group>"; };
 		2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZRootViewControllerRouter.m; sourceTree = "<group>"; };
 		2354FA15202243AA000A97C8 /* NSError+Domains.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+Domains.h"; sourceTree = "<group>"; };
 		2354FA16202243AA000A97C8 /* NSError+Domains.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Domains.m"; sourceTree = "<group>"; };
 		2354FA182023F450000A97C8 /* DAZPartyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyTableViewCell.h; sourceTree = "<group>"; };
 		2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyTableViewCell.m; sourceTree = "<group>"; };
+		236994DD20384B870012C2BE /* ClaimMO+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaimMO+CoreDataClass.h"; sourceTree = "<group>"; };
+		236994DE20384B870012C2BE /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ClaimMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		236994DF20384B880012C2BE /* PartyMO+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PartyMO+CoreDataClass.m"; sourceTree = "<group>"; };
+		236994E020384B880012C2BE /* PartyMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PartyMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		236994E120384B880012C2BE /* PartyMO+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PartyMO+CoreDataClass.h"; sourceTree = "<group>"; };
+		236994E220384B890012C2BE /* DAZUserProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAZUserProfile.m; sourceTree = "<group>"; };
+		236994E320384B890012C2BE /* ClaimMO+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ClaimMO+CoreDataClass.m"; sourceTree = "<group>"; };
+		236994E420384B890012C2BE /* DAZUserProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAZUserProfile.h; sourceTree = "<group>"; };
+		236994E520384B8A0012C2BE /* ClaimMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaimMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		236994E620384B8A0012C2BE /* PartyMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PartyMO+CoreDataProperties.h"; sourceTree = "<group>"; };
 		239101C5202B363C001E8DE1 /* DAZClaimsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZClaimsTableViewController.h; sourceTree = "<group>"; };
 		239101C6202B363C001E8DE1 /* DAZClaimsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZClaimsTableViewController.m; sourceTree = "<group>"; };
 		239101CE202B55B7001E8DE1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -140,8 +142,6 @@
 		23EA666B202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPresentPartyDetailsTransitionController.m; sourceTree = "<group>"; };
 		23EA666D202E0B250083303E /* UIViewController+Alerts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alerts.h"; sourceTree = "<group>"; };
 		23EA666E202E0B250083303E /* UIViewController+Alerts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alerts.m"; sourceTree = "<group>"; };
-		23EA6670202E10840083303E /* DAZUserProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZUserProfile.h; sourceTree = "<group>"; };
-		23EA6671202E10840083303E /* DAZUserProfile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZUserProfile.m; sourceTree = "<group>"; };
 		23EA6676202F10D10083303E /* UIImage+Cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Cache.h"; sourceTree = "<group>"; };
 		23EA6677202F10D10083303E /* UIImage+Cache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Cache.m"; sourceTree = "<group>"; };
 		23EA6679202F143C0083303E /* UIImageView+Cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Cache.h"; sourceTree = "<group>"; };
@@ -302,16 +302,16 @@
 		23AFB4CC201BA25000260C11 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				23EA6670202E10840083303E /* DAZUserProfile.h */,
-				23EA6671202E10840083303E /* DAZUserProfile.m */,
-				2351BEDA201F37D60065C1C1 /* PartyMO+CoreDataProperties.h */,
-				2351BEDB201F37D60065C1C1 /* PartyMO+CoreDataProperties.m */,
-				2351BECF201F371D0065C1C1 /* PartyMO+CoreDataClass.h */,
-				2351BECA201F371D0065C1C1 /* PartyMO+CoreDataClass.m */,
-				2351BEDD201F37D60065C1C1 /* ClaimMO+CoreDataProperties.h */,
-				2351BEDE201F37D60065C1C1 /* ClaimMO+CoreDataProperties.m */,
-				2351BED0201F371E0065C1C1 /* ClaimMO+CoreDataClass.h */,
-				2351BECC201F371D0065C1C1 /* ClaimMO+CoreDataClass.m */,
+				236994E420384B890012C2BE /* DAZUserProfile.h */,
+				236994E220384B890012C2BE /* DAZUserProfile.m */,
+				236994DD20384B870012C2BE /* ClaimMO+CoreDataClass.h */,
+				236994E320384B890012C2BE /* ClaimMO+CoreDataClass.m */,
+				236994E520384B8A0012C2BE /* ClaimMO+CoreDataProperties.h */,
+				236994DE20384B870012C2BE /* ClaimMO+CoreDataProperties.m */,
+				236994E120384B880012C2BE /* PartyMO+CoreDataClass.h */,
+				236994DF20384B880012C2BE /* PartyMO+CoreDataClass.m */,
+				236994E620384B8A0012C2BE /* PartyMO+CoreDataProperties.h */,
+				236994E020384B880012C2BE /* PartyMO+CoreDataProperties.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -330,9 +330,9 @@
 		23AFB4CE201BA3FD00260C11 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				234EBCC7202890E100FB83C6 /* View Controllers Managers */,
 				2346B732201E66E40039DF3F /* Authorization Service */,
 				2346B733201E730F0039DF3F /* Network Service */,
-				234EBCC7202890E100FB83C6 /* View Controllers Managers */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -628,31 +628,31 @@
 				233E689D2034D98D00F01B30 /* DAZActivityButton.m in Sources */,
 				23BEA5872016302B000ECFE5 /* DAZPartiesTableViewController.m in Sources */,
 				2346B739201E74F50039DF3F /* DAZNetworkService.m in Sources */,
+				236994E720384B8A0012C2BE /* ClaimMO+CoreDataProperties.m in Sources */,
 				23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */,
 				239F48DC2024B64900D13770 /* CAGradientLayer+Gradients.m in Sources */,
-				23EA6672202E10840083303E /* DAZUserProfile.m in Sources */,
+				236994EB20384B8A0012C2BE /* ClaimMO+CoreDataClass.m in Sources */,
 				23BEA58D2016302B000ECFE5 /* Legion.xcdatamodeld in Sources */,
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
 				23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */,
 				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
-				2351BED7201F371E0065C1C1 /* ClaimMO+CoreDataClass.m in Sources */,
 				239101D8202C918F001E8DE1 /* DAZClaimTableViewCell.m in Sources */,
-				2351BED5201F371E0065C1C1 /* PartyMO+CoreDataClass.m in Sources */,
 				2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */,
 				2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */,
 				23AFB4F6201C892600260C11 /* DAZAuthorizationViewController.m in Sources */,
 				2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */,
+				236994EA20384B8A0012C2BE /* DAZUserProfile.m in Sources */,
 				23BEA5842016302B000ECFE5 /* AppDelegate.m in Sources */,
 				2346B736201E742C0039DF3F /* DAZProxyService.m in Sources */,
 				23EA667B202F143C0083303E /* UIImageView+Cache.m in Sources */,
-				2351BEE0201F37D70065C1C1 /* PartyMO+CoreDataProperties.m in Sources */,
 				23EA6678202F10D10083303E /* UIImage+Cache.m in Sources */,
-				2351BEE1201F37D70065C1C1 /* ClaimMO+CoreDataProperties.m in Sources */,
 				23EA666C202DDA170083303E /* DAZPresentPartyDetailsTransitionController.m in Sources */,
+				236994E920384B8A0012C2BE /* PartyMO+CoreDataProperties.m in Sources */,
 				2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */,
 				239101DB202CBED6001E8DE1 /* DAZInfoView.m in Sources */,
 				232056B42031A3DB0004015C /* DAZProfileViewController.m in Sources */,
+				236994E820384B8A0012C2BE /* PartyMO+CoreDataClass.m in Sources */,
 				239101C7202B363C001E8DE1 /* DAZClaimsTableViewController.m in Sources */,
 				2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */,
 				23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */,
