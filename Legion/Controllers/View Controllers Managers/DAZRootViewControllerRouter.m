@@ -71,7 +71,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
                                                    object:nil];
     });
     
-    BOOL loggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"];
+    BOOL loggedIn = [self.profile isLoggedIn];
     
     if (!loggedIn)
     {
@@ -89,14 +89,18 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     
-    if (animated)
+    if (!animated)
+    {
+        
+    }
+    else
     {
         [UIView transitionWithView:window
                           duration:0.75
                            options:UIViewAnimationOptionTransitionFlipFromRight
                         animations:^{
-                            window.rootViewController = rootViewController;
-                        } completion:nil];
+            window.rootViewController = rootViewController;
+        } completion:nil];
     }
 }
 
@@ -110,6 +114,9 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     return tabBarController;
 }
+
+
+#pragma mark - Custom Accessors
 
 - (UIViewController *)firstViewController
 {
@@ -165,13 +172,13 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+    self.profile.loggedIn = YES;
     [self setRootViewController:[self rootViewController] animated:YES];
 }
 
 - (void)authorizationTokenExpired:(NSNotification *)notification
 {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"loggedIn"];
+    self.profile.loggedIn = NO;
     [DAZUserProfile resetUserProfile];
     
     [self setRootViewController:[self rootViewController] animated:YES];

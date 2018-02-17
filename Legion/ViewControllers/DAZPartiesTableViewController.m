@@ -271,7 +271,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 #pragma mark - DAZPartyCreationViewControllerDelegate
 
-- (void)partyCreationViewCompletedWorkWithParty:(PartyMO *)party
+- (void)partyCreationViewControllerCompletedWorkWithParty:(PartyMO *)party
 {
     [self.networkService addParty:party];
 }

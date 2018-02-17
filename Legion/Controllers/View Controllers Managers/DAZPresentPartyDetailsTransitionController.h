@@ -11,6 +11,6 @@
 
 @interface DAZPresentPartyDetailsTransitionController : NSObject <UIViewControllerAnimatedTransitioning>
 
-@property (nonatomic, assign) CGRect cellFrame;
+@property (nonatomic, assign) CGRect cellFrame; // Фрейм, с которого начинает появление презентуемый контроллер
 
 @end

@@ -24,7 +24,6 @@
 
 @end
 
-
 @interface DAZNetworkService : NSObject
 
 @property (nonatomic, weak) id <DAZNetworkServiceDelegate> delegate;

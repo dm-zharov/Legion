@@ -14,7 +14,7 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) DAZRootViewControllerRouter *viewControllerRouter;
+@property (nonatomic, strong) DAZRootViewControllerRouter *rootViewControllerRouter;
            
 @end
 
@@ -34,8 +34,8 @@
     self.window.layer.cornerRadius = 5;
     self.window.layer.masksToBounds = YES;
     
-    self.viewControllerRouter = [[DAZRootViewControllerRouter alloc] init];
-    self.window.rootViewController = [self.viewControllerRouter rootViewController];
+    self.rootViewControllerRouter = [[DAZRootViewControllerRouter alloc] init];
+    self.window.rootViewController = [self.rootViewControllerRouter rootViewController];
     
     [self.window makeKeyAndVisible];
 

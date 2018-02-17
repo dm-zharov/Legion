@@ -161,14 +161,10 @@
 }
 
 
-#pragma mark Basic
+#pragma mark - Basic
 
 - (void)saveObjects:(NSArray *)objects
 {
-    for (id object in objects) {
-        [self.coreDataContext insertObject:object];
-    }
-    
     [self saveContext];
 }
 
@@ -178,18 +174,6 @@
         [self.coreDataContext deleteObject:object];
     }
     
-    [self saveContext];
-}
-
-- (void)saveObject:(id)object
-{
-    [self.coreDataContext insertObject:object];
-    [self saveContext];
-}
-
-- (void)deleteObject:(id)object
-{
-    [self.coreDataContext deleteObject:object];
     [self saveContext];
 }
 

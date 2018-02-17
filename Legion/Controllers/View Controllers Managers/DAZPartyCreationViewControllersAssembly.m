@@ -21,6 +21,8 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 @interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
+@property (nonatomic, strong) PartyMO *party;
+
 @property (nonatomic, strong) UINavigationController *navigationController;
 
 @property (nonatomic, assign) NSInteger currentItem;
@@ -204,9 +206,9 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 
 - (void)completedWorkWithParty:(PartyMO *)party
 {
-    if ([self.delegate respondsToSelector:@selector(partyCreationViewCompletedWorkWithParty:)])
+    if ([self.delegate respondsToSelector:@selector(partyCreationViewControllerCompletedWorkWithParty:)])
     {
-        [self.delegate partyCreationViewCompletedWorkWithParty:party];
+        [self.delegate partyCreationViewControllerCompletedWorkWithParty:party];
     }
 }
     

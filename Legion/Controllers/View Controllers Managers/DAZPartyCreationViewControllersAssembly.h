@@ -12,7 +12,7 @@
 
 @protocol DAZPartyCreationViewControllerDelegate <NSObject>
 
-- (void)partyCreationViewCompletedWorkWithParty:(PartyMO *)party;
+- (void)partyCreationViewControllerCompletedWorkWithParty:(PartyMO *)party;
 
 @end;
 
@@ -21,8 +21,6 @@
 @interface DAZPartyCreationViewControllersAssembly : NSObject
 
 @property (nonatomic, weak) id <DAZPartyCreationViewControllerDelegate> delegate;
-
-@property (nonatomic, strong) PartyMO *party;
 
 - (UIViewController *)partyCreationViewController;
 

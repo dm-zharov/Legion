@@ -37,7 +37,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 @end
 
-
 @implementation DAZNetworkService
 
 
@@ -57,7 +56,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 - (BOOL)isServerReachable
 {
-    
     NSString *absoluteURL = [NSString stringWithFormat:@"%@%@", DAZServerBaseURL, DAZServerIsReachable];
     
     // Тестирование активного соединения, в ответ приходит сырая строка 'YES'
