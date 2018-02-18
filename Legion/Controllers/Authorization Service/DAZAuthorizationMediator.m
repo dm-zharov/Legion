@@ -6,7 +6,6 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import <Firebase.h>
 #import "DAZAuthorizationMediator.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
@@ -67,6 +66,11 @@
 
 - (void)processAuthorizationURL:(NSURL *)url
 {
+    if (!url)
+    {
+        return;
+    }
+    
     [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
 }
 
@@ -91,13 +95,13 @@
          */
         [self.firebaseAuthorizationService signInWithUserID:profile.userID];
     }
-    else
+    else if (profile.authorizationType == DAZAuthorizationAnonymously)
     {
         if ([self.delegate respondsToSelector:@selector(authorizationServiceDidFinishSignInWithProfile:error:)])
         {
             [self.delegate authorizationServiceDidFinishSignInWithProfile:profile error:nil];
         }
-    }
+    };
 }
 
 - (void)authorizationServiceDidFinishSignOut
