@@ -55,6 +55,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     [self setupPlaceholdersViews];
     
     [self setupRefreshControl];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self.networkService getClaims];
 }

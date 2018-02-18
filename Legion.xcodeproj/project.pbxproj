@@ -45,6 +45,8 @@
 		23BF82862038E10600884C2F /* DAZAuthorizationMediatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */; };
 		23BF828820398F5200884C2F /* DAZPlaceholderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828720398F5200884C2F /* DAZPlaceholderViewTests.m */; };
 		23BF828C2039903100884C2F /* DAZActivityButtonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828B2039903100884C2F /* DAZActivityButtonTests.m */; };
+		23BF82902039953C00884C2F /* DAZRootViewControllerRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */; };
+		23BF8292203995D600884C2F /* tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF8291203995D600884C2F /* tests.m */; };
 		23D9D19E202620C300E25EA9 /* DAZPartyDetailsViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */; };
 		23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1AE20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m */; };
 		23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23D9D1B12027461D00E25EA9 /* DAZSelectionScreenViewController.m */; };
@@ -138,6 +140,8 @@
 		23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediatorTests.m; sourceTree = "<group>"; };
 		23BF828720398F5200884C2F /* DAZPlaceholderViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPlaceholderViewTests.m; sourceTree = "<group>"; };
 		23BF828B2039903100884C2F /* DAZActivityButtonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZActivityButtonTests.m; sourceTree = "<group>"; };
+		23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZRootViewControllerRouterTests.m; sourceTree = "<group>"; };
+		23BF8291203995D600884C2F /* tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tests.m; sourceTree = "<group>"; };
 		23D9D19C202620C300E25EA9 /* DAZPartyDetailsViewControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyDetailsViewControllers.h; sourceTree = "<group>"; };
 		23D9D19D202620C300E25EA9 /* DAZPartyDetailsViewControllers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyDetailsViewControllers.m; sourceTree = "<group>"; };
 		23D9D1AD20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyCreationViewControllersAssembly.h; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 				23BEA5A02016302C000ECFE5 /* Info.plist */,
 				23BF828E2039946100884C2F /* ControllersTests */,
 				23BF828D2039944100884C2F /* ViewsTests */,
+				23BF8291203995D600884C2F /* tests.m */,
 			);
 			path = LegionTests;
 			sourceTree = "<group>";
@@ -407,6 +412,7 @@
 		23BF828E2039946100884C2F /* ControllersTests */ = {
 			isa = PBXGroup;
 			children = (
+				23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */,
 				23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */,
 			);
 			path = ControllersTests;
@@ -691,6 +697,8 @@
 				23BF82862038E10600884C2F /* DAZAuthorizationMediatorTests.m in Sources */,
 				23BF828820398F5200884C2F /* DAZPlaceholderViewTests.m in Sources */,
 				23BF828C2039903100884C2F /* DAZActivityButtonTests.m in Sources */,
+				23BF8292203995D600884C2F /* tests.m in Sources */,
+				23BF82902039953C00884C2F /* DAZRootViewControllerRouterTests.m in Sources */,
 				23BF827E2038765E00884C2F /* DAZInfoViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
