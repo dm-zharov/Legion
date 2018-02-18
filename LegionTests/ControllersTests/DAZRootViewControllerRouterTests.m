@@ -11,12 +11,14 @@
 #import <Expecta/Expecta.h>
 
 #import "DAZRootViewControllerRouter.h"
+#import "DAZAuthorizationViewController.h"
 #import "DAZUserProfile.h"
 
 @interface DAZRootViewControllerRouter (Tests)
 
 @property (nonatomic, strong) DAZUserProfile *profile;
 
+@property (nonatomic, readonly) UIViewController *tabBarController;
 @property (nonatomic, readonly) UIViewController *firstViewController;
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
@@ -29,6 +31,8 @@
 
 @interface DAZRootViewControllerRouterTests : XCTestCase
 
+@property (nonatomic, strong) DAZRootViewControllerRouter *rootViewControllerRouter;
+
 @end
 
 @implementation DAZRootViewControllerRouterTests
@@ -38,20 +42,79 @@
     [super setUp];
     
     DAZUserProfile *profile = OCMClassMock([DAZUserProfile class]);
+    OCMStub(ClassMethod([(id)profile alloc])).andReturn(profile);
     
-    OCMStub([DAZUserProfile alloc])._andReturn;
-    
+    self.rootViewControllerRouter = OCMPartialMock([[DAZRootViewControllerRouter alloc] init]);
 }
 
 - (void)tearDown
 {
+    self.rootViewControllerRouter = nil;
     
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testRootViewControllerWhenLoggedIn
 {
+    id profile = self.rootViewControllerRouter.profile;
+    OCMStub([profile isLoggedIn]).andReturn(YES);
     
+    OCMStub([self.rootViewControllerRouter tabBarController]);
+    
+    [self.rootViewControllerRouter rootViewController];
+    
+    OCMVerify([self.rootViewControllerRouter tabBarController]);
+}
+
+- (void)testRootViewControllerWhenLoggedOut
+{
+    id profile = self.rootViewControllerRouter.profile;
+    
+    OCMStub([profile isLoggedIn]).andReturn(NO);
+    
+    DAZAuthorizationViewController *authorizationViewController = OCMClassMock([DAZAuthorizationViewController class]);
+    OCMStub(ClassMethod([(id)authorizationViewController alloc])).andReturn(authorizationViewController);
+    
+    id rootViewController = [self.rootViewControllerRouter rootViewController];
+    
+    expect(rootViewController).to.equal(authorizationViewController);
+}
+
+- (void)testSetNilRootViewController
+{
+    OCMReject([UIApplication sharedApplication]);
+    
+    [self.rootViewControllerRouter setRootViewController:nil animated:YES];
+}
+
+- (void)testSetRootViewControllerWithAnimation
+{
+    UIApplication *application = OCMClassMock([UIApplication class]);
+    OCMStub(ClassMethod([(id)application sharedApplication])).andReturn(application);
+    
+    UIWindow *window = OCMClassMock([UIWindow class]);
+    OCMStub([application keyWindow]).andReturn(window);
+
+    UIViewController *viewController = OCMClassMock([UIViewController class]);
+    
+    [self.rootViewControllerRouter setRootViewController:viewController animated:YES];
+    
+    OCMVerify([window setRootViewController:OCMOCK_ANY]);
+}
+
+- (void)testSetRootViewControllerWithoutAnimation
+{
+    UIApplication *application = OCMClassMock([UIApplication class]);
+    OCMStub(ClassMethod([(id)application sharedApplication])).andReturn(application);
+    
+    UIWindow *window = OCMClassMock([UIWindow class]);
+    OCMStub([application keyWindow]).andReturn(window);
+    
+    UIViewController *viewController = OCMClassMock([UIViewController class]);
+    
+    [self.rootViewControllerRouter setRootViewController:viewController animated:NO];
+    
+    OCMVerify([window setRootViewController:OCMOCK_ANY]);
 }
 
 @end

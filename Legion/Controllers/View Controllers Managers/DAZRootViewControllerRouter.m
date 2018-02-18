@@ -23,6 +23,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 @property (nonatomic, strong) DAZUserProfile *profile;
 
+@property (nonatomic, readonly) UIViewController *tabBarController;
 @property (nonatomic, readonly) UIViewController *firstViewController;
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
@@ -87,11 +88,16 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 
 - (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
 {
+    if (!rootViewController)
+    {
+        return;
+    }
+    
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     
     if (!animated)
     {
-        
+        window.rootViewController = rootViewController;
     }
     else
     {

@@ -35,11 +35,10 @@
     [super setUp];
     
     DAZVkontakteAuthorizationService *vkontakteService = OCMClassMock([DAZVkontakteAuthorizationService class]);
-    OCMStub(ClassMethod([(id)vkontakteService alloc])).andReturn(vkontakteService);;
+    OCMStub(ClassMethod([(id)vkontakteService alloc])).andReturn(vkontakteService);
     
     DAZFirebaseAuthorizationService *firebaseService = OCMClassMock([DAZFirebaseAuthorizationService class]);
-    OCMStub(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);;
-    OCMStub([firebaseService initWithMediator:OCMOCK_ANY]).andReturn(firebaseService);
+    OCMStub(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);
     
     self.authorizationMediator = OCMPartialMock([[DAZAuthorizationMediator alloc] init]);
 }
@@ -59,7 +58,7 @@
 
     [self.authorizationMediator signInWithAuthorizationType:authorizationType];
 
-    OCMExpect([self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:nil error:OCMOCK_ANY]);;
+    OCMVerify([self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:nil error:OCMOCK_ANY]);
 }
 
 - (void)testSignInWithAuthorizationVkontakte
@@ -68,7 +67,7 @@
 
     [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationVkontakte];
 
-    OCMExpect([self.authorizationMediator.vkontakteAuthorizationService signIn]);
+    OCMVerify([self.authorizationMediator.vkontakteAuthorizationService signIn]);
 }
 
 - (void)testSignInWithAuthorizationFirebase
@@ -77,7 +76,7 @@
     
     [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
     
-    OCMExpect([self.authorizationMediator.firebaseAuthorizationService signInAnonymously]);
+    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signInAnonymously]);
 }
 
 - (void)testSignOut
@@ -86,7 +85,7 @@
     
     [self.authorizationMediator signOut];
     
-    OCMExpect([self.authorizationMediator.firebaseAuthorizationService signOut]);
+    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signOut]);
 }
 
 - (void)testProcessNilAuthorizationURL
@@ -103,7 +102,7 @@
     NSURL *url = [NSURL URLWithString:@"https://test"];
     [self.authorizationMediator processAuthorizationURL:url];
     
-    OCMExpect([self.authorizationMediator.vkontakteAuthorizationService processAuthorizationURL:url]);
+    OCMVerify([self.authorizationMediator.vkontakteAuthorizationService processAuthorizationURL:url]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithNilProfile
@@ -114,7 +113,7 @@
     NSError *error = [NSError new];
     [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:nil error:error];
     
-    OCMExpect([delegate authorizationServiceDidFinishSignInWithProfile:nil error:error]);
+    OCMVerify([delegate authorizationServiceDidFinishSignInWithProfile:nil error:error]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithProfileByVkontakteAuthorization
@@ -129,7 +128,7 @@
     
     [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:profile error:nil];
     
-    OCMExpect([self.authorizationMediator.firebaseAuthorizationService signInWithUserID:profile.userID]);
+    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signInWithUserID:profile.userID]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithProfileByAnonymouslyAuthorization
@@ -143,7 +142,7 @@
     
     [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:profile error:nil];
     
-    OCMExpect([delegate authorizationServiceDidFinishSignInWithProfile:profile error:nil]);
+    OCMVerify([delegate authorizationServiceDidFinishSignInWithProfile:profile error:nil]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignOut
@@ -153,7 +152,7 @@
     
     [self.authorizationMediator authorizationServiceDidFinishSignOut];
     
-    OCMExpect([delegate authorizationServiceDidFinishSignOut]);
+    OCMVerify([delegate authorizationServiceDidFinishSignOut]);
 }
 
 @end
