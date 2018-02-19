@@ -1,5 +1,5 @@
 //
-//  DAZAuthorizationMediator.h
+//  DAZAuthorizationFacade.h
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
@@ -17,7 +17,7 @@
  *
  * Данный посредник обеспечивает взаимодействие между обоими сервисами.
  */
-@interface DAZAuthorizationMediator : NSObject <DAZAuthorizationServiceProtocol>
+@interface DAZAuthorizationFacade : NSObject <DAZAuthorizationServiceProtocol>
 
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 

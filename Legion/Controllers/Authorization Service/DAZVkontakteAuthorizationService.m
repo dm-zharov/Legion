@@ -103,18 +103,9 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     NSError *error = [NSError errorWithDomain:DAZVkontakteOpenURLErrorDomain code:0 userInfo:nil];
     if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
     {
-        NSString *absoluteURL = [url absoluteString];
-        
         // Поиск позиции в строке, с которой начинаются ключи параметров
-        NSRange rangeOfHash = [absoluteURL rangeOfString:@"#"];
-        
-        if (rangeOfHash.location == NSNotFound)
-        {
-            [self completedSignInWithProfile:nil error:error];
-            return NO;
-        }
-        
-        NSString *parametersString = [absoluteURL substringFromIndex:rangeOfHash.location + 1];
+        NSString *parametersString = url.query;
+
         if (parametersString.length == 0)
         {
             [self completedSignInWithProfile:nil error:error];
@@ -200,7 +191,10 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     for (NSString *keyValueString in keyValuePairs)
     {
         NSArray *keyValueArray = [keyValueString componentsSeparatedByString:@"="];
-        parametersDictionary[keyValueArray[0]] = keyValueArray[1];
+        if (keyValueArray[0] && keyValueArray[1])
+        {
+            parametersDictionary[keyValueArray[0]] = keyValueArray[1];
+        }
     }
     
     return parametersDictionary;

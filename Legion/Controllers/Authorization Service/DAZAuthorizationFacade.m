@@ -1,24 +1,24 @@
 //
-//  DAZAuthorizationMediator.m
+//  DAZAuthorizationFacade.m
 //  Legion
 //
 //  Created by Дмитрий Жаров on 28.01.2018.
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import "DAZAuthorizationMediator.h"
+#import "DAZAuthorizationFacade.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 #import "DAZUserProfile.h"
 
-@interface DAZAuthorizationMediator () <DAZAuthorizationServiceDelegate>
+@interface DAZAuthorizationFacade () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
 
 @end
 
-@implementation DAZAuthorizationMediator
+@implementation DAZAuthorizationFacade
 
 
 #pragma mark - Lifecycle

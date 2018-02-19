@@ -10,12 +10,12 @@
 #import <OCMock/OCMock.h>
 #import <Expecta/Expecta.h>
 
-#import "DAZAuthorizationMediator.h"
+#import "DAZAuthorizationFacade.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
 #import "DAZUserProfile.h"
 
-@interface DAZAuthorizationMediator (Tests) <DAZAuthorizationServiceDelegate>
+@interface DAZAuthorizationFacade (Tests) <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
@@ -24,7 +24,7 @@
 
 @interface DAZAuthorizationMediatorTests : XCTestCase
 
-@property (nonatomic, strong) DAZAuthorizationMediator *authorizationMediator;
+@property (nonatomic, strong) DAZAuthorizationFacade *authorizationMediator;
 
 @end
 
@@ -40,7 +40,7 @@
     DAZFirebaseAuthorizationService *firebaseService = OCMClassMock([DAZFirebaseAuthorizationService class]);
     OCMStub(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);
     
-    self.authorizationMediator = OCMPartialMock([[DAZAuthorizationMediator alloc] init]);
+    self.authorizationMediator = OCMPartialMock([[DAZAuthorizationFacade alloc] init]);
 }
 
 - (void)tearDown

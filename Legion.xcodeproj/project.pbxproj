@@ -15,7 +15,7 @@
 		232056B42031A3DB0004015C /* DAZProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232056B32031A3DB0004015C /* DAZProfileViewController.m */; };
 		233E689A2034A23400F01B30 /* DAZPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 233E68992034A23400F01B30 /* DAZPlaceholderView.m */; };
 		233E689D2034D98D00F01B30 /* DAZActivityButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 233E689C2034D98D00F01B30 /* DAZActivityButton.m */; };
-		2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */; };
+		2346B728201E02340039DF3F /* DAZAuthorizationFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B727201E02340039DF3F /* DAZAuthorizationFacade.m */; };
 		2346B72B201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */; };
 		2346B72E201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */; };
 		2346B736201E742C0039DF3F /* DAZProxyService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2346B735201E742C0039DF3F /* DAZProxyService.m */; };
@@ -84,8 +84,8 @@
 		233E689B2034D98D00F01B30 /* DAZActivityButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZActivityButton.h; sourceTree = "<group>"; };
 		233E689C2034D98D00F01B30 /* DAZActivityButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZActivityButton.m; sourceTree = "<group>"; };
 		2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationServiceProtocol.h; sourceTree = "<group>"; };
-		2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationMediator.h; sourceTree = "<group>"; };
-		2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediator.m; sourceTree = "<group>"; };
+		2346B726201E02340039DF3F /* DAZAuthorizationFacade.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZAuthorizationFacade.h; sourceTree = "<group>"; };
+		2346B727201E02340039DF3F /* DAZAuthorizationFacade.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationFacade.m; sourceTree = "<group>"; };
 		2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZVkontakteAuthorizationService.h; sourceTree = "<group>"; };
 		2346B72A201E03CC0039DF3F /* DAZVkontakteAuthorizationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZVkontakteAuthorizationService.m; sourceTree = "<group>"; };
 		2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZFirebaseAuthorizationService.h; sourceTree = "<group>"; };
@@ -205,8 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
-				2346B726201E02340039DF3F /* DAZAuthorizationMediator.h */,
-				2346B727201E02340039DF3F /* DAZAuthorizationMediator.m */,
+				2346B726201E02340039DF3F /* DAZAuthorizationFacade.h */,
+				2346B727201E02340039DF3F /* DAZAuthorizationFacade.m */,
 				2354FA092020CBB9000A97C8 /* Mediated Authorization Services */,
 			);
 			path = "Authorization Service";
@@ -656,7 +656,7 @@
 				23EA666F202E0B250083303E /* UIViewController+Alerts.m in Sources */,
 				239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */,
 				2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */,
-				2346B728201E02340039DF3F /* DAZAuthorizationMediator.m in Sources */,
+				2346B728201E02340039DF3F /* DAZAuthorizationFacade.m in Sources */,
 				233E689A2034A23400F01B30 /* DAZPlaceholderView.m in Sources */,
 				2346B73C201E75090039DF3F /* DAZCoreDataManager.m in Sources */,
 				233E689D2034D98D00F01B30 /* DAZActivityButton.m in Sources */,

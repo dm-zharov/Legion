@@ -51,7 +51,7 @@
 
 - (void)setupAuthorizationService
 {
-    self.authorizationMediator = [[DAZAuthorizationMediator alloc] init];
+    self.authorizationMediator = [[DAZAuthorizationFacade alloc] init];
     self.authorizationMediator.delegate = self;
 }
 

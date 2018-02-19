@@ -72,8 +72,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    
-    [self saveContext];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -89,46 +87,6 @@
     }
     
     return YES;
-}
-
-
-#pragma mark - Core Data stack
-
-@synthesize persistentContainer = _persistentContainer;
-
-- (NSPersistentContainer *)persistentContainer
-{
-    @synchronized (self)
-    {
-        if (_persistentContainer == nil)
-        {
-            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"Legion"];
-            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-                if (error != nil)
-                {
-                    NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-                    abort();
-                }
-            }];
-        }
-    }
-    
-    return _persistentContainer;
-}
-
-
-#pragma mark - Core Data Saving support
-
-- (void)saveContext
-{
-    NSManagedObjectContext *context = self.persistentContainer.viewContext;
-    
-    NSError *error = nil;
-    if ([context hasChanges] && ![context save:&error])
-    {
-        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-        abort();
-    }
 }
 
 @end

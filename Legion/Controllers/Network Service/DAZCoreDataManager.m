@@ -14,6 +14,8 @@
 
 @interface DAZCoreDataManager ()
 
+@property (nonatomic, weak) NSManagedObjectContext *coreDataContext;
+
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName;
 - (void)removeObjectsWithEntityName:(NSString *)entityName;
 - (void)saveObjects:(NSArray *)objects;
@@ -24,27 +26,43 @@
 @implementation DAZCoreDataManager
 
 
-#pragma mark - Instance Accessors
+#pragma mark - Core Data stack
+
++ (NSPersistentContainer *)persistentContainer
+{
+    static NSPersistentContainer *_persistentContainer;
+    
+    if (_persistentContainer == nil)
+    {
+        _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"Legion"];
+        [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error)
+         {
+             if (error != nil)
+             {
+                 NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+                 abort();
+             }
+         }];
+    }
+    
+    return _persistentContainer;
+}
 
 + (NSManagedObjectContext *)coreDataContext
 {
-    UIApplication *application = [UIApplication sharedApplication];
-    AppDelegate *appDelegate =  (AppDelegate*)application.delegate;
-    
-    NSPersistentContainer *container = appDelegate.persistentContainer;
+    NSPersistentContainer *container = self.persistentContainer;
     return container.viewContext;
 }
 
 + (NSArray<PartyMO *> *)partiesArrayByDictionariesArray:(NSArray<NSDictionary *> *)parties
 {
-    NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:[parties count]];
+    NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:parties.count];
     for (NSDictionary *party in parties)
     {
         PartyMO *item = [PartyMO partyWithContext:[self coreDataContext] dictionary:party];
         if (!item)
         {
-            partiesArray = nil;
-            return partiesArray;
+            return nil;
         }
         else
         {
@@ -60,14 +78,13 @@
 
 + (NSArray<ClaimMO *> *)claimsArrayByDictionariesArray:(NSArray<NSDictionary *> *)claims
 {
-    NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:[claims count]];
+    NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:claims.count];
     for (NSDictionary *claim in claims)
     {
         ClaimMO *item = [ClaimMO claimWithContext:[self coreDataContext] dictionary:claim];
         if (!item)
         {
-            claimsArray = nil;
-            return claimsArray;
+            return nil;
         }
         else
         {
@@ -161,7 +178,19 @@
 }
 
 
-#pragma mark - Basic
+#pragma mark - Core Data Saving support
+
+- (void)saveContext
+{
+    NSManagedObjectContext *context = [self class].persistentContainer.viewContext;
+    
+    NSError *error = nil;
+    if ([context hasChanges] && ![context save:&error])
+    {
+        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+        abort();
+    }
+}
 
 - (void)saveObjects:(NSArray *)objects
 {
@@ -175,15 +204,6 @@
     }
     
     [self saveContext];
-}
-
-- (void)saveContext
-{
-    NSError *error;
-    if ([self.coreDataContext hasChanges] && ![self.coreDataContext save:&error])
-    {
-        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-    }
 }
 
 @end
