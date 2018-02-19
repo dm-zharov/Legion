@@ -135,7 +135,9 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     if ([sender isKindOfClass:[UIRefreshControl class]])
     {
         [self.tableView.refreshControl beginRefreshing];
-        [self.networkService performSelector:@selector(downloadParties) withObject:nil afterDelay:0.5];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.networkService downloadParties];
+        });
     }
     else
     {
