@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) DAZUserProfile *profile;
 
-@property (nonatomic, readonly) UIViewController *tabBarController;
+@property (nonatomic, readonly) UITabBarController *tabBarController;
 @property (nonatomic, readonly) UIViewController *firstViewController;
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
@@ -115,6 +115,63 @@
     [self.rootViewControllerRouter setRootViewController:viewController animated:NO];
     
     OCMVerify([window setRootViewController:OCMOCK_ANY]);
+}
+
+- (void)testTabBarController
+{
+    UITabBarController *tabBarController = [self.rootViewControllerRouter tabBarController];
+    
+    expect(tabBarController.viewControllers.count).to.equal(@3);
+    expect(tabBarController.viewControllers.count).notTo.beNil();
+}
+
+- (void)testFirstViewController
+{
+    UIViewController *firstViewController = [self.rootViewControllerRouter firstViewController];
+    
+    expect(firstViewController).notTo.beNil();
+}
+
+- (void)testSecondViewController
+{
+    UIViewController *secondViewController = [self.rootViewControllerRouter secondViewController];
+    
+    expect(secondViewController).notTo.beNil();
+}
+
+- (void)testThirdViewController
+{
+    UIViewController *thirdViewController = [self.rootViewControllerRouter thirdViewController];
+    
+    expect(thirdViewController).notTo.beNil();
+}
+
+- (void)testAuthorizationTokenReceiver
+{
+    id profile = self.rootViewControllerRouter.profile;
+    
+    OCMStub([profile setLoggedIn:YES]);
+    OCMStub([self.rootViewControllerRouter setRootViewController:OCMOCK_ANY animated:YES]);
+    
+    [self.rootViewControllerRouter authorizationTokenReceived:nil];
+    
+    OCMVerify([profile setLoggedIn:YES]);
+    OCMVerify([self.rootViewControllerRouter setRootViewController:OCMOCK_ANY animated:YES]);
+}
+
+- (void)testAuthorizationTokenExpired
+{
+    id profile = self.rootViewControllerRouter.profile;
+    
+    OCMStub([profile setLoggedIn:NO]);
+    OCMStub(ClassMethod([(id)profile resetUserProfile]));
+    OCMStub([self.rootViewControllerRouter setRootViewController:OCMOCK_ANY animated:YES]);
+    
+    [self.rootViewControllerRouter authorizationTokenExpired:nil];
+    
+    OCMVerify([profile setLoggedIn:NO]);
+    OCMVerify(ClassMethod([(id)profile resetUserProfile]));
+    OCMVerify([self.rootViewControllerRouter setRootViewController:OCMOCK_ANY animated:YES]);
 }
 
 @end

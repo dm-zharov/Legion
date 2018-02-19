@@ -24,6 +24,7 @@
 		2354FA0F20221953000A97C8 /* DAZRootViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA0E20221953000A97C8 /* DAZRootViewControllerRouter.m */; };
 		2354FA17202243AA000A97C8 /* NSError+Domains.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA16202243AA000A97C8 /* NSError+Domains.m */; };
 		2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */; };
+		2359AB74203A4ADA00384B2E /* DAZProxyServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2359AB73203A4ADA00384B2E /* DAZProxyServiceTests.m */; };
 		236994E720384B8A0012C2BE /* ClaimMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994DE20384B870012C2BE /* ClaimMO+CoreDataProperties.m */; };
 		236994E820384B8A0012C2BE /* PartyMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994DF20384B880012C2BE /* PartyMO+CoreDataClass.m */; };
 		236994E920384B8A0012C2BE /* PartyMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 236994E020384B880012C2BE /* PartyMO+CoreDataProperties.m */; };
@@ -101,6 +102,7 @@
 		2354FA16202243AA000A97C8 /* NSError+Domains.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+Domains.m"; sourceTree = "<group>"; };
 		2354FA182023F450000A97C8 /* DAZPartyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAZPartyTableViewCell.h; sourceTree = "<group>"; };
 		2354FA192023F450000A97C8 /* DAZPartyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPartyTableViewCell.m; sourceTree = "<group>"; };
+		2359AB73203A4ADA00384B2E /* DAZProxyServiceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZProxyServiceTests.m; sourceTree = "<group>"; };
 		236994DD20384B870012C2BE /* ClaimMO+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaimMO+CoreDataClass.h"; sourceTree = "<group>"; };
 		236994DE20384B870012C2BE /* ClaimMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ClaimMO+CoreDataProperties.m"; sourceTree = "<group>"; };
 		236994DF20384B880012C2BE /* PartyMO+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PartyMO+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -297,14 +299,14 @@
 				2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */,
 				239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */,
 				239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */,
-				2354FA15202243AA000A97C8 /* NSError+Domains.h */,
-				2354FA16202243AA000A97C8 /* NSError+Domains.m */,
 				23EA6679202F143C0083303E /* UIImageView+Cache.h */,
 				23EA667A202F143C0083303E /* UIImageView+Cache.m */,
 				23EA6676202F10D10083303E /* UIImage+Cache.h */,
 				23EA6677202F10D10083303E /* UIImage+Cache.m */,
 				23034526202A2422004CF6C8 /* UIImage+Overlay.h */,
 				23034527202A2422004CF6C8 /* UIImage+Overlay.m */,
+				2354FA15202243AA000A97C8 /* NSError+Domains.h */,
+				2354FA16202243AA000A97C8 /* NSError+Domains.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -414,6 +416,7 @@
 			children = (
 				23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */,
 				23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */,
+				2359AB73203A4ADA00384B2E /* DAZProxyServiceTests.m */,
 			);
 			path = ControllersTests;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				23BF828820398F5200884C2F /* DAZPlaceholderViewTests.m in Sources */,
 				23BF828C2039903100884C2F /* DAZActivityButtonTests.m in Sources */,
 				23BF8292203995D600884C2F /* tests.m in Sources */,
+				2359AB74203A4ADA00384B2E /* DAZProxyServiceTests.m in Sources */,
 				23BF82902039953C00884C2F /* DAZRootViewControllerRouterTests.m in Sources */,
 				23BF827E2038765E00884C2F /* DAZInfoViewTests.m in Sources */,
 			);

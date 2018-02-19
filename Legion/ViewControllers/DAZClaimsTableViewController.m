@@ -61,7 +61,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 {
     [super viewWillAppear:animated];
     
-    [self.networkService getClaims];
+    [self.networkService downloadClaims];
 }
 
 
@@ -184,11 +184,11 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     if ([sender isKindOfClass:[UIRefreshControl class]])
     {
         [self.tableView.refreshControl beginRefreshing];
-        [self.networkService performSelector:@selector(getClaims) withObject:nil afterDelay:0.5];
+        [self.networkService performSelector:@selector(downloadClaims) withObject:nil afterDelay:0.5];
     }
     else
     {
-        [self.networkService getClaims];
+        [self.networkService downloadClaims];
     }
 }
 

@@ -13,8 +13,8 @@
 
 + (CAGradientLayer *)gr_purpleGradientLayer
 {
-    UIColor *topLeftColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
-    UIColor *bottomRightColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+    UIColor *topLeftColor = [UIColor cl_lightPurpleColor];
+    UIColor *bottomRightColor = [UIColor cl_darkPurpleColor];
     
     NSArray *gradientColors = @[(id)topLeftColor.CGColor, (id)bottomRightColor.CGColor];
     

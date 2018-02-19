@@ -55,7 +55,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self setupPlaceholderView];
     [self setupRefreshControl];
     
-    [self.networkService getParties];
+    [self.networkService downloadParties];
 }
 
 
@@ -135,11 +135,11 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     if ([sender isKindOfClass:[UIRefreshControl class]])
     {
         [self.tableView.refreshControl beginRefreshing];
-        [self.networkService performSelector:@selector(getParties) withObject:nil afterDelay:0.5];
+        [self.networkService performSelector:@selector(downloadParties) withObject:nil afterDelay:0.5];
     }
     else
     {
-        [self.networkService getParties];
+        [self.networkService downloadParties];
     }
 }
 
@@ -251,14 +251,14 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status
 {
-    [self.networkService getParties];
+    [self.networkService downloadParties];
     
     [self setViewStateWithNetworkStatus:status];
 }
 
 - (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
 {
-    [self.networkService getParties];
+    [self.networkService downloadParties];
     
     [self setViewStateWithNetworkStatus:status];
 }

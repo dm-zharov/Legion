@@ -27,14 +27,14 @@
 
 + (UIColor *)cl_darkPurpleColor
 {
-    static UIColor *lightPurpleColor;
+    static UIColor *darkPurpleColor;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        lightPurpleColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
+        darkPurpleColor = [UIColor colorWithRed:67/255.0 green:67/255.0 blue:123/255.0 alpha:1.0];
     });
     
-    return lightPurpleColor;
+    return darkPurpleColor;
 }
 
 + (UIColor *)cl_lightBlueColor

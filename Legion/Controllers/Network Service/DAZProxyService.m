@@ -47,7 +47,7 @@
 
 #pragma mark - Parties Accessors
 
-- (void)getParties
+- (void)downloadParties
 {
     if ([self isServerReachable])
     {
@@ -69,6 +69,13 @@
     {
         [self.networkService addParty:[party dictionary]];
     }
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline];
+        }
+    }
 }
 
 - (void)updateParty:(PartyMO *)party
@@ -76,6 +83,13 @@
     if ([self isServerReachable])
     {
         [self.networkService updateParty:[party dictionary]];
+    }
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishUpdatePartyWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishUpdatePartyWithNetworkStatus:DAZNetworkOffline];
+        }
     }
 }
 
@@ -86,12 +100,19 @@
         [self.networkService deleteParty:[party dictionary]];
         [party deleteParty];
     }
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOffline];
+        }
+    }
 }
 
 
 #pragma mark - Claims Accessors
 
-- (void)getClaims
+- (void)downloadClaims
 {
     if ([self isServerReachable])
     {
@@ -129,6 +150,13 @@
     {
         [self.networkService updateClaim:[claim dictionaryFromClaim]];
     }
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishUpdateClaimWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishUpdateClaimWithNetworkStatus:DAZNetworkOffline];
+        }
+    }
 }
 
 - (void)deleteClaim:(ClaimMO *)claim
@@ -136,9 +164,16 @@
     if ([self isServerReachable])
     {
         [self.networkService deleteClaim:[claim dictionaryFromClaim]];
+        [claim deleteClaim];
     }
-    
-    [claim deleteClaim];
+    else
+    {
+        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeleteClaimWithNetworkStatus:)])
+        {
+            [self.delegate proxyServiceDidFinishDeleteClaimWithNetworkStatus:DAZNetworkOffline];
+        }
+    }
+        
 }
 
 
