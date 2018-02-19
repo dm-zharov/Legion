@@ -663,7 +663,7 @@
     
     [self.closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.bottom.equalTo(self.view.mas_bottom).with.offset(-16);
+        make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom).with.offset(-16);
         make.size.equalTo(@28);
     }];
 }

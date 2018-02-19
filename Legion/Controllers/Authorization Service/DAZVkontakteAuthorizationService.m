@@ -100,11 +100,17 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 - (BOOL)processAuthorizationURL:(NSURL *)url
 {
+    if (!url)
+    {
+        return NO;
+    }
+    
     NSError *error = [NSError errorWithDomain:DAZVkontakteOpenURLErrorDomain code:0 userInfo:nil];
     if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
     {
+        NSURL *normalizedURL = [NSURL URLWithString:[url.absoluteString stringByReplacingOccurrencesOfString:@"#" withString:@"?"]];
         // Поиск позиции в строке, с которой начинаются ключи параметров
-        NSString *parametersString = url.query;
+        NSString *parametersString = normalizedURL.query;
 
         if (parametersString.length == 0)
         {
