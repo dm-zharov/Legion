@@ -9,6 +9,7 @@
 #import <Masonry.h>
 #import "DAZActivityButton.h"
 
+
 @interface DAZActivityButton ()
 
 @property (nonatomic, strong) NSString *textString;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "DAZAuthorizationServiceProtocol.h"
 
+
 @interface DAZUserProfile : NSObject
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;

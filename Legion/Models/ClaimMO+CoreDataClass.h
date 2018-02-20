@@ -9,13 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+
 @class PartyMO, UserMO;
+
 
 typedef NS_ENUM(NSUInteger, DAZClaimStatus) {
     DAZClaimStatusConfirmed,
     DAZClaimStatusRequested,
     DAZClaimStatusClosed
 };
+
 
 NS_ASSUME_NONNULL_BEGIN
 

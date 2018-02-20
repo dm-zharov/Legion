@@ -9,6 +9,7 @@
 #import "DAZAuthorizationFacade.h"
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZFirebaseAuthorizationService.h"
+
 #import "DAZUserProfile.h"
 
 @interface DAZAuthorizationFacade () <DAZAuthorizationServiceDelegate>

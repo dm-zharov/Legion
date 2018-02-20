@@ -9,12 +9,15 @@
 #ifndef DAZAuthorizationServiceProtocol_h
 #define DAZAuthorizationServiceProtocol_h
 
+
 @class DAZUserProfile;
+
 
 typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
     DAZAuthorizationVkontakte = 1,
     DAZAuthorizationAnonymously
 };
+
 
 @protocol DAZAuthorizationServiceProtocol <NSObject>
 

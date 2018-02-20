@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class PartyMO, ClaimMO;
+
 
 typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
     DAZNetworkOnline = 1,
     DAZNetworkOffline,
 };
+
 
 @protocol DAZProxyServiceDelegate <NSObject>
 

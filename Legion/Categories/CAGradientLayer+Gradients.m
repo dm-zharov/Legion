@@ -9,6 +9,7 @@
 #import "CAGradientLayer+Gradients.h"
 #import "UIColor+Colors.h"
 
+
 @implementation CAGradientLayer (Gradients)
 
 + (CAGradientLayer *)gr_purpleGradientLayer

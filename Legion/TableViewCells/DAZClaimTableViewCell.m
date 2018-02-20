@@ -13,6 +13,7 @@
 #import "UIImageView+Cache.h"
 #import "UIColor+Colors.h"
 
+
 @interface DAZClaimTableViewCell ()
 
 @property (nonatomic, strong) ClaimMO *claim;

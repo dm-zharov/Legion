@@ -10,6 +10,7 @@
 #import "DAZRootViewControllerRouter.h"
 #import "DAZNetworkService.h"
 
+
 typedef void (^URLSessionCompletionBlock)(NSData * data, NSURLResponse *response, NSError *error);
 
 static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";

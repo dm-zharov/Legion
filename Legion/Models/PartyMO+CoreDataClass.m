@@ -8,6 +8,7 @@
 
 #import "PartyMO+CoreDataClass.h"
 
+
 @implementation PartyMO
 
 

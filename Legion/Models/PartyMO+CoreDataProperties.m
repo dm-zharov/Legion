@@ -8,6 +8,7 @@
 
 #import "PartyMO+CoreDataProperties.h"
 
+
 @implementation PartyMO (CoreDataProperties)
 
 + (NSFetchRequest<PartyMO *> *)fetchRequest {

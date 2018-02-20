@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class ClaimMO;
+
 
 @interface DAZClaimTableViewCell : UITableViewCell
 

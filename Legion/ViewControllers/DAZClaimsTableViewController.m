@@ -20,6 +20,7 @@
 #import "UIColor+Colors.h"
 #import "ClaimMO+CoreDataClass.h"
 
+
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
 
 @interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface DAZInfoView : UIView
 
 @property (nonatomic, readonly) UILabel *infoLabel;

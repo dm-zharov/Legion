@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class PartyMO;
+
 
 @interface DAZPartyTableViewCell : UITableViewCell
 

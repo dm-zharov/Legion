@@ -8,6 +8,7 @@
 
 #import "ClaimMO+CoreDataClass.h"
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ClaimMO (CoreDataProperties)

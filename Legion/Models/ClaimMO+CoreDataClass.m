@@ -8,6 +8,7 @@
 
 #import "ClaimMO+CoreDataClass.h"
 
+
 @implementation ClaimMO
 
 

@@ -12,6 +12,7 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
+
 @interface DAZCoreDataManager ()
 
 @property (nonatomic, weak) NSManagedObjectContext *coreDataContext;

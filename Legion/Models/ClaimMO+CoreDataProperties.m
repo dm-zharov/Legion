@@ -8,6 +8,7 @@
 
 #import "ClaimMO+CoreDataProperties.h"
 
+
 @implementation ClaimMO (CoreDataProperties)
 
 + (NSFetchRequest<ClaimMO *> *)fetchRequest {

@@ -21,6 +21,7 @@
 
 #import "PartyMO+CoreDataClass.h"
 
+
 static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 

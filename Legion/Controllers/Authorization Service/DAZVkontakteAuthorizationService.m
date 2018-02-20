@@ -11,6 +11,7 @@
 #import "NSError+Domains.h"
 #import "DAZUserProfile.h"
 
+
 static NSString *const DAZVkontakteResourceScheme = @"https://oauth.vk.com/";
 static NSString *const DAZVkontakteApplicationScheme = @"vkauthorize://";
 
@@ -29,7 +30,8 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     "&fields=photo_200" // Разрешение запрашиваемой аватарки
     "&name_case=Nom" // Форматирование имени и фамилии
     "&v=v5.71" // Версия используемого API
-    "&user_ids="; // Идентификатор пользователя (!)
+    "&user_ids="; // Идентификатор пользователя (%@)
+
 
 
 @interface DAZVkontakteAuthorizationService ()

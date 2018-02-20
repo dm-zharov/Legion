@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "PartyMO+CoreDataClass.h"
 
+
 @protocol DAZPartyCreationViewControllerDelegate <NSObject>
 
 - (void)partyCreationViewControllerCompletedWorkWithParty:(PartyMO *)party;

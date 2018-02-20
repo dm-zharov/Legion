@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+
 @class ClaimMO;
+
 
 typedef NS_ENUM(NSUInteger, DAZPartyStatus) {
     DAZPartyStatusOpen,
     DAZPartyStatusClosed
 };
+
 
 NS_ASSUME_NONNULL_BEGIN
 

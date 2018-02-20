@@ -11,6 +11,7 @@
 @class PartyMO;
 @protocol DAZProxyServiceDelegate;
 
+
 @interface DAZPartyDetailsViewControllers : UIViewController
 
 @property (nonatomic, readonly) UIScrollView *scrollView; // Необходим для кастомной анимации

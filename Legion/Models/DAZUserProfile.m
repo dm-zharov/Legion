@@ -8,6 +8,7 @@
 
 #import "DAZUserProfile.h"
 
+
 static NSString *const DAZUserAuthorizationTypeKey = @"authorizationType";
 static NSString *const DAZUserLoggedIn = @"authorizationType";
 static NSString *const DAZUserIDKey = @"userID";
@@ -15,6 +16,7 @@ static NSString *const DAZUserFirstNameKey = @"firstName";
 static NSString *const DAZUserLastNameKey = @"lastName";
 static NSString *const DAZUserEmailKey = @"email";
 static NSString *const DAZUserPhotoURLKey = @"photoURL";
+
 
 @interface DAZUserProfile ()
 

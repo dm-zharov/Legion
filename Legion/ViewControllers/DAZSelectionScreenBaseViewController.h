@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PartyMO+CoreDataClass.h"
 
 @protocol DAZSelectionScreenBaseViewControllerProtocol <NSObject>
 

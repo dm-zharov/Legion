@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface UIImage (Cache)
 
 + (void)ch_imageWithContentsOfURL:(NSURL *)url completion:(void (^)(UIImage *))completion;

@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+
 @interface CAGradientLayer (Gradients)
 
 + (CAGradientLayer *)gr_purpleGradientLayer;

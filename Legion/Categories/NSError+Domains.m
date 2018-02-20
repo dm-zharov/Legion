@@ -8,6 +8,7 @@
 
 #import "NSError+Domains.h"
 
+
 NSErrorDomain const DAZVkontakteOpenURLErrorDomain =
     @"Ошибка авторизации с помощью \"ВКонтакте\": не удалось обработать полученную URL строку.";
 

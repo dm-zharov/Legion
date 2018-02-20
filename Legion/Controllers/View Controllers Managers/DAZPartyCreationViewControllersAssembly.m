@@ -11,12 +11,14 @@
 #import "DAZProxyService.h"
 #import "DAZCoreDataManager.h"
 
+
 static NSString *const DAZPartyMessageDate = @"Когда планируется вечеринка?";
 static NSString *const DAZPartyMessageAddress = @"В каком общежитии?";
 static NSString *const DAZPartyMessageApartment = @"В какой квартире?";
 static NSString *const DAZPartyMessageMembers = @"Сколько людей ожидается?";
 static NSString *const DAZPartyMessage = @"Добавьте сообщение для гостей!";
 static NSString *const DAZPartyMessageTitle = @"Осталось придумать заголовок!";
+
 
 @interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenDelegate>
 
