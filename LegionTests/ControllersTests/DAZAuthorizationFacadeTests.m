@@ -1,5 +1,5 @@
 //
-//  DAZAuthorizationMediatorTests.m
+//  DAZAuthorizationFacadeTests.m
 //  LegionTests
 //
 //  Created by Дмитрий Жаров on 18.02.2018.
@@ -22,13 +22,13 @@
 
 @end
 
-@interface DAZAuthorizationMediatorTests : XCTestCase
+@interface DAZAuthorizationFacadeTests : XCTestCase
 
 @property (nonatomic, strong) DAZAuthorizationFacade *authorizationMediator;
 
 @end
 
-@implementation DAZAuthorizationMediatorTests
+@implementation DAZAuthorizationFacadeTests
 
 - (void)setUp
 {

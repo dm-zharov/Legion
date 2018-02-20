@@ -89,6 +89,33 @@
     OCMVerify([delegate proxyServiceDidFinishDownloadParties:[OCMArg isNotNil] networkStatus:DAZNetworkOffline]);
 }
 
+//- (void)testAddPartyWhenServerIsReachable
+//{
+//    OCMStub([self.proxyService isServerReachable]).andReturn(YES);
+//    PartyMO *party = OCMClassMock([PartyMO class]);
+//    
+//    id networkService = self.proxyService.networkService;
+//    OCMStub([networkService addParty:party]);
+//    
+//    OCMStub([party dictionary]).andReturn([NSDictionary new]);
+//    
+//    [self.proxyService addParty:party];
+//    
+//    OCMVerify([networkService addParty:[party dictionary]]);
+//}
 
+//- (void)testAddPartyWhenServerNotReachable
+//{
+//    OCMStub([self.proxyService isServerReachable]).andReturn(NO);
+//
+//    id delegate = OCMProtocolMock(@protocol(DAZProxyServiceDelegate));
+//    self.proxyService.delegate = delegate;
+//
+//    PartyMO *party = OCMClassMock([PartyMO class]);
+//
+//    [self.proxyService addParty:party];
+//
+//    OCMVerify([delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline]);
+//}
 
 @end

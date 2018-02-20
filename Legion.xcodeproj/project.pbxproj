@@ -43,7 +43,7 @@
 		23BEA5922016302B000ECFE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23BEA5902016302B000ECFE5 /* LaunchScreen.storyboard */; };
 		23BEA5952016302C000ECFE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BEA5942016302C000ECFE5 /* main.m */; };
 		23BF827E2038765E00884C2F /* DAZInfoViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF827D2038765E00884C2F /* DAZInfoViewTests.m */; };
-		23BF82862038E10600884C2F /* DAZAuthorizationMediatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */; };
+		23BF82862038E10600884C2F /* DAZAuthorizationFacadeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF82852038E10500884C2F /* DAZAuthorizationFacadeTests.m */; };
 		23BF828820398F5200884C2F /* DAZPlaceholderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828720398F5200884C2F /* DAZPlaceholderViewTests.m */; };
 		23BF828C2039903100884C2F /* DAZActivityButtonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828B2039903100884C2F /* DAZActivityButtonTests.m */; };
 		23BF82902039953C00884C2F /* DAZRootViewControllerRouterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */; };
@@ -69,7 +69,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		23034526202A2422004CF6C8 /* UIImage+Overlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Overlay.h"; sourceTree = "<group>"; };
 		23034527202A2422004CF6C8 /* UIImage+Overlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Overlay.m"; sourceTree = "<group>"; };
 		23034529202B2E3B004CF6C8 /* UIColor+Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Colors.h"; sourceTree = "<group>"; };
@@ -139,7 +138,7 @@
 		23BEA59A2016302C000ECFE5 /* LegionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LegionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23BEA5A02016302C000ECFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23BF827D2038765E00884C2F /* DAZInfoViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZInfoViewTests.m; sourceTree = "<group>"; };
-		23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationMediatorTests.m; sourceTree = "<group>"; };
+		23BF82852038E10500884C2F /* DAZAuthorizationFacadeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZAuthorizationFacadeTests.m; sourceTree = "<group>"; };
 		23BF828720398F5200884C2F /* DAZPlaceholderViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZPlaceholderViewTests.m; sourceTree = "<group>"; };
 		23BF828B2039903100884C2F /* DAZActivityButtonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZActivityButtonTests.m; sourceTree = "<group>"; };
 		23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAZRootViewControllerRouterTests.m; sourceTree = "<group>"; };
@@ -158,7 +157,6 @@
 		23EA6677202F10D10083303E /* UIImage+Cache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Cache.m"; sourceTree = "<group>"; };
 		23EA6679202F143C0083303E /* UIImageView+Cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Cache.h"; sourceTree = "<group>"; };
 		23EA667A202F143C0083303E /* UIImageView+Cache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Cache.m"; sourceTree = "<group>"; };
-		38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionUITests/Pods-LegionUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3912D243E638C9C75441C0EB /* libPods-LegionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LegionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.release.xcconfig"; sourceTree = "<group>"; };
 		98F0F6400CB3A8D9674E42E4 /* Pods-LegionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LegionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LegionTests/Pods-LegionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -195,8 +193,6 @@
 				B67E6EC37313C39D84185F24 /* Pods-Legion.release.xcconfig */,
 				98F0F6400CB3A8D9674E42E4 /* Pods-LegionTests.debug.xcconfig */,
 				4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */,
-				044E6362D089C900D4F5656D /* Pods-LegionUITests.debug.xcconfig */,
-				38ADF5EA1DAA691DE1D62E67 /* Pods-LegionUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -415,7 +411,7 @@
 			isa = PBXGroup;
 			children = (
 				23BF828F2039953C00884C2F /* DAZRootViewControllerRouterTests.m */,
-				23BF82852038E10500884C2F /* DAZAuthorizationMediatorTests.m */,
+				23BF82852038E10500884C2F /* DAZAuthorizationFacadeTests.m */,
 				2359AB73203A4ADA00384B2E /* DAZProxyServiceTests.m */,
 			);
 			path = ControllersTests;
@@ -697,7 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BF82862038E10600884C2F /* DAZAuthorizationMediatorTests.m in Sources */,
+				23BF82862038E10600884C2F /* DAZAuthorizationFacadeTests.m in Sources */,
 				23BF828820398F5200884C2F /* DAZPlaceholderViewTests.m in Sources */,
 				23BF828C2039903100884C2F /* DAZActivityButtonTests.m in Sources */,
 				23BF8292203995D600884C2F /* tests.m in Sources */,

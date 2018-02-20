@@ -78,7 +78,6 @@
     
     [self setupBackgroundLayer];
     [self setupScrollView];
-    
     [self setupNavigationBar];
     [self setupCloseButton];
     
@@ -180,7 +179,6 @@
     
     [self setupHeaderView];
     [self setupDetailsView];
-    
 }
 
 
@@ -246,7 +244,6 @@
     [self setupShareButton];
     [self setupAddressSection];
     [self setupMembersSection];
-    //[self setupEditButton];
     [self setupDeleteButton];
 }
 
@@ -388,7 +385,7 @@
     }
     
     DAZActivityButton *claimButton = [[DAZActivityButton alloc] init];
-    claimButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    claimButton.backgroundColor = [UIColor cl_lightPurpleColor];
     claimButton.layer.cornerRadius = 14;
     claimButton.layer.masksToBounds = YES;
     
@@ -414,14 +411,14 @@
 {
     UIButton *shareButton = [[UIButton alloc] init];
     shareButton.backgroundColor = [UIColor whiteColor];
-    shareButton.layer.borderColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0].CGColor;
+    shareButton.layer.borderColor = [UIColor cl_lightPurpleColor].CGColor;
     shareButton.layer.borderWidth = 2.0f;
     shareButton.layer.cornerRadius = 14;
     shareButton.layer.masksToBounds = YES;
     
     shareButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
     [shareButton setTitle:@"Позвать друга" forState:UIControlStateNormal];
-    [shareButton setTitleColor:[UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [shareButton setTitleColor:[UIColor cl_lightPurpleColor] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(actionShareParty:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.detailsView addSubview:shareButton];
@@ -451,7 +448,7 @@
 - (void)setupAddressSection
 {
     UIView *separator = [[UIView alloc] init];
-    separator.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    separator.backgroundColor = [UIColor cl_lightPurpleColor];
     
     [self.detailsView addSubview:separator];
     
@@ -518,7 +515,7 @@
     }];
     
     UIView *separator = [[UIView alloc] init];
-    separator.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    separator.backgroundColor = [UIColor cl_lightPurpleColor];
     
     [self.detailsView addSubview:separator];
     
@@ -550,30 +547,6 @@
     }
 }
 
-//- (void)setupEditButton
-//{
-//    UIButton *editButton = [[UIButton alloc] init];
-//    editButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
-//    editButton.layer.cornerRadius = 14;
-//    editButton.layer.masksToBounds = YES;
-//
-//    editButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightMedium];
-//    [editButton setTitle:@"Редактировать" forState:UIControlStateNormal];
-//    [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    //[claimButton addTarget:self action:@selector(actionSendClalim:) forControlEvents:UIControlEventTouchUpInside];
-//
-//    [self.detailsView addSubview:editButton];
-//
-//    self.editButton = editButton;
-//
-//    [self.editButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.membersLabel.mas_bottom).with.offset(16);
-//        make.left.equalTo(self.detailsView).with.offset(16);
-//        make.right.equalTo(self.detailsView).with.offset(-16);
-//        make.height.equalTo(@48);
-//    }];
-//}
-
 - (void)setupDeleteButton
 {
     if (![self isOwner])
@@ -582,7 +555,7 @@
     }
     
     UIButton *deleteButton = [[UIButton alloc] init];
-    deleteButton.backgroundColor = [UIColor colorWithRed:115/225.0 green:108/255.0 blue:171/255.0 alpha:1.0];
+    deleteButton.backgroundColor = [UIColor cl_lightPurpleColor];
     deleteButton.layer.cornerRadius = 14;
     deleteButton.layer.masksToBounds = YES;
     
@@ -686,11 +659,8 @@
         self.avatarImageView.image = [UIImage imageNamed:@"Purple Avatar"];
     }
     
-    if (party.title)
-    {
-        self.navigationItem.title = party.title;
-        self.titleLabel.text = party.title;
-    }
+    self.navigationItem.title = party.title ? party.title : nil;
+    self.titleLabel.text = party.title ? party.title : nil;
     
     if (party.date)
     {

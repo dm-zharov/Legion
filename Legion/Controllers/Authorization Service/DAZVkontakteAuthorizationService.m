@@ -108,9 +108,21 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
     NSError *error = [NSError errorWithDomain:DAZVkontakteOpenURLErrorDomain code:0 userInfo:nil];
     if ([url.scheme isEqualToString:[NSString stringWithFormat:@"vk6347345"]])
     {
-        // Нормализация полученного URL для соответствия RFC 1808
-        NSURL *normalizedURL = [NSURL URLWithString:[url.absoluteString stringByReplacingOccurrencesOfString:@"#" withString:@"?"]];
-        NSString *parametersString = normalizedURL.query;
+        NSString *absoluteURL = [url absoluteString];
+    
+        /**
+         * Поиск позиции в строке, с которой начинаются ключи параметров. Для данной задачи свойство URL.query
+         * не может быть использовано по причине несоответствия RFC 1808.
+         */
+        NSRange rangeOfHash = [absoluteURL rangeOfString:@"#"];
+    
+        if (rangeOfHash.location == NSNotFound)
+        {
+            [self completedSignInWithProfile:nil error:error];
+            return NO;
+        }
+     
+        NSString *parametersString = [absoluteURL substringFromIndex:rangeOfHash.location + 1];
 
         if (parametersString.length == 0)
         {
