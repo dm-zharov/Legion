@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="legion-purple" translatesAutoresizingMaskIntoConstraints="NO" id="KoO-gr-NDZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Legion Logo" translatesAutoresizingMaskIntoConstraints="NO" id="KoO-gr-NDZ">
                                 <rect key="frame" x="109" y="243.5" width="157" height="200"/>
                             </imageView>
                         </subviews>
@@ -35,6 +35,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="legion-purple" width="157" height="200"/>
+        <image name="Legion Logo" width="157" height="200"/>
     </resources>
 </document>
