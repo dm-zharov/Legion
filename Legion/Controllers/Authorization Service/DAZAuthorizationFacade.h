@@ -24,6 +24,6 @@
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType;
 - (void)signOut;
 
-- (void)processAuthorizationURL:(NSURL *)url;
+- (BOOL)processAuthorizationURL:(NSURL *)url;
 
 @end

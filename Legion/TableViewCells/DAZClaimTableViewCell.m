@@ -47,7 +47,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]]; // UIImage ImageNamed
+        _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Purple Avatar"]];
         _avatarImageView.contentMode = UIViewContentModeScaleAspectFill;
         _avatarImageView.layer.masksToBounds = YES;
         _avatarImageView.clipsToBounds = YES;
@@ -82,14 +82,6 @@
     
     [super updateConstraints];
 }
-
-- (void)prepareForReuse
-{
-    self.avatarImageView.image = [UIImage imageNamed:@"Purple Avatar"];
-    
-    [super prepareForReuse];
-}
-
 
 #pragma mark - Custom Mutators
 

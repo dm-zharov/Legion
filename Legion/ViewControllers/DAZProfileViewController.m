@@ -150,6 +150,7 @@
     UILabel *emailLabel = [[UILabel alloc] init];
     emailLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
     emailLabel.textColor = [UIColor lightGrayColor];
+    emailLabel.text = @"Вы не авторизованы";
     
     [self.headerView addSubview:emailLabel];
     
@@ -240,6 +241,14 @@
     {
         self.emailLabel.text = profile.email;
     }
+
+#ifdef DEBUG
+    if (!profile.email)
+    {
+        self.avatarImageView.userInteractionEnabled = NO;
+        [self setupFooterView];
+    }
+#endif
 }
 
 
@@ -261,7 +270,6 @@
         make.left.equalTo(self.footerView).with.offset(16);
         make.right.equalTo(self.footerView).with.offset(-16);
         make.centerX.equalTo(self.footerView);
-        //make.bottom.equalTo(self.profileView.mas_bottom).with.offset(-32);
         
     }];
     

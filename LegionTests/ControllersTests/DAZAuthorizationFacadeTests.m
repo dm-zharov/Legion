@@ -24,7 +24,7 @@
 
 @interface DAZAuthorizationFacadeTests : XCTestCase
 
-@property (nonatomic, strong) DAZAuthorizationFacade *authorizationMediator;
+@property (nonatomic, strong) DAZAuthorizationFacade *authorizationFacade;
 
 @end
 
@@ -35,17 +35,19 @@
     [super setUp];
     
     DAZVkontakteAuthorizationService *vkontakteService = OCMClassMock([DAZVkontakteAuthorizationService class]);
-    OCMStub(ClassMethod([(id)vkontakteService alloc])).andReturn(vkontakteService);
+    OCMExpect(ClassMethod([(id)vkontakteService alloc])).andReturn(vkontakteService);
+    OCMExpect([vkontakteService initWithMediator:OCMOCK_ANY]).andReturn(vkontakteService);
     
     DAZFirebaseAuthorizationService *firebaseService = OCMClassMock([DAZFirebaseAuthorizationService class]);
-    OCMStub(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);
+    OCMExpect(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);
+    OCMExpect([firebaseService initWithMediator:OCMOCK_ANY]).andReturn(firebaseService);
     
-    self.authorizationMediator = OCMPartialMock([[DAZAuthorizationFacade alloc] init]);
+    self.authorizationFacade = OCMPartialMock([[DAZAuthorizationFacade alloc] init]);
 }
 
 - (void)tearDown
 {
-    self.authorizationMediator = nil;
+    self.authorizationFacade = nil;
     
     [super tearDown];
 }
@@ -54,104 +56,110 @@
 {
     DAZAuthorizationType authorizationType = 0;
 
-    OCMStub([self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:OCMOCK_ANY error:OCMOCK_ANY]);
+    OCMExpect([self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:OCMOCK_ANY error:OCMOCK_ANY]);
 
-    [self.authorizationMediator signInWithAuthorizationType:authorizationType];
+    [self.authorizationFacade signInWithAuthorizationType:authorizationType];
 
-    OCMVerify([self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:nil error:OCMOCK_ANY]);
+    OCMVerify([self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:nil error:OCMOCK_ANY]);
 }
 
 - (void)testSignInWithAuthorizationVkontakte
 {
-    OCMStub([self.authorizationMediator.vkontakteAuthorizationService signIn]);
+    id vkontakteAuthorizationService = self.authorizationFacade.vkontakteAuthorizationService;
+    OCMExpect([vkontakteAuthorizationService signIn]);
 
-    [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationVkontakte];
+    [self.authorizationFacade signInWithAuthorizationType:DAZAuthorizationVkontakte];
 
-    OCMVerify([self.authorizationMediator.vkontakteAuthorizationService signIn]);
+    OCMVerify([vkontakteAuthorizationService signIn]);
 }
 
 - (void)testSignInWithAuthorizationFirebase
 {
-    OCMStub([self.authorizationMediator.firebaseAuthorizationService signInAnonymously]);
-    
-    [self.authorizationMediator signInWithAuthorizationType:DAZAuthorizationAnonymously];
-    
-    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signInAnonymously]);
+    id firebaseAuthorizationService = self.authorizationFacade.firebaseAuthorizationService;
+    OCMExpect([firebaseAuthorizationService signInAnonymously]);
+
+    [self.authorizationFacade signInWithAuthorizationType:DAZAuthorizationAnonymously];
+
+    OCMVerify([firebaseAuthorizationService signInAnonymously]);
 }
 
 - (void)testSignOut
 {
-    OCMStub([self.authorizationMediator.firebaseAuthorizationService signOut]);
-    
-    [self.authorizationMediator signOut];
-    
-    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signOut]);
+    id firebaseAuthorizationService = self.authorizationFacade.firebaseAuthorizationService;
+    OCMExpect([firebaseAuthorizationService signOut]);
+
+    [self.authorizationFacade signOut];
+
+    OCMVerify([firebaseAuthorizationService signOut]);
 }
 
 - (void)testProcessNilAuthorizationURL
 {
-    [self.authorizationMediator processAuthorizationURL:nil];
-    
-    OCMReject([self.authorizationMediator.vkontakteAuthorizationService processAuthorizationURL:OCMOCK_ANY]);
+    id vkontakteAuthorizationService = self.authorizationFacade.vkontakteAuthorizationService;
+    OCMReject([vkontakteAuthorizationService processAuthorizationURL:OCMOCK_ANY]);
+
+    [self.authorizationFacade processAuthorizationURL:nil];
 }
 
 - (void)testProcessAuthorizationURL
 {
-    OCMStub([self.authorizationMediator.vkontakteAuthorizationService processAuthorizationURL:OCMOCK_ANY]);
-    
+    id vkontakteAuthorizationService = self.authorizationFacade.vkontakteAuthorizationService;
+    OCMExpect([vkontakteAuthorizationService processAuthorizationURL:OCMOCK_ANY]);
+
     NSURL *url = [NSURL URLWithString:@"https://test"];
-    [self.authorizationMediator processAuthorizationURL:url];
-    
-    OCMVerify([self.authorizationMediator.vkontakteAuthorizationService processAuthorizationURL:url]);
+    [self.authorizationFacade processAuthorizationURL:url];
+
+    OCMVerify([vkontakteAuthorizationService processAuthorizationURL:url]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithNilProfile
 {
     id <DAZAuthorizationServiceDelegate> delegate = OCMProtocolMock(@protocol(DAZAuthorizationServiceDelegate));
-    self.authorizationMediator.delegate = delegate;
-    
+    self.authorizationFacade.delegate = delegate;
+
     NSError *error = [NSError new];
-    [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:nil error:error];
-    
+    [self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:nil error:error];
+
     OCMVerify([delegate authorizationServiceDidFinishSignInWithProfile:nil error:error]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithProfileByVkontakteAuthorization
 {
     DAZUserProfile *profile = OCMClassMock([DAZUserProfile class]);
-    
+
     OCMStub(profile.authorizationType).andReturn(DAZAuthorizationVkontakte);
-    
+
     OCMStub(profile.userID).andReturn(@"12345");
-    
-    OCMStub([self.authorizationMediator.firebaseAuthorizationService signInWithUserID:OCMOCK_ANY]);
-    
-    [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:profile error:nil];
-    
-    OCMVerify([self.authorizationMediator.firebaseAuthorizationService signInWithUserID:profile.userID]);
+
+    id firebaseAuthorizationService = self.authorizationFacade.firebaseAuthorizationService;
+    OCMExpect([firebaseAuthorizationService signInWithUserID:OCMOCK_ANY]);
+
+    [self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:profile error:nil];
+
+    OCMVerify([firebaseAuthorizationService signInWithUserID:@"12345"]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignInWithProfileByAnonymouslyAuthorization
 {
     id <DAZAuthorizationServiceDelegate> delegate = OCMProtocolMock(@protocol(DAZAuthorizationServiceDelegate));
-    self.authorizationMediator.delegate = delegate;
-    
+    self.authorizationFacade.delegate = delegate;
+
     DAZUserProfile *profile = OCMClassMock([DAZUserProfile class]);
-    
+
     OCMStub(profile.authorizationType).andReturn(DAZAuthorizationAnonymously);
-    
-    [self.authorizationMediator authorizationServiceDidFinishSignInWithProfile:profile error:nil];
-    
+
+    [self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:profile error:nil];
+
     OCMVerify([delegate authorizationServiceDidFinishSignInWithProfile:profile error:nil]);
 }
 
 - (void)testAuthorizationServiceDidFinishSignOut
 {
     id <DAZAuthorizationServiceDelegate> delegate = OCMProtocolMock(@protocol(DAZAuthorizationServiceDelegate));
-    self.authorizationMediator.delegate = delegate;
-    
-    [self.authorizationMediator authorizationServiceDidFinishSignOut];
-    
+    self.authorizationFacade.delegate = delegate;
+
+    [self.authorizationFacade authorizationServiceDidFinishSignOut];
+
     OCMVerify([delegate authorizationServiceDidFinishSignOut]);
 }
 

@@ -64,14 +64,14 @@
 
 #pragma mark - Public
 
-- (void)processAuthorizationURL:(NSURL *)url
+- (BOOL)processAuthorizationURL:(NSURL *)url
 {
     if (!url)
     {
-        return;
+        return NO;
     }
     
-    [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
+    return [self.vkontakteAuthorizationService processAuthorizationURL:(NSURL *)url];
 }
 
 

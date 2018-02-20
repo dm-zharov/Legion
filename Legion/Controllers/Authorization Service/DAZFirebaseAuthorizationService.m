@@ -40,17 +40,17 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    if (authorizationType != DAZAuthorizationAnonymously)
+    if (authorizationType == DAZAuthorizationAnonymously)
+    {
+        [self signInAnonymously];
+    }
+    else
     {
         NSError *error = [[NSError alloc]
             initWithDomain:@"Ошибка авторизации: данный способ авторизации не поддерживается провайдером \"Firebase\"."
                       code:0
                   userInfo:nil];
         [self completedSignInWithProfile:nil error:error];
-    }
-    else
-    {
-        [self signInAnonymously];
     }
 }
 
@@ -117,6 +117,7 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
         {
             DAZUserProfile *profile = [[DAZUserProfile alloc] init];
             profile.authorizationType = DAZAuthorizationAnonymously;
+            profile.userID = user.uid;
             profile.firstName = @"Анонимный";
             profile.lastName = @"пользователь";
             

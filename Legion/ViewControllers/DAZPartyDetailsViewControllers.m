@@ -13,7 +13,7 @@
 #import "DAZActivityButton.h"
 
 #import "CAGradientLayer+Gradients.h"
-#import "UIImage+Cache.h"
+#import "UIImageView+Cache.h"
 #import "UIImage+Overlay.h"
 #import "UIColor+Colors.h"
 #import "UINavigationBar+Shadow.h"
@@ -32,7 +32,7 @@
 @property (nonatomic, weak) UINavigationBar *navigationBar;
 @property (nonatomic, weak) UIView *navigationBackground;
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
 
 @property (nonatomic, weak) UIView *headerView;
@@ -269,6 +269,7 @@
 {
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = [UIFont systemFontOfSize:21 weight:UIFontWeightBold];
+    nameLabel.adjustsFontSizeToFitWidth = YES;
     
     [self.detailsView addSubview:nameLabel];
     
@@ -608,7 +609,8 @@
     // Добавляем к навигиционному бару подложку, цвет которой мы будем изменять
     
     UIView *navigationBackground = [[UIView alloc] init];
-    navigationBackground.backgroundColor = [UIColor whiteColor];    navigationBackground.alpha = 0;
+    navigationBackground.backgroundColor = [UIColor whiteColor];
+    navigationBackground.alpha = 0;
     
     [self.view insertSubview:navigationBackground belowSubview:navigationBar];
     
@@ -650,9 +652,7 @@
     
     if (party.photoURL)
     {
-         [UIImage ch_imageWithContentsOfURL:party.photoURL completion:^(UIImage *image) {
-             self.avatarImageView.image = image;
-         }];
+        [self.avatarImageView ch_imageWithContentsOfURL:party.photoURL];
     }
     else
     {
@@ -701,7 +701,6 @@
         [button startSpinning];
 
         [self.networkService sendClaimForParty:self.party];
-        //[self actionDismissViewController];
     }
 }
 

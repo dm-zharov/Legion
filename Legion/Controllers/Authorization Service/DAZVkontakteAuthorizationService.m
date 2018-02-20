@@ -62,7 +62,11 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType
 {
-    if (authorizationType != DAZAuthorizationVkontakte)
+    if (authorizationType == DAZAuthorizationVkontakte)
+    {
+        [self signIn];
+    }
+    else
     {
         NSError *error = [[NSError alloc]
             initWithDomain:@"Ошибка авторизации: данный способ авторизации не поддерживается провайдером \"ВКонтакте\"."
@@ -70,8 +74,6 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
                   userInfo:nil];
         [self completedSignInWithProfile:nil error:error];
     }
-    
-    [self signIn];
 }
 
 - (void)signOut

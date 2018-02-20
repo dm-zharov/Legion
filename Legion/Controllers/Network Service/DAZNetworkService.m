@@ -72,7 +72,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 {
     [self dataTaskWithFunction:DAZFunctionGetParties
                     dictionary:nil
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
         {
             NSArray *parties = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -106,7 +106,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionAddParty
                     dictionary:partyDictionary
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishAddParty)])
@@ -131,7 +131,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionUpdateParty
                     dictionary:partyDictionary
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateParty)])
@@ -158,7 +158,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionDeleteParty
                     dictionary:parameters
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteParty)])
@@ -181,7 +181,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 {
     [self dataTaskWithFunction:DAZFunctionGetClaims
                     dictionary:nil
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
         {
           NSArray *claims = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -217,7 +217,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionSendClaim
                     dictionary:claimDictionary
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishSendClaim)])
@@ -242,7 +242,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionUpdateClaim
                     dictionary:claimDictionary
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateClaim)])
@@ -267,7 +267,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     [self dataTaskWithFunction:DAZFunctionDeleteClaim
                     dictionary:claimDictionary
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error) {
           dispatch_async(dispatch_get_main_queue(), ^{
               if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteClaim)])
@@ -289,7 +289,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 {
     [self dataTaskWithFunction:@"setTestData"
                     dictionary:nil
-              completionHanler:^(NSData * data, NSURLResponse * response, NSError * error) {
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
                   NSLog(@"Тестовые данные установлены!");
               }];
 }

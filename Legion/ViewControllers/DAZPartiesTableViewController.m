@@ -86,9 +86,6 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     tableView.delegate = self;
     tableView.dataSource = self;
     
-    tableView.clipsToBounds = NO;
-    tableView.layer.masksToBounds = NO;
-    
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.contentInset = UIEdgeInsetsMake(0, 0, 16, 0);
     tableView.showsVerticalScrollIndicator = NO;
