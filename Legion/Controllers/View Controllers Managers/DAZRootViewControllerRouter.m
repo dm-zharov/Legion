@@ -133,7 +133,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     
     navigationController.navigationBar.prefersLargeTitles = YES;
     
-    navigationController.tabBarItem.title = @"Тусовки";
+    navigationController.tabBarItem.title = @"Вечеринки";
     navigationController.tabBarItem.image = [UIImage imageNamed:@"Parties Icon"];
     
     return navigationController;

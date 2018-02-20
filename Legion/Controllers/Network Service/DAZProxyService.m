@@ -181,7 +181,7 @@
 
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
 {
-    // Мы получили новые данные, кешированные в базу данных тусовки могли утратить актуальность
+    // Мы получили новые данные, кешированные в базу данных вечеринки могли утратить актуальность
     [self.coreDataManager removeParties];
     
     NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByDictionariesArray:parties];
@@ -191,7 +191,7 @@
         [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOnline];
     }
     
-    // Сохраняем обновленные тусовки
+    // Сохраняем обновленные вечеринки
     [self.coreDataManager saveContext];
 }
 

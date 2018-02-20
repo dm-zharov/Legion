@@ -16,7 +16,7 @@
 
 @end;
 
-/* Сборщик экранов создания новой тусовки
+/* Сборщик экранов создания новой вечеринки
  */
 @interface DAZPartyCreationViewControllersAssembly : NSObject
 

@@ -58,6 +58,15 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
     [self.networkService downloadParties];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView.refreshControl isRefreshing])
+    {
+        [self.tableView.refreshControl endRefreshing];
+    }
+}
 
 #pragma mark - Network Service
 
@@ -72,7 +81,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 - (void)setupNavigationBar
 {
-    self.navigationItem.title = @"Тусовки";
+    self.navigationItem.title = @"Вечеринки";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                                 initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                      target:self
@@ -105,7 +114,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 - (void)setupPlaceholderView
 {
     DAZPlaceholderView *placeholderView = [[DAZPlaceholderView alloc]
-        initWithTitle:@"Тусовок нет" message:@"Организуйте тусовку и будьте первым!"];
+        initWithTitle:@"Вечеринок нет" message:@"Организуйте вечеринку и будьте первым!"];
     placeholderView.hidden = YES;
 
     [self.view addSubview:placeholderView];

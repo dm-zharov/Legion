@@ -709,7 +709,7 @@
     NSString *authorName = self.party.authorName;
     NSString *partyTitle = self.party.title;
     
-    NSString *sharedString = [NSString stringWithFormat:@"Приглашаю тебя посмотреть тусовку \"%@\", которую организовал %@", partyTitle, authorName];
+    NSString *sharedString = [NSString stringWithFormat:@"Приглашаю тебя посмотреть вечеринку \"%@\", которую организовал %@", partyTitle, authorName];
     
     NSArray *sharedObjects = @[sharedString];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]

@@ -11,7 +11,7 @@
 #import "DAZProxyService.h"
 #import "DAZCoreDataManager.h"
 
-static NSString *const DAZPartyMessageDate = @"Когда планируется тусовка?";
+static NSString *const DAZPartyMessageDate = @"Когда планируется вечеринка?";
 static NSString *const DAZPartyMessageAddress = @"В каком общежитии?";
 static NSString *const DAZPartyMessageApartment = @"В какой квартире?";
 static NSString *const DAZPartyMessageMembers = @"Сколько людей ожидается?";

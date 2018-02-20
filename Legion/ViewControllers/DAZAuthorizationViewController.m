@@ -18,7 +18,6 @@
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
-
 @property (nonatomic, weak) UILabel *greetingLabel;
 @property (nonatomic, weak) UILabel *authorizeLabel;
 @property (nonatomic, weak) UIButton *signInButton;
@@ -73,7 +72,7 @@
 - (void)setupGreetingLabel
 {
     UILabel *greetingLabel = [[UILabel alloc] init];
-    greetingLabel.text = @"Не можете найти тусовку в общежитии?";
+    greetingLabel.text = @"Не можете найти вечеринку в общежитии?";
     greetingLabel.textColor = [UIColor whiteColor];
     greetingLabel.font = [UIFont systemFontOfSize:35 weight:UIFontWeightBold];
     greetingLabel.numberOfLines = 0;

@@ -37,10 +37,10 @@
     [super setUp];
     
     DAZCoreDataManager *coreDataManager = OCMClassMock([DAZCoreDataManager class]);
-    OCMStub(ClassMethod([(id)coreDataManager alloc])).andReturn(coreDataManager);
+    OCMExpect(ClassMethod([(id)coreDataManager alloc])).andReturn(coreDataManager);
     
     DAZNetworkService *networkService = OCMClassMock([DAZNetworkService class]);
-    OCMStub(ClassMethod([(id)networkService alloc])).andReturn(networkService);
+    OCMExpect(ClassMethod([(id)networkService alloc])).andReturn(networkService);
     
     self.proxyService = OCMPartialMock([[DAZProxyService alloc] init]);
 }
@@ -55,7 +55,7 @@
 - (void)testIsServerReachable
 {
     id networkService = self.proxyService.networkService;
-    OCMStub([networkService isServerReachable]).andReturn(YES);
+    OCMExpect([networkService isServerReachable]).andReturn(YES);
     
     BOOL isServerReachable = [self.proxyService isServerReachable];
     
@@ -64,7 +64,7 @@
 
 - (void)testGetPartiesWhenServerIsReachable
 {
-    OCMStub([self.proxyService isServerReachable]).andReturn(YES);
+    OCMExpect([self.proxyService isServerReachable]).andReturn(YES);
     
     id networkService = self.proxyService.networkService;
     OCMStub([networkService downloadParties]);
@@ -76,7 +76,7 @@
 
 - (void)testGetPartiesWhenServerNotReachable
 {
-    OCMStub([self.proxyService isServerReachable]).andReturn(NO);
+    OCMExpect([self.proxyService isServerReachable]).andReturn(NO);
     
     id coreDataManager = self.proxyService.coreDataManager;
     OCMStub([coreDataManager fetchParties]).andReturn([NSArray array]);
@@ -89,33 +89,33 @@
     OCMVerify([delegate proxyServiceDidFinishDownloadParties:[OCMArg isNotNil] networkStatus:DAZNetworkOffline]);
 }
 
-//- (void)testAddPartyWhenServerIsReachable
-//{
-//    OCMStub([self.proxyService isServerReachable]).andReturn(YES);
-//    PartyMO *party = OCMClassMock([PartyMO class]);
-//    
-//    id networkService = self.proxyService.networkService;
-//    OCMStub([networkService addParty:party]);
-//    
-//    OCMStub([party dictionary]).andReturn([NSDictionary new]);
-//    
-//    [self.proxyService addParty:party];
-//    
-//    OCMVerify([networkService addParty:[party dictionary]]);
-//}
+- (void)testAddPartyWhenServerIsReachable
+{
+    OCMExpect([self.proxyService isServerReachable]).andReturn(YES);
+    PartyMO *party = OCMClassMock([PartyMO class]);
 
-//- (void)testAddPartyWhenServerNotReachable
-//{
-//    OCMStub([self.proxyService isServerReachable]).andReturn(NO);
-//
-//    id delegate = OCMProtocolMock(@protocol(DAZProxyServiceDelegate));
-//    self.proxyService.delegate = delegate;
-//
-//    PartyMO *party = OCMClassMock([PartyMO class]);
-//
-//    [self.proxyService addParty:party];
-//
-//    OCMVerify([delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline]);
-//}
+    id networkService = self.proxyService.networkService;
+    OCMStub([networkService addParty:party]);
+
+    OCMStub([party dictionary]).andReturn([NSDictionary new]);
+
+    [self.proxyService addParty:party];
+
+    OCMVerify([networkService addParty:[OCMArg isKindOfClass:[NSDictionary class]]]);
+}
+
+- (void)testAddPartyWhenServerNotReachable
+{
+    OCMStub([self.proxyService isServerReachable]).andReturn(NO);
+
+    id delegate = OCMProtocolMock(@protocol(DAZProxyServiceDelegate));
+    self.proxyService.delegate = delegate;
+
+    PartyMO *party = OCMClassMock([PartyMO class]);
+
+    [self.proxyService addParty:party];
+
+    OCMVerify([delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline]);
+}
 
 @end

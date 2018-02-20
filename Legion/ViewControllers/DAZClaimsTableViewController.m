@@ -105,7 +105,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     }];
     
     DAZPlaceholderView *inboxPlaceholderView = [[DAZPlaceholderView alloc]
-        initWithTitle:@"Запросов нет" message:@"Организуйте тусовку и управляйте входящими запросами на место "
+        initWithTitle:@"Запросов нет" message:@"Организуйте вечеринку и управляйте входящими запросами на место "
                                                         "проведения здесь!"];
     inboxPlaceholderView.hidden = YES;
     [self.view addSubview:inboxPlaceholderView];

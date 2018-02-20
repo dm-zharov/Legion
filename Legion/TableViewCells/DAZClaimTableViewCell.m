@@ -115,7 +115,7 @@
     NSString *message;
     if (income)
     {
-        message = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение тусовки %@ %@",
+        message = [NSString stringWithFormat:@"%@ отправил вам запрос на посещение вечеринки %@ %@",
                        authorString, partyString, dateString];
     }
     else
@@ -124,15 +124,15 @@
         switch (status)
         {
             case DAZClaimStatusConfirmed:
-                message = [NSString stringWithFormat:@"%@ подтвердил вашу заявку на посещение тусовки %@ %@",
+                message = [NSString stringWithFormat:@"%@ подтвердил вашу заявку на посещение вечеринки %@ %@",
                             authorString, partyString, dateString];
                 break;
             case DAZClaimStatusRequested:
-                message = [NSString stringWithFormat:@"Вы запросили у %@ место проведения тусовки %@ %@",
+                message = [NSString stringWithFormat:@"Вы запросили у %@ место проведения вечеринки %@ %@",
                             authorString, partyString, dateString];
                 break;
             case DAZClaimStatusClosed:
-                message = [NSString stringWithFormat:@"%@ отклонил вашу заявку на посещение тусовки %@ %@",
+                message = [NSString stringWithFormat:@"%@ отклонил вашу заявку на посещение вечеринки %@ %@",
                             authorString, partyString, dateString];
                 break;
         }

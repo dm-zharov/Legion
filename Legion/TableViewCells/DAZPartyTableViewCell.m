@@ -86,7 +86,7 @@
         _frontCardLayer = [CAGradientLayer gr_purpleGradientLayer];
         [_frontCardView.layer addSublayer:_frontCardLayer];
 
-        // Заголовок тусовки
+        // Заголовок вечеринку
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:25 weight:UIFontWeightBold];
         _titleLabel.textColor = [UIColor whiteColor];
@@ -154,7 +154,7 @@
         _messageLabel.text = @"Сообщение";
         [_backCardView addSubview:_messageLabel];
         
-        // Текст с описанием тусовки
+        // Текст с описанием вечеринки
         _descriptionLabel = [[UILabel alloc] init];
         _descriptionLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightBold];
         _descriptionLabel.textColor = [UIColor whiteColor];

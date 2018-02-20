@@ -96,7 +96,21 @@
 
 - (void)actionButtonPressed
 {
-    [self selectionCompleted];
+    if (!self.textField)
+    {
+        [self selectionCompleted];
+    }
+    else
+    {
+        if (![self textFieldShouldReturn:self.textField])
+        {
+            return;
+        }
+        else
+        {
+            [self selectionCompleted];
+        }
+    }
 }
 
 
@@ -190,6 +204,7 @@
     textField.textAlignment = NSTextAlignmentCenter;
     textField.font = [UIFont systemFontOfSize:27 weight:UIFontWeightBold];
     textField.textColor = [UIColor cl_darkPurpleColor];
+    textField.textAlignment = NSTextAlignmentCenter;
     textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     textField.spellCheckingType = UITextSpellCheckingTypeNo;
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -213,12 +228,14 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField.text.length < 10)
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (text.length >= 10)
     {
-        return YES;
+        return NO;
     }
     
-    return NO;
+    return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
