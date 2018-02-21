@@ -195,8 +195,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
             self.party.members = [members intValue];
             break;
         }
-        default:
-            break;
     }
 
     [self continueButtonPressed];

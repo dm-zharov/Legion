@@ -47,13 +47,6 @@
         case DAZAuthorizationAnonymously:
             [self.firebaseAuthorizationService signInAnonymously];
             break;
-        default:
-        {
-            NSError *error = [[NSError alloc]
-                initWithDomain:@"Ошибка авторизации: отсутствующий способ авторизации." code:0 userInfo:nil];
-            [self authorizationServiceDidFinishSignInWithProfile:nil error:error];
-            break;
-        }
     }
 }
 

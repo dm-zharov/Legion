@@ -90,8 +90,6 @@
             break;
         case DAZSelectionScreenSlider:
             [self setupSlider];
-        default:
-            break;
     }
 }
 
@@ -404,8 +402,6 @@
             result = @(self.sliderView.value);
             break;
         }
-        default:
-            break;
     }
     
     if ([self.delegate respondsToSelector:@selector(selectionScreenCompletedWorkWithResult:ofType:)])
