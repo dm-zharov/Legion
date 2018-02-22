@@ -42,7 +42,7 @@
     self = [super initWithMessage:message];
     if (self) {
         _type = type;
-        _message = message;
+        _message = [message copy];
     }
     return self;
 }

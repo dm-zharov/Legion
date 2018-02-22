@@ -28,7 +28,7 @@
 {
     self = [super init];
     if (self) {
-        _messageString = message;
+        _messageString = [message copy];
     }
     return self;
 }
