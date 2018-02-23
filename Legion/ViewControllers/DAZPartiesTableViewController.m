@@ -25,11 +25,11 @@
 static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 
-@interface DAZPartiesTableViewController () <UIViewControllerTransitioningDelegate, DAZProxyServiceDelegate,
-                                                DAZPartyCreationViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface DAZPartiesTableViewController () <UIViewControllerTransitioningDelegate, DAZProxyServicePartiesDelegate,
+                                                DAZPartyCreationViewControllerAssemblyDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
-@property (nonatomic, nullable, copy) NSArray *partiesArray;
+@property (nonatomic, copy) NSArray *partiesArray;
 
 @property (nonatomic, weak) DAZPlaceholderView *placeholderView;
 @property (nonatomic, weak) UITableView *tableView;
@@ -39,6 +39,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 @property (nonatomic, strong) DAZPartyCreationViewControllersAssembly *partyCreationViewControllerAssembly;
 
 @end
+
 
 @implementation DAZPartiesTableViewController
 
@@ -74,7 +75,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 - (void)setupNetworkService
 {
     self.networkService  = [[DAZProxyService alloc] init];
-    self.networkService.delegate = self;
+    self.networkService.partiesDelegate = self;
 }
 
 

@@ -23,6 +23,8 @@
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
 
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated;
+
 // Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;

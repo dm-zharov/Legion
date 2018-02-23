@@ -22,7 +22,8 @@
 #import "PartyMO+CoreDataClass.h"
 
 
-@interface DAZPartyDetailsViewControllers () <DAZProxyServiceDelegate, UINavigationBarDelegate, UIScrollViewDelegate>
+@interface DAZPartyDetailsViewControllers () <DAZProxyServicePartiesDelegate, DAZProxyServiceClaimsDelegate,
+                                                UINavigationBarDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, getter=isStatusBarLight, assign) BOOL statusBarLight;
 @property (nonatomic, getter=isOwner, assign) BOOL owner;
@@ -56,6 +57,7 @@
 @property (nonatomic, weak) UIButton *closeButton;
 
 @end
+
 
 @implementation DAZPartyDetailsViewControllers
 
@@ -116,7 +118,8 @@
 - (void)setupNetworkService
 {
     self.networkService = [[DAZProxyService alloc] init];
-    self.networkService.delegate = self;
+    self.networkService.partiesDelegate = self;
+    self.networkService.claimsDelegate = self;
 }
 
 
@@ -767,7 +770,20 @@
 }
 
 
-#pragma mark - DAZProxyServiceDelegate
+#pragma mark - DAZProxyServicePartiesDelegate
+
+- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
+{
+    [self actionDismissViewController];
+    
+    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+    {
+        [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:status];
+    }
+}
+
+
+#pragma mark - DAZProxyServiceClaimsDelegate
 
 - (void)proxyServiceDidFinishSendClaimWithNetworkStatus:(DAZNetworkStatus)status
 {
@@ -778,16 +794,6 @@
     {
         [self al_presentOfflineModeAlertViewController];
         [self.claimButton setTitle:@"Ошибка" forState:UIControlStateDisabled];
-    }
-}
-
-- (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status
-{
-    [self actionDismissViewController];
-    
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
-    {
-        [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:status];
     }
 }
 

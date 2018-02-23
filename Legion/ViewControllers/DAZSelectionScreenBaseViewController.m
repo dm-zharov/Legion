@@ -13,11 +13,13 @@
 
 @interface DAZSelectionScreenBaseViewController ()
 
+@property (nonatomic, copy) NSString *messageString;
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIButton *actionButton;
 
 @end
+
 
 @implementation DAZSelectionScreenBaseViewController
 
@@ -28,7 +30,7 @@
 {
     self = [super init];
     if (self) {
-        _messageString = message;
+        _messageString = [message copy];
     }
     return self;
 }
@@ -120,12 +122,14 @@
 
 - (void)setupContentInView:(UIView *)contentView
 {
-    return;
+    NSString *reason = [NSString stringWithFormat:@"%@ должен быть переопределен", NSStringFromSelector(_cmd)];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
 - (void)actionButtonPressed
 {
-    return;
+    NSString *reason = [NSString stringWithFormat:@"%@ должен быть переопределен", NSStringFromSelector(_cmd)];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
 @end

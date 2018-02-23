@@ -31,11 +31,12 @@
 @property (nonatomic, weak) UILabel *nameLabel;
 @property (nonatomic, weak) UILabel *emailLabel;
 
-@property (nonatomic, strong) UIButton *signOutButton;
+@property (nonatomic, weak) UIButton *signOutButton;
 
 @property (nonatomic, weak) UIView *footerView;
 
 @end
+
 
 @implementation DAZProfileViewController
 
@@ -46,6 +47,7 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.tabBarController.tabBar.translucent = NO;
     
     [self setupHeaderView];
@@ -56,16 +58,8 @@
     [self setupDebugView];
 #endif
     
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
     [self setValuesWithUserProfile];
 }
-
 
 #pragma mark - Setup UI
 
@@ -74,14 +68,14 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor whiteColor];
     
+    view.layer.shadowColor = [UIColor blackColor].CGColor;
+    view.layer.shadowOpacity = 0.15;
+    view.layer.shadowOffset = CGSizeMake(0, 2);
+    view.layer.shadowRadius = 2.0;
+    
     [self.view addSubview:view];
     
     self.headerView = view;
-    
-    self.headerView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.headerView.layer.shadowOpacity = 0.15;
-    self.headerView.layer.shadowOffset = CGSizeMake(0, 2);
-    self.headerView.layer.shadowRadius = 2.0;
     
     [self.headerView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self.view);

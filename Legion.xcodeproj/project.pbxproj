@@ -201,7 +201,7 @@
 				2346B724201DFC020039DF3F /* DAZAuthorizationServiceProtocol.h */,
 				2346B726201E02340039DF3F /* DAZAuthorizationFacade.h */,
 				2346B727201E02340039DF3F /* DAZAuthorizationFacade.m */,
-				2354FA092020CBB9000A97C8 /* Mediated Authorization Services */,
+				2354FA092020CBB9000A97C8 /* Facaded Authorization Services */,
 			);
 			path = "Authorization Service";
 			sourceTree = "<group>";
@@ -229,7 +229,7 @@
 			path = "View Controllers Managers";
 			sourceTree = "<group>";
 		};
-		2354FA092020CBB9000A97C8 /* Mediated Authorization Services */ = {
+		2354FA092020CBB9000A97C8 /* Facaded Authorization Services */ = {
 			isa = PBXGroup;
 			children = (
 				2346B729201E03CC0039DF3F /* DAZVkontakteAuthorizationService.h */,
@@ -237,7 +237,7 @@
 				2346B72C201E03DB0039DF3F /* DAZFirebaseAuthorizationService.h */,
 				2346B72D201E03DB0039DF3F /* DAZFirebaseAuthorizationService.m */,
 			);
-			name = "Mediated Authorization Services";
+			name = "Facaded Authorization Services";
 			sourceTree = "<group>";
 		};
 		2354FA0A2020CBD8000A97C8 /* Services Under Proxy */ = {

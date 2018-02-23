@@ -6,8 +6,6 @@
 //  Copyright © 2018 SberTech. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 #import "DAZSelectionScreenBaseViewController.h"
 
 
@@ -24,15 +22,17 @@ typedef NS_ENUM(NSInteger, DAZSelectionScreenType) {
     DAZSelectionScreenSlider
 };
 
-@protocol DAZSelectionScreenDelegate <NSObject>
+
+@protocol DAZSelectionScreenViewControllerDelegate <NSObject>
 
 - (void)selectionScreenCompletedWorkWithResult:(id)result ofType:(DAZSelectionScreenType)type;
 
 @end
 
+
 @interface DAZSelectionScreenViewController : DAZSelectionScreenBaseViewController <DAZSelectionScreenBaseViewControllerProtocol>
 
-@property (nonatomic, weak) id<DAZSelectionScreenDelegate> delegate;
+@property (nonatomic, weak) id <DAZSelectionScreenViewControllerDelegate> delegate;
 
 @property (nonatomic, readonly) DAZSelectionScreenType type;
 @property (nonatomic, readonly) NSString *message;

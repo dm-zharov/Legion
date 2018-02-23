@@ -17,12 +17,8 @@
 
 @property (nonatomic, weak) NSManagedObjectContext *coreDataContext;
 
-- (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName;
-- (void)removeObjectsWithEntityName:(NSString *)entityName;
-- (void)saveObjects:(NSArray *)objects;
-- (void)deleteObjects:(NSArray *)objects;
-
 @end
+
 
 @implementation DAZCoreDataManager
 
@@ -55,50 +51,6 @@
     return container.viewContext;
 }
 
-+ (NSArray<PartyMO *> *)partiesArrayByDictionariesArray:(NSArray<NSDictionary *> *)parties
-{
-    NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:parties.count];
-    for (NSDictionary *party in parties)
-    {
-        PartyMO *item = [PartyMO partyWithContext:[self coreDataContext] dictionary:party];
-        if (!item)
-        {
-            return nil;
-        }
-        else
-        {
-            [partiesArray addObject:item];
-        }
-    }
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];    
-    NSArray *result = [partiesArray sortedArrayUsingDescriptors:@[sortDescriptor]];
-    
-    return result;
-}
-
-+ (NSArray<ClaimMO *> *)claimsArrayByDictionariesArray:(NSArray<NSDictionary *> *)claims
-{
-    NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:claims.count];
-    for (NSDictionary *claim in claims)
-    {
-        ClaimMO *item = [ClaimMO claimWithContext:[self coreDataContext] dictionary:claim];
-        if (!item)
-        {
-            return nil;
-        }
-        else
-        {
-            [claimsArray addObject:item];
-        }
-    }
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-    NSArray *result = [claimsArray sortedArrayUsingDescriptors:@[sortDescriptor]];
-    
-    return result;
-}
-
 
 #pragma mark - Lifecycle
 
@@ -109,42 +61,6 @@
         _coreDataContext = [[self class] coreDataContext];
     }
     return self;
-}
-
-
-#pragma mark - Parties Accessors
-
-- (NSArray<PartyMO *> *)fetchParties
-{
-    return [self fetchObjectsWithEntityName:[PartyMO entityName]];
-}
-
-- (void)saveParties:(NSArray<PartyMO *> *)parties
-{
-    [self saveObjects:parties];
-}
-
-- (void)removeParties
-{
-    [self removeObjectsWithEntityName:[PartyMO entityName]];
-}
-
-
-#pragma mark - Claims Accessors
-
-- (NSArray<ClaimMO *> *)fetchClaims
-{
-    return [self fetchObjectsWithEntityName:[ClaimMO entityName]];
-}
-
-- (void)saveClaims:(NSArray<ClaimMO *> *)claims
-{
-    [self saveObjects:claims];
-}
-
-- (void)removeClaims
-{
-    [self removeObjectsWithEntityName:[ClaimMO entityName]];
 }
 
 
@@ -183,7 +99,7 @@
 
 - (void)saveContext
 {
-    NSManagedObjectContext *context = [self class].persistentContainer.viewContext;
+    NSManagedObjectContext *context = [[self class] coreDataContext];
     
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error])
@@ -205,6 +121,101 @@
     }
     
     [self saveContext];
+}
+
+@end
+
+
+@implementation DAZCoreDataManager (Parties)
+
+
+#pragma mark - Instance Accesors
+
++ (NSArray<PartyMO *> *)partiesArrayByDictionariesArray:(NSArray<NSDictionary *> *)parties
+{
+    NSMutableArray *partiesArray = [NSMutableArray arrayWithCapacity:parties.count];
+    for (NSDictionary *party in parties)
+    {
+        PartyMO *item = [PartyMO partyWithContext:[self coreDataContext] dictionary:party];
+        if (!item)
+        {
+            return nil;
+        }
+        else
+        {
+            [partiesArray addObject:item];
+        }
+    }
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];    
+    NSArray *result = [partiesArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    return result;
+}
+
+
+#pragma mark - Parties Accessors
+
+- (NSArray<PartyMO *> *)fetchParties
+{
+    return [self fetchObjectsWithEntityName:[PartyMO entityName]];
+}
+
+- (void)saveParties:(NSArray<PartyMO *> *)parties
+{
+    [self saveObjects:parties];
+}
+
+- (void)removeParties
+{
+    [self removeObjectsWithEntityName:[PartyMO entityName]];
+}
+
+@end
+
+@implementation DAZCoreDataManager (Claims)
+
+
+#pragma mark - Instance Accesors
+
++ (NSArray<ClaimMO *> *)claimsArrayByDictionariesArray:(NSArray<NSDictionary *> *)claims
+{
+    NSMutableArray *claimsArray = [NSMutableArray arrayWithCapacity:claims.count];
+    for (NSDictionary *claim in claims)
+    {
+        ClaimMO *item = [ClaimMO claimWithContext:[self coreDataContext] dictionary:claim];
+        if (!item)
+        {
+            return nil;
+        }
+        else
+        {
+            [claimsArray addObject:item];
+        }
+    }
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    NSArray *result = [claimsArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    return result;
+}
+
+
+#pragma mark - Claims Accessors
+
+- (NSArray<ClaimMO *> *)fetchClaims
+{
+    return [self fetchObjectsWithEntityName:[ClaimMO entityName]];
+}
+
+- (void)saveClaims:(NSArray<ClaimMO *> *)claims
+{
+    [self saveObjects:claims];
+}
+
+- (void)removeClaims
+{
+    [self removeObjectsWithEntityName:[ClaimMO entityName]];
 }
 
 @end

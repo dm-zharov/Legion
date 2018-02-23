@@ -13,12 +13,13 @@
 #import "ClaimMO+CoreDataClass.h"
 
 
-@interface DAZProxyService () <DAZNetworkServiceDelegate>
+@interface DAZProxyService () <DAZNetworkServicePartiesDelegate, DAZNetworkServiceClaimsDelegate>
 
 @property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
 
 @end
+
 
 @implementation DAZProxyService
 
@@ -32,7 +33,8 @@
         _coreDataManager = [[DAZCoreDataManager alloc] init];
         _networkService = [[DAZNetworkService alloc] init];
         
-        _networkService.delegate = self;
+        _networkService.partiesDelegate = self;
+        _networkService.claimsDelegate = self;
     }
     return self;
 }
@@ -44,6 +46,11 @@
 {
     return [self.networkService isServerReachable];
 }
+
+@end
+
+
+@implementation  DAZProxyService (Parties)
 
 
 #pragma mark - Parties Accessors
@@ -57,9 +64,9 @@
     else
     {
         NSArray<PartyMO *> *partiesArray = [self.coreDataManager fetchParties];
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
+        if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOffline];
+            [self.partiesDelegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOffline];
         }
     }
 }
@@ -72,9 +79,9 @@
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
+        if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline];
+            [self.partiesDelegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOffline];
         }
     }
 }
@@ -87,9 +94,9 @@
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishUpdatePartyWithNetworkStatus:)])
+        if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishUpdatePartyWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishUpdatePartyWithNetworkStatus:DAZNetworkOffline];
+            [self.partiesDelegate proxyServiceDidFinishUpdatePartyWithNetworkStatus:DAZNetworkOffline];
         }
     }
 }
@@ -103,12 +110,51 @@
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+        if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOffline];
+            [self.partiesDelegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOffline];
         }
     }
 }
+
+#pragma mark - DAZNetworkServiceDelegate
+
+- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
+{
+    // Мы получили новые данные, кешированные в базу данных вечеринки могли утратить актуальность
+    [self.coreDataManager removeParties];
+    
+    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByDictionariesArray:parties];
+    
+    if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
+    {
+        [self.partiesDelegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOnline];
+    }
+    
+    // Сохраняем обновленные вечеринки
+    [self.coreDataManager saveContext];
+}
+
+- (void)networkServiceDidFinishAddParty
+{
+    if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
+    {
+        [self.partiesDelegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOnline];
+    }
+}
+
+- (void)networkServiceDidFinishDeleteParty
+{
+    if ([self.partiesDelegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
+    {
+        [self.partiesDelegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOnline];
+    }
+}
+
+@end
+
+
+@implementation DAZProxyService (Claims)
 
 
 #pragma mark - Claims Accessors
@@ -122,9 +168,9 @@
     else
     {
         NSArray<ClaimMO *> *claimsArray = [self.coreDataManager fetchClaims];
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
+        if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOffline];
+            [self.claimsDelegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOffline];
         }
         
     }
@@ -134,13 +180,13 @@
 {
     if ([self isServerReachable])
     {
-        [self.networkService sendClaimForParty:[party dictionary]];
+        [self.networkService sendClaimForPartyID:party.partyID];
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
+        if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOffline];
+            [self.claimsDelegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOffline];
         }
     }
 }
@@ -153,9 +199,9 @@
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishUpdateClaimWithNetworkStatus:)])
+        if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishUpdateClaimWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishUpdateClaimWithNetworkStatus:DAZNetworkOffline];
+            [self.claimsDelegate proxyServiceDidFinishUpdateClaimWithNetworkStatus:DAZNetworkOffline];
         }
     }
 }
@@ -169,9 +215,9 @@
     }
     else
     {
-        if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeleteClaimWithNetworkStatus:)])
+        if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishDeleteClaimWithNetworkStatus:)])
         {
-            [self.delegate proxyServiceDidFinishDeleteClaimWithNetworkStatus:DAZNetworkOffline];
+            [self.claimsDelegate proxyServiceDidFinishDeleteClaimWithNetworkStatus:DAZNetworkOffline];
         }
     }
         
@@ -180,38 +226,6 @@
 
 #pragma mark - DAZNetworkServiceDelegate
 
-- (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties
-{
-    // Мы получили новые данные, кешированные в базу данных вечеринки могли утратить актуальность
-    [self.coreDataManager removeParties];
-    
-    NSArray *partiesArray = [[self.coreDataManager class] partiesArrayByDictionariesArray:parties];
-    
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadParties:networkStatus:)])
-    {
-        [self.delegate proxyServiceDidFinishDownloadParties:partiesArray networkStatus:DAZNetworkOnline];
-    }
-    
-    // Сохраняем обновленные вечеринки
-    [self.coreDataManager saveContext];
-}
-
-- (void)networkServiceDidFinishAddParty
-{
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishAddPartyWithNetworkStatus:)])
-    {
-        [self.delegate proxyServiceDidFinishAddPartyWithNetworkStatus:DAZNetworkOnline];
-    }
-}
-
-- (void)networkServiceDidFinishDeleteParty
-{
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDeletePartyWithNetworkStatus:)])
-    {
-        [self.delegate proxyServiceDidFinishDeletePartyWithNetworkStatus:DAZNetworkOnline];
-    }
-}
-
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claims
 {
     // Мы получили новые данные, кешированные в базу данных запросы могли утратить актуальность
@@ -219,9 +233,9 @@
     
     NSArray *claimsArray = [[self.coreDataManager class] claimsArrayByDictionariesArray:claims];
     
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
+    if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishDownloadClaims:networkStatus:)])
     {
-        [self.delegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOnline];
+        [self.claimsDelegate proxyServiceDidFinishDownloadClaims:claimsArray networkStatus:DAZNetworkOnline];
     }
     
     // Сохраняем обновленные запросы
@@ -230,9 +244,9 @@
 
 - (void)networkServiceDidFinishSendClaim
 {
-    if ([self.delegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
+    if ([self.claimsDelegate respondsToSelector:@selector(proxyServiceDidFinishSendClaimWithNetworkStatus:)])
     {
-        [self.delegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOnline];
+        [self.claimsDelegate proxyServiceDidFinishSendClaimWithNetworkStatus:DAZNetworkOnline];
     }
 }
 

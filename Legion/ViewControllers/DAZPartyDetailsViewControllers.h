@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class PartyMO;
-@protocol DAZProxyServiceDelegate;
+@protocol DAZProxyServicePartiesDelegate;
 
 
 @interface DAZPartyDetailsViewControllers : UIViewController
 
 @property (nonatomic, readonly) UIScrollView *scrollView; // Необходим для кастомной анимации
 
-@property (nonatomic, weak) id <DAZProxyServiceDelegate> delegate;
+@property (nonatomic, weak) id <DAZProxyServicePartiesDelegate> delegate;
 
 - (instancetype)initWithParty:(PartyMO *)party;
 

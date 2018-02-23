@@ -18,6 +18,8 @@
 
 @interface DAZAuthorizationViewController () <DAZAuthorizationServiceDelegate>
 
+@property (nonatomic, strong) DAZAuthorizationFacade *authorizationMediator;
+
 @property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, weak) UILabel *greetingLabel;
 @property (nonatomic, weak) UILabel *authorizeLabel;
@@ -25,6 +27,7 @@
 @property (nonatomic, weak) UIButton *anonymousInButton;
 
 @end
+
 
 @implementation DAZAuthorizationViewController
 

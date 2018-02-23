@@ -11,18 +11,19 @@
 #import "PartyMO+CoreDataClass.h"
 
 
-@protocol DAZPartyCreationViewControllerDelegate <NSObject>
+@protocol DAZPartyCreationViewControllerAssemblyDelegate <NSObject>
 
 - (void)partyCreationViewControllerCompletedWorkWithParty:(PartyMO *)party;
 
 @end;
 
+
 /* Сборщик экранов создания новой вечеринки
  */
 @interface DAZPartyCreationViewControllersAssembly : NSObject
 
-@property (nonatomic, weak) id <DAZPartyCreationViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <DAZPartyCreationViewControllerAssemblyDelegate> delegate;
 
-- (UIViewController *)partyCreationViewController;
+@property (nonatomic, readonly) UIViewController *partyCreationViewController;
 
 @end

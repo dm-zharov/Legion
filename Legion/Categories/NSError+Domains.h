@@ -11,8 +11,10 @@
 
 typedef NSString *NSErrorDomain;
 
+
 extern NSErrorDomain const DAZVkontakteOpenURLErrorDomain;
 extern NSErrorDomain const DAZFirebaseAuthorizationErrorDomain;
+
 
 @interface NSError (Domains)
 

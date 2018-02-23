@@ -20,17 +20,18 @@ static NSString *const DAZPartyMessage = @"Добавьте сообщение �
 static NSString *const DAZPartyMessageTitle = @"Осталось придумать заголовок!";
 
 
-@interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenDelegate>
+@interface DAZPartyCreationViewControllersAssembly () <DAZSelectionScreenViewControllerDelegate>
+
+@property (nonatomic, strong) UINavigationController *navigationController;
 
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, strong) PartyMO *party;
-
-@property (nonatomic, strong) UINavigationController *navigationController;
 
 @property (nonatomic, assign) NSInteger currentItem;
 @property (nonatomic, copy) NSArray *chainArray;
 
 @end
+
 
 @implementation DAZPartyCreationViewControllersAssembly
 
@@ -42,7 +43,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
     self = [super init];
     if (self) {
         _networkService = [[DAZProxyService alloc] init];
-        _currentItem = 0;
         _party = [PartyMO partyWithContext:[DAZCoreDataManager coreDataContext]];
     }
     return self;
@@ -63,8 +63,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
                             @[@(DAZSelectionScreenTextField), DAZPartyMessageTitle]
                        ];
     
-    self.navigationController =
-        [[UINavigationController alloc] initWithRootViewController:[self nextViewController]];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:[self nextViewController]];
     
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = NO;
@@ -195,8 +194,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
             self.party.members = [members intValue];
             break;
         }
-        default:
-            break;
     }
 
     [self continueButtonPressed];

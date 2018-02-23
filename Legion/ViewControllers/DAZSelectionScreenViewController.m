@@ -25,12 +25,13 @@
 @property (nonatomic, weak) UITextField *textField;
 
 @property (nonatomic, weak) UITextView *textView;
-@property (nonatomic, copy)NSString * textViewPlaceholder;
+@property (nonatomic, copy) NSString * textViewPlaceholder;
 
 @property (nonatomic, weak) UILabel *membersLabel;
 @property (nonatomic, weak) UISlider *sliderView;
 
 @end
+
 
 @implementation DAZSelectionScreenViewController
 
@@ -42,7 +43,6 @@
     self = [super initWithMessage:message];
     if (self) {
         _type = type;
-        _message = message;
     }
     return self;
 }
@@ -90,8 +90,6 @@
             break;
         case DAZSelectionScreenSlider:
             [self setupSlider];
-        default:
-            break;
     }
 }
 
@@ -404,8 +402,6 @@
             result = @(self.sliderView.value);
             break;
         }
-        default:
-            break;
     }
     
     if ([self.delegate respondsToSelector:@selector(selectionScreenCompletedWorkWithResult:ofType:)])

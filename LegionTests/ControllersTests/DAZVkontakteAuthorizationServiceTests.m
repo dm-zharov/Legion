@@ -52,7 +52,7 @@
     [super tearDown];
 }
 
-- (void)testSignInWithAuthorizationType
+- (void)testSignInWithWrongAuthorizationType
 {
     NSUInteger wrongType = NSUIntegerMax;
     

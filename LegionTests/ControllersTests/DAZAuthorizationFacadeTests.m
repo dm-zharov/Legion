@@ -52,17 +52,6 @@
     [super tearDown];
 }
 
-- (void)testSignInWithWrongAuthorizationType
-{
-    DAZAuthorizationType authorizationType = 0;
-
-    OCMExpect([self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:OCMOCK_ANY error:OCMOCK_ANY]);
-
-    [self.authorizationFacade signInWithAuthorizationType:authorizationType];
-
-    OCMVerify([self.authorizationFacade authorizationServiceDidFinishSignInWithProfile:nil error:OCMOCK_ANY]);
-}
-
 - (void)testSignInWithAuthorizationVkontakte
 {
     id vkontakteAuthorizationService = self.authorizationFacade.vkontakteAuthorizationService;

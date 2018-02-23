@@ -30,11 +30,14 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
 
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated;
+
 // Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;
 
 @end
+
 
 @implementation DAZRootViewControllerRouter
 
@@ -51,18 +54,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     self = [super init];
     if (self) {
         _profile = [[DAZUserProfile alloc] init];
-    }
-    return self;
-}
-
-
-#pragma mark - Custom Accessors
-
-- (UIViewController *)rootViewController
-{
-    // Вызывается при открытии приложения и последующих изменениях статуса авторизации
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(authorizationTokenReceived:)
                                                      name:DAZAuthorizationTokenReceivedNotification
@@ -72,8 +64,15 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
                                                  selector:@selector(authorizationTokenExpired:)
                                                      name:DAZAuthorizationTokenExpiredNotification
                                                    object:nil];
-    });
-    
+    }
+    return self;
+}
+
+
+#pragma mark - Accessors
+
+- (UIViewController *)rootViewController
+{    
     BOOL loggedIn = [self.profile isLoggedIn];
     
     if (!loggedIn)
@@ -84,9 +83,12 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     else
     {
         // Показать экран приложения
-        return self.tabBarController;
+        return [self tabBarController];
     }
 }
+
+
+#pragma mark - Custom Mutators
 
 - (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
 {
@@ -118,13 +120,10 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (UITabBarController *)tabBarController
 {
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController];
+    tabBarController.viewControllers = @[[self firstViewController], [self secondViewController], [self thirdViewController]];
     
     return tabBarController;
 }
-
-
-#pragma mark - Custom Accessors
 
 - (UIViewController *)firstViewController
 {
@@ -179,7 +178,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {
     self.profile.loggedIn = YES;
-    [self setRootViewController:[self rootViewController] animated:YES];
+    [self setRootViewController:self.rootViewController animated:YES];
 }
 
 - (void)authorizationTokenExpired:(NSNotification *)notification
@@ -187,7 +186,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     self.profile.loggedIn = NO;
     [DAZUserProfile resetUserProfile];
     
-    [self setRootViewController:[self rootViewController] animated:YES];
+    [self setRootViewController:self.rootViewController animated:YES];
 }
 
 @end

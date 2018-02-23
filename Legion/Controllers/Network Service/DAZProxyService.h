@@ -18,15 +18,20 @@ typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
 };
 
 
-@protocol DAZProxyServiceDelegate <NSObject>
+@protocol DAZProxyServicePartiesDelegate <NSObject>
 
 @optional
-
 - (void)proxyServiceDidFinishDownloadParties:(NSArray<PartyMO *> *)parties networkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishAddPartyWithNetworkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishUpdatePartyWithNetworkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishDeletePartyWithNetworkStatus:(DAZNetworkStatus)status;
 
+@end
+
+
+@protocol DAZProxyServiceClaimsDelegate <NSObject>
+
+@optional
 - (void)proxyServiceDidFinishDownloadClaims:(NSArray<ClaimMO *> *)claims networkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishSendClaimWithNetworkStatus:(DAZNetworkStatus)status;
 - (void)proxyServiceDidFinishUpdateClaimWithNetworkStatus:(DAZNetworkStatus)status;
@@ -34,16 +39,28 @@ typedef NS_ENUM(NSInteger, DAZNetworkStatus) {
 
 @end
 
+
 @interface DAZProxyService : NSObject
 
-@property (nonatomic, weak) id <DAZProxyServiceDelegate> delegate;
+@property (nonatomic, weak) id <DAZProxyServicePartiesDelegate> partiesDelegate;
+@property (nonatomic, weak) id <DAZProxyServiceClaimsDelegate> claimsDelegate;
 
 - (BOOL)isServerReachable;
+
+@end
+
+
+@interface DAZProxyService (Parties)
 
 - (void)downloadParties;
 - (void)addParty:(PartyMO *)party;
 - (void)updateParty:(PartyMO *)party;
 - (void)deleteParty:(PartyMO *)party;
+
+@end
+
+
+@interface DAZProxyService (Claims)
 
 - (void)downloadClaims;
 - (void)sendClaimForParty:(PartyMO *)party;

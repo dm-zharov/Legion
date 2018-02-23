@@ -17,7 +17,7 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
-@interface DAZProxyService (Tests) <DAZNetworkServiceDelegate>
+@interface DAZProxyService (Tests) <DAZNetworkServicePartiesDelegate, DAZNetworkServiceClaimsDelegate>
 
 @property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
@@ -81,8 +81,8 @@
     id coreDataManager = self.proxyService.coreDataManager;
     OCMStub([coreDataManager fetchParties]).andReturn([NSArray array]);
     
-    id delegate = OCMProtocolMock(@protocol(DAZProxyServiceDelegate));
-    self.proxyService.delegate = delegate;
+    id delegate = OCMProtocolMock(@protocol(DAZProxyServicePartiesDelegate));
+    self.proxyService.partiesDelegate = delegate;
     
     [self.proxyService downloadParties];
     
@@ -108,8 +108,8 @@
 {
     OCMStub([self.proxyService isServerReachable]).andReturn(NO);
 
-    id delegate = OCMProtocolMock(@protocol(DAZProxyServiceDelegate));
-    self.proxyService.delegate = delegate;
+    id delegate = OCMProtocolMock(@protocol(DAZProxyServicePartiesDelegate));
+    self.proxyService.partiesDelegate = delegate;
 
     PartyMO *party = OCMClassMock([PartyMO class]);
 
