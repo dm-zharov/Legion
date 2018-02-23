@@ -40,6 +40,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 @end
 
+
 @implementation DAZVkontakteAuthorizationService
 
 

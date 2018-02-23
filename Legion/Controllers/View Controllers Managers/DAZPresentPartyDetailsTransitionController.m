@@ -12,9 +12,9 @@
 #import "DAZPartyDetailsViewControllers.h"
 
 
-@interface DAZPresentPartyDetailsTransitionController ()
+const NSTimeInterval DAZPresentationAnimationDuration = 0.65;
+const NSTimeInterval DAZPresentationDampingRatio = 0.9;
 
-@end
 
 @implementation DAZPresentPartyDetailsTransitionController
 
@@ -44,8 +44,8 @@
     
     [containerView layoutIfNeeded];
     
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.65
-                                                                           dampingRatio:0.9
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:DAZPresentationAnimationDuration
+                                                                           dampingRatio:DAZPresentationDampingRatio
                                                                              animations:^{
         // Финальное состояние
         destination.view.layer.transform = CATransform3DIdentity;
@@ -66,6 +66,6 @@
 
 - (NSTimeInterval)transitionDuration:(nullable id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.65;
+    return DAZPresentationAnimationDuration;
 }
 @end

@@ -23,7 +23,8 @@
 
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
 
-@interface DAZClaimsTableViewController () <DAZProxyServiceDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@interface DAZClaimsTableViewController () <DAZProxyServiceClaimsDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, getter=isInbox, assign) BOOL inbox;
 
@@ -38,6 +39,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 @property (nonatomic, assign) NSInteger selectedSegment;
 
 @end
+
 
 @implementation DAZClaimsTableViewController
 
@@ -71,7 +73,7 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 - (void)setupNetworkService
 {
     self.networkService  = [[DAZProxyService alloc] init];
-    self.networkService.delegate = self;
+    self.networkService.claimsDelegate = self;
 }
 
 

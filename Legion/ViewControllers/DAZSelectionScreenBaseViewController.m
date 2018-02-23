@@ -13,11 +13,13 @@
 
 @interface DAZSelectionScreenBaseViewController ()
 
+@property (nonatomic, copy) NSString *messageString;
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIButton *actionButton;
 
 @end
+
 
 @implementation DAZSelectionScreenBaseViewController
 

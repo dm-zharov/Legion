@@ -21,7 +21,6 @@
 
 - (void)signInWithUserID:(NSString *)userID;
 - (void)signInAnonymously;
-
 - (void)signOut;
 
 /* Обновляет личные данные пользователя на сервере "Firebase".

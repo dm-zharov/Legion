@@ -9,15 +9,20 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol DAZNetworkServiceDelegate <NSObject>
+@protocol DAZNetworkServicePartiesDelegate <NSObject>
 
 @optional
-
 - (void)networkServiceDidFinishDownloadParties:(NSArray<NSDictionary *> *)parties;
 - (void)networkServiceDidFinishAddParty;
 - (void)networkServiceDidFinishUpdateParty;
 - (void)networkServiceDidFinishDeleteParty;
 
+@end
+
+
+@protocol DAZNetworkServiceClaimsDelegate <NSObject>
+
+@optional
 - (void)networkServiceDidFinishDownloadClaims:(NSArray<NSDictionary *> *)claimsDictionary;
 - (void)networkServiceDidFinishSendClaim;
 - (void)networkServiceDidFinishUpdateClaim;
@@ -25,24 +30,36 @@
 
 @end
 
+
 @interface DAZNetworkService : NSObject
 
-@property (nonatomic, weak) id <DAZNetworkServiceDelegate> delegate;
+@property (nonatomic, weak) id <DAZNetworkServicePartiesDelegate> partiesDelegate;
+@property (nonatomic, weak) id <DAZNetworkServiceClaimsDelegate> claimsDelegate;
 
 - (BOOL)isServerReachable;
+
+#ifdef DEBUG
+- (void)setTestData;
+#endif
+
+@end
+
+
+@interface DAZNetworkService (Parties)
 
 - (void)downloadParties;
 - (void)addParty:(NSDictionary *)partyDictionary;
 - (void)updateParty:(NSDictionary *)partyDictionary;
 - (void)deleteParty:(NSDictionary *)partyDictionary;
 
+@end
+
+
+@interface DAZNetworkService (Claims)
+
 - (void)downloadClaims;
-- (void)sendClaimForParty:(NSDictionary *)partyDictionary;
+- (void)sendClaimForPartyID:(NSString *)partyID;
 - (void)updateClaim:(NSDictionary *)claimDictionary;
 - (void)deleteClaim:(NSDictionary *)claimDictionary;
-
-#ifdef DEBUG
-- (void)setTestData;
-#endif
 
 @end

@@ -38,6 +38,7 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 @end
 
+
 @implementation DAZNetworkService
 
 
@@ -65,225 +66,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     
     return data ? YES : NO;
 }
-
-
-#pragma mark - Parties Accessors
-
-- (void)downloadParties
-{
-    [self dataTaskWithFunction:DAZFunctionGetParties
-                    dictionary:nil
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error)
-        {
-            NSArray *parties = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (!error)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDownloadParties:)])
-                    {
-                        [self.delegate networkServiceDidFinishDownloadParties:parties];
-                    }
-                });
-            }
-            else
-            {
-                NSLog(@"Error occured during downloadParties response serialization - %@", error);
-            }
-        }
-        else
-        {
-            NSLog(@"Error occured during downloadParties request - %@", error);
-        }
-    }];
-}
-
-- (void)addParty:(NSDictionary *)partyDictionary
-{
-    if (!partyDictionary)
-    {
-        return;
-    }
-    
-    [self dataTaskWithFunction:DAZFunctionAddParty
-                    dictionary:partyDictionary
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishAddParty)])
-              {
-                  [self.delegate networkServiceDidFinishAddParty];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during addParty - %@", error);
-        }
-    }];
-}
-
-- (void)updateParty:(NSDictionary *)partyDictionary
-{
-    if (!partyDictionary)
-    {
-        return;
-    }
-    
-    [self dataTaskWithFunction:DAZFunctionUpdateParty
-                    dictionary:partyDictionary
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateParty)])
-              {
-                  [self.delegate networkServiceDidFinishUpdateParty];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during updateParty - %@", error);
-        }
-    }];
-}
-
-- (void)deleteParty:(NSDictionary *)partyDictionary
-{
-    if (!partyDictionary)
-    {
-        return;
-    }
-    
-    NSDictionary *parameters = @{ @"partyID" : partyDictionary[@"partyID"] };
-    
-    [self dataTaskWithFunction:DAZFunctionDeleteParty
-                    dictionary:parameters
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteParty)])
-              {
-                  [self.delegate networkServiceDidFinishDeleteParty];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during deleteParty - %@", error);
-        }
-    }];
-}
-
-
-#pragma mark - Claims Accessors
-
-- (void)downloadClaims
-{
-    [self dataTaskWithFunction:DAZFunctionGetClaims
-                    dictionary:nil
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error)
-        {
-          NSArray *claims = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-          if (!error)
-          {
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDownloadClaims:)])
-                  {
-                      [self.delegate networkServiceDidFinishDownloadClaims:claims];
-                  }
-              });
-          }
-          else
-          {
-              NSLog(@"Error occured during downloadClaims response serialization - %@", error);
-          }
-        }
-        else
-        {
-          NSLog(@"Error occured during downloadClaims request - %@", error);
-        }
-    }];
-}
-
-- (void)sendClaimForParty:(NSDictionary *)partyDictionary
-{
-    if (!partyDictionary)
-    {
-        return;
-    }
-    
-    NSDictionary *claimDictionary = @{ @"partyID" : partyDictionary[@"partyID"] };
-    
-    [self dataTaskWithFunction:DAZFunctionSendClaim
-                    dictionary:claimDictionary
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishSendClaim)])
-              {
-                  [self.delegate networkServiceDidFinishSendClaim];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during sendClaim - %@", error);
-        }
-    }];
-}
-
-- (void)updateClaim:(NSDictionary *)claimDictionary
-{
-    if (!claimDictionary)
-    {
-        return;
-    }
-    
-    [self dataTaskWithFunction:DAZFunctionUpdateClaim
-                    dictionary:claimDictionary
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishUpdateClaim)])
-              {
-                  [self.delegate networkServiceDidFinishUpdateClaim];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during updateClaim - %@", error);
-        }
-    }];
-}
-
-- (void)deleteClaim:(NSDictionary *)claimDictionary
-{
-    if (!claimDictionary)
-    {
-        return;
-    }
-    
-    [self dataTaskWithFunction:DAZFunctionDeleteClaim
-                    dictionary:claimDictionary
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-              if ([self.delegate respondsToSelector:@selector(networkServiceDidFinishDeleteClaim)])
-              {
-                  [self.delegate networkServiceDidFinishDeleteClaim];
-              }
-          });
-        }
-        else
-        {
-          NSLog(@"Error occured during deleteClaim - %@", error);
-        }
-    }];
-}
-
 
 #ifdef DEBUG
 - (void)setTestData
@@ -344,6 +126,234 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
         NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:completionHandler];
         [postDataTask resume];
     }];
+}
+
+@end
+
+
+@implementation DAZNetworkService (Parties)
+
+
+#pragma mark - Parties Accessors
+
+- (void)downloadParties
+{
+    [self dataTaskWithFunction:DAZFunctionGetParties
+                    dictionary:nil
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error)
+                  {
+                      NSArray *parties = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                      if (!error)
+                      {
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              if ([self.partiesDelegate respondsToSelector:@selector(networkServiceDidFinishDownloadParties:)])
+                              {
+                                  [self.partiesDelegate networkServiceDidFinishDownloadParties:parties];
+                              }
+                          });
+                      }
+                      else
+                      {
+                          NSLog(@"Error occured during downloadParties response serialization - %@", error);
+                      }
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during downloadParties request - %@", error);
+                  }
+              }];
+}
+
+- (void)addParty:(NSDictionary *)partyDictionary
+{
+    if (!partyDictionary)
+    {
+        return;
+    }
+    
+    [self dataTaskWithFunction:DAZFunctionAddParty
+                    dictionary:partyDictionary
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.partiesDelegate respondsToSelector:@selector(networkServiceDidFinishAddParty)])
+                          {
+                              [self.partiesDelegate networkServiceDidFinishAddParty];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during addParty - %@", error);
+                  }
+              }];
+}
+
+- (void)updateParty:(NSDictionary *)partyDictionary
+{
+    if (!partyDictionary)
+    {
+        return;
+    }
+    
+    [self dataTaskWithFunction:DAZFunctionUpdateParty
+                    dictionary:partyDictionary
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.partiesDelegate respondsToSelector:@selector(networkServiceDidFinishUpdateParty)])
+                          {
+                              [self.partiesDelegate networkServiceDidFinishUpdateParty];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during updateParty - %@", error);
+                  }
+              }];
+}
+
+- (void)deleteParty:(NSDictionary *)partyDictionary
+{
+    if (!partyDictionary)
+    {
+        return;
+    }
+    
+    NSDictionary *parameters = @{ @"partyID" : partyDictionary[@"partyID"] };
+    
+    [self dataTaskWithFunction:DAZFunctionDeleteParty
+                    dictionary:parameters
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.partiesDelegate respondsToSelector:@selector(networkServiceDidFinishDeleteParty)])
+                          {
+                              [self.partiesDelegate networkServiceDidFinishDeleteParty];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during deleteParty - %@", error);
+                  }
+              }];
+}
+
+@end
+
+
+@implementation DAZNetworkService (Claims)
+
+
+#pragma mark - Claims Accessors
+
+- (void)downloadClaims
+{
+    [self dataTaskWithFunction:DAZFunctionGetClaims
+                    dictionary:nil
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error)
+                  {
+                      NSArray *claims = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                      if (!error)
+                      {
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              if ([self.claimsDelegate respondsToSelector:@selector(networkServiceDidFinishDownloadClaims:)])
+                              {
+                                  [self.claimsDelegate networkServiceDidFinishDownloadClaims:claims];
+                              }
+                          });
+                      }
+                      else
+                      {
+                          NSLog(@"Error occured during downloadClaims response serialization - %@", error);
+                      }
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during downloadClaims request - %@", error);
+                  }
+              }];
+}
+
+- (void)sendClaimForPartyID:(NSString *)partyID
+{
+    if (!partyID)
+    {
+        return;
+    }
+    
+    NSDictionary *claimDictionary = @{ @"partyID" : partyID };
+    
+    [self dataTaskWithFunction:DAZFunctionSendClaim
+                    dictionary:claimDictionary
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.claimsDelegate respondsToSelector:@selector(networkServiceDidFinishSendClaim)])
+                          {
+                              [self.claimsDelegate networkServiceDidFinishSendClaim];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during sendClaim - %@", error);
+                  }
+              }];
+}
+
+- (void)updateClaim:(NSDictionary *)claimDictionary
+{
+    if (!claimDictionary)
+    {
+        return;
+    }
+    
+    [self dataTaskWithFunction:DAZFunctionUpdateClaim
+                    dictionary:claimDictionary
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.claimsDelegate respondsToSelector:@selector(networkServiceDidFinishUpdateClaim)])
+                          {
+                              [self.claimsDelegate networkServiceDidFinishUpdateClaim];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during updateClaim - %@", error);
+                  }
+              }];
+}
+
+- (void)deleteClaim:(NSDictionary *)claimDictionary
+{
+    if (!claimDictionary)
+    {
+        return;
+    }
+    
+    [self dataTaskWithFunction:DAZFunctionDeleteClaim
+                    dictionary:claimDictionary
+              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                  if (!error) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          if ([self.claimsDelegate respondsToSelector:@selector(networkServiceDidFinishDeleteClaim)])
+                          {
+                              [self.claimsDelegate networkServiceDidFinishDeleteClaim];
+                          }
+                      });
+                  }
+                  else
+                  {
+                      NSLog(@"Error occured during deleteClaim - %@", error);
+                  }
+              }];
 }
 
 @end

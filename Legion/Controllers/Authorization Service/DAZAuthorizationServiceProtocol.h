@@ -26,10 +26,10 @@ typedef NS_ENUM(NSUInteger, DAZAuthorizationType) {
 
 @end
 
+
 @protocol DAZAuthorizationServiceDelegate <NSObject>
 
 @optional
-
 - (void)authorizationServiceDidFinishSignInWithProfile:(DAZUserProfile *)profile error:(NSError *)error;
 - (void)authorizationServiceDidFinishSignOut;
 

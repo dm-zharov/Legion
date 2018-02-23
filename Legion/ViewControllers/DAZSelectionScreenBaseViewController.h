@@ -19,7 +19,7 @@
 
 @interface DAZSelectionScreenBaseViewController : UIViewController
 
-@property (nonatomic, copy) NSString *messageString;
+@property (nonatomic, readonly) NSString *messageString;
 @property (nonatomic, readonly) UIButton *actionButton;
 
 - (instancetype)initWithMessage:(NSString *)message;

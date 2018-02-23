@@ -25,12 +25,13 @@
 @property (nonatomic, weak) UITextField *textField;
 
 @property (nonatomic, weak) UITextView *textView;
-@property (nonatomic, copy)NSString * textViewPlaceholder;
+@property (nonatomic, copy) NSString * textViewPlaceholder;
 
 @property (nonatomic, weak) UILabel *membersLabel;
 @property (nonatomic, weak) UISlider *sliderView;
 
 @end
+
 
 @implementation DAZSelectionScreenViewController
 
@@ -42,7 +43,6 @@
     self = [super initWithMessage:message];
     if (self) {
         _type = type;
-        _message = [message copy];
     }
     return self;
 }

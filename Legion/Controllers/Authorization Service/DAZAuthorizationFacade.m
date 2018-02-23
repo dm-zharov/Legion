@@ -12,6 +12,7 @@
 
 #import "DAZUserProfile.h"
 
+
 @interface DAZAuthorizationFacade () <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
@@ -19,8 +20,8 @@
 
 @end
 
-@implementation DAZAuthorizationFacade
 
+@implementation DAZAuthorizationFacade
 
 #pragma mark - Lifecycle
 
