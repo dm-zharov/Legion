@@ -15,6 +15,7 @@ NSErrorDomain const DAZVkontakteOpenURLErrorDomain =
 NSErrorDomain const DAZFirebaseAuthorizationErrorDomain =
     @"Ошибка авторизации с помощью \"Firebase\": ошибка сети.";
 
+
 @implementation NSError (Domains)
 
 @end

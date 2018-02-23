@@ -183,7 +183,7 @@
 
 - (void)saveContext
 {
-    NSManagedObjectContext *context = [self class].persistentContainer.viewContext;
+    NSManagedObjectContext *context = [[self class] coreDataContext];
     
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error])

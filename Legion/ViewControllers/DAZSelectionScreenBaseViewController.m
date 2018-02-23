@@ -120,12 +120,14 @@
 
 - (void)setupContentInView:(UIView *)contentView
 {
-    return;
+    NSString *reason = [NSString stringWithFormat:@"%@ должен быть переопределен", NSStringFromSelector(_cmd)];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
 - (void)actionButtonPressed
 {
-    return;
+    NSString *reason = [NSString stringWithFormat:@"%@ должен быть переопределен", NSStringFromSelector(_cmd)];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
 @end
