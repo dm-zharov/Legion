@@ -120,7 +120,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (UITabBarController *)tabBarController
 {
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[[self firstViewController], [self secondViewController], [self thirdViewController]];
+    tabBarController.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController];
     
     return tabBarController;
 }
