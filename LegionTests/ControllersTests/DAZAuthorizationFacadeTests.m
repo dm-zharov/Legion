@@ -15,12 +15,14 @@
 #import "DAZFirebaseAuthorizationService.h"
 #import "DAZUserProfile.h"
 
+
 @interface DAZAuthorizationFacade (Tests) <DAZAuthorizationServiceDelegate>
 
 @property (nonatomic, strong) DAZVkontakteAuthorizationService *vkontakteAuthorizationService;
 @property (nonatomic, strong) DAZFirebaseAuthorizationService *firebaseAuthorizationService;
 
 @end
+
 
 @interface DAZAuthorizationFacadeTests : XCTestCase
 
@@ -35,12 +37,10 @@
     [super setUp];
     
     DAZVkontakteAuthorizationService *vkontakteService = OCMClassMock([DAZVkontakteAuthorizationService class]);
-    OCMExpect(ClassMethod([(id)vkontakteService alloc])).andReturn(vkontakteService);
-    OCMExpect([vkontakteService initWithMediator:OCMOCK_ANY]).andReturn(vkontakteService);
+    OCMExpect(ClassMethod([(id)vkontakteService new])).andReturn(vkontakteService);
     
     DAZFirebaseAuthorizationService *firebaseService = OCMClassMock([DAZFirebaseAuthorizationService class]);
-    OCMExpect(ClassMethod([(id)firebaseService alloc])).andReturn(firebaseService);
-    OCMExpect([firebaseService initWithMediator:OCMOCK_ANY]).andReturn(firebaseService);
+    OCMExpect(ClassMethod([(id)firebaseService new])).andReturn(firebaseService);
     
     self.authorizationFacade = OCMPartialMock([[DAZAuthorizationFacade alloc] init]);
 }

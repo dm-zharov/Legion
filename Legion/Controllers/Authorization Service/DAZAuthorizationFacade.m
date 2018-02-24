@@ -29,10 +29,10 @@
 {
     if (self = [super init])
     {
-        _vkontakteAuthorizationService = [[DAZVkontakteAuthorizationService alloc] init];
+        _vkontakteAuthorizationService = [DAZVkontakteAuthorizationService new];
         _vkontakteAuthorizationService.delegate = self;
         
-        _firebaseAuthorizationService = [[DAZFirebaseAuthorizationService alloc] init];
+        _firebaseAuthorizationService = [DAZFirebaseAuthorizationService new];
         _firebaseAuthorizationService.delegate = self;
     }
     return self;
