@@ -20,8 +20,8 @@
 
 @end
 
-
 @implementation DAZAuthorizationFacade
+
 
 #pragma mark - Lifecycle
 
@@ -29,8 +29,11 @@
 {
     if (self = [super init])
     {
-        _vkontakteAuthorizationService = [[DAZVkontakteAuthorizationService alloc] initWithMediator:self];
-        _firebaseAuthorizationService = [[DAZFirebaseAuthorizationService alloc] initWithMediator:self];
+        _vkontakteAuthorizationService = [DAZVkontakteAuthorizationService new];
+        _vkontakteAuthorizationService.delegate = self;
+        
+        _firebaseAuthorizationService = [DAZFirebaseAuthorizationService new];
+        _firebaseAuthorizationService.delegate = self;
     }
     return self;
 }

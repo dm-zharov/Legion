@@ -15,6 +15,7 @@
 #import "DAZVkontakteAuthorizationService.h"
 #import "DAZUserProfile.h"
 
+
 @interface DAZVkontakteAuthorizationService (Tests)
 
 @property (nonatomic, strong) SFAuthenticationSession *session;
@@ -29,6 +30,7 @@
 - (void)processSignInWithParametersDictionary:(NSDictionary *)dictionary;
 
 @end
+
 
 @interface DAZVkontakteAuthorizationServiceTests : XCTestCase
 

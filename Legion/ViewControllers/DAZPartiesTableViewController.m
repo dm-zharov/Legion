@@ -26,7 +26,7 @@ static NSString *const DAZPartiesTableViewCellReuseIdentifier = @"Party Cell";
 
 
 @interface DAZPartiesTableViewController () <UIViewControllerTransitioningDelegate, DAZProxyServicePartiesDelegate,
-                                                DAZPartyCreationViewControllerAssemblyDelegate, UITableViewDataSource, UITableViewDelegate>
+                                                DAZPartyCreationViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DAZProxyService *networkService;
 @property (nonatomic, copy) NSArray *partiesArray;

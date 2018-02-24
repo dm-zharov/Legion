@@ -16,9 +16,6 @@
 
 @property (nonatomic, getter=isLoggedIn, readonly) BOOL loggedIn;
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithMediator:(id)mediator;
-
 - (void)signInWithUserID:(NSString *)userID;
 - (void)signInAnonymously;
 - (void)signOut;

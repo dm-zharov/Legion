@@ -17,12 +17,14 @@
 #import "PartyMO+CoreDataClass.h"
 #import "ClaimMO+CoreDataClass.h"
 
+
 @interface DAZProxyService (Tests) <DAZNetworkServicePartiesDelegate, DAZNetworkServiceClaimsDelegate>
 
 @property (nonatomic, strong) DAZCoreDataManager *coreDataManager;
 @property (nonatomic, strong) DAZNetworkService *networkService;
 
 @end
+
 
 @interface DAZProxyServiceTests : XCTestCase
 

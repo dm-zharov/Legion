@@ -14,6 +14,7 @@
 #import "DAZAuthorizationViewController.h"
 #import "DAZUserProfile.h"
 
+
 @interface DAZRootViewControllerRouter (Tests)
 
 @property (nonatomic, strong) DAZUserProfile *profile;
@@ -30,6 +31,7 @@
 - (void)authorizationTokenExpired:(NSNotification *)notification;
 
 @end
+
 
 @interface DAZRootViewControllerRouterTests : XCTestCase
 

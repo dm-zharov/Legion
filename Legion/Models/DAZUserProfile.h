@@ -14,14 +14,14 @@
 
 @property (nonatomic, assign) DAZAuthorizationType authorizationType;
 
-@property (nonatomic, getter=isLoggedIn, assign) BOOL loggedIn;
-
-@property (nonatomic, readwrite) NSString *userID;
+@property (nonatomic) NSString *userID;
 @property (nonatomic, readonly) NSString* fullName;
-@property (nonatomic, readwrite) NSString *firstName;
-@property (nonatomic, readwrite) NSString *lastName;
-@property (nonatomic, readwrite) NSString *email;
-@property (nonatomic, readwrite) NSURL *photoURL;
+@property (nonatomic) NSString *firstName;
+@property (nonatomic) NSString *lastName;
+@property (nonatomic) NSString *email;
+@property (nonatomic) NSURL *photoURL;
+
+@property (nonatomic, getter=isLoggedIn) BOOL loggedIn;
 
 + (void)resetUserProfile;
 

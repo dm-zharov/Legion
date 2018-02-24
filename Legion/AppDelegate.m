@@ -37,7 +37,7 @@
     self.window.layer.masksToBounds = YES;
     
     self.rootViewControllerRouter = [[DAZRootViewControllerRouter alloc] init];
-    self.window.rootViewController = [self.rootViewControllerRouter rootViewController];
+    self.window.rootViewController = self.rootViewControllerRouter.rootViewController;
     
     [self.window makeKeyAndVisible];
 

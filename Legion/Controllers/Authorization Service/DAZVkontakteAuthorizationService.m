@@ -40,25 +40,7 @@ static NSString *const DAZVkontakteProfileBaseURL = @"https://api.vk.com/method/
 
 @end
 
-
 @implementation DAZVkontakteAuthorizationService
-
-
-#pragma mark - Lifecycle
-
-- (instancetype)init
-{
-    return [super init];
-}
-
-- (instancetype)initWithMediator:(id)mediator
-{
-    self = [self init];
-    if (self) {
-        _delegate = mediator;
-    }
-    return self;
-}
 
 
 #pragma mark - DAZAuthorizationServiceProtocol

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setClaimStatus:(DAZClaimStatus)status;
 
 // Coding
-- (NSDictionary *)dictionaryFromClaim;
+- (NSDictionary *)dictionary;
 
 // Basic
 - (BOOL)saveClaim;

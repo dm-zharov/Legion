@@ -154,7 +154,7 @@
 }
 
 
-- (NSDictionary *)dictionaryFromClaim {
+- (NSDictionary *)dictionary {
     return [ClaimMO dictionaryFromClaim:self];
 }
 
