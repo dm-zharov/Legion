@@ -19,25 +19,6 @@ static NSString *const DAZFunctionAuthWithUserID = @"authWithUserID";
 @implementation DAZFirebaseAuthorizationService
 
 
-#pragma mark - Lifecycle
-
-- (instancetype)init
-{
-    self = [super init];
-    return self;
-}
-
-- (instancetype)initWithMediator:(id)mediator
-{
-    if (self = [self init])
-    {
-        _delegate = mediator;
-    }
-    
-    return self;
-}
-
-
 #pragma mark - DAZAuthorizationServiceProtocol
 
 - (void)signInWithAuthorizationType:(DAZAuthorizationType)authorizationType

@@ -14,9 +14,6 @@
 
 @property (nonatomic, weak) id <DAZAuthorizationServiceDelegate> delegate;
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithMediator:(id)mediator;
-
 - (void)signIn;
 - (void)signOut;
 

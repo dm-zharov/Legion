@@ -11,7 +11,7 @@
 #import "PartyMO+CoreDataClass.h"
 
 
-@protocol DAZPartyCreationViewControllerAssemblyDelegate <NSObject>
+@protocol DAZPartyCreationViewControllerDelegate <NSObject>
 
 - (void)partyCreationViewControllerCompletedWorkWithParty:(PartyMO *)party;
 
@@ -22,7 +22,7 @@
  */
 @interface DAZPartyCreationViewControllersAssembly : NSObject
 
-@property (nonatomic, weak) id <DAZPartyCreationViewControllerAssemblyDelegate> delegate;
+@property (nonatomic, weak) id <DAZPartyCreationViewControllerDelegate> delegate;
 
 @property (nonatomic, readonly) UIViewController *partyCreationViewController;
 

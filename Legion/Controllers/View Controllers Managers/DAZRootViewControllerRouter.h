@@ -15,6 +15,7 @@ extern NSString *const DAZAuthorizationTokenReceivedNotification;
 
 @interface DAZRootViewControllerRouter : NSObject
 
-@property (nonatomic, readonly) UIViewController *rootViewController;
+@property (readonly) UIViewController *rootViewController;
+- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated;
 
 @end

@@ -31,8 +31,8 @@
     self = [super init];
     if (self) {
         _coreDataManager = [[DAZCoreDataManager alloc] init];
-        _networkService = [[DAZNetworkService alloc] init];
         
+        _networkService = [[DAZNetworkService alloc] init];
         _networkService.partiesDelegate = self;
         _networkService.claimsDelegate = self;
     }
@@ -48,7 +48,6 @@
 }
 
 @end
-
 
 @implementation  DAZProxyService (Parties)
 
@@ -153,7 +152,6 @@
 
 @end
 
-
 @implementation DAZProxyService (Claims)
 
 
@@ -195,7 +193,7 @@
 {
     if ([self isServerReachable])
     {
-        [self.networkService updateClaim:[claim dictionaryFromClaim]];
+        [self.networkService updateClaim:[claim dictionary]];
     }
     else
     {
@@ -210,7 +208,7 @@
 {
     if ([self isServerReachable])
     {
-        [self.networkService deleteClaim:[claim dictionaryFromClaim]];
+        [self.networkService deleteClaim:[claim dictionary]];
         [claim deleteClaim];
     }
     else

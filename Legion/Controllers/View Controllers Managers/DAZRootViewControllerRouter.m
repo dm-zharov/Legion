@@ -30,17 +30,22 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 @property (nonatomic, readonly) UIViewController *secondViewController;
 @property (nonatomic, readonly) UIViewController *thirdViewController;
 
-- (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated;
-
 // Обработка сообщений от центра нотификаций
 - (void)authorizationTokenReceived:(NSNotification *)notification;
 - (void)authorizationTokenExpired:(NSNotification *)notification;
 
 @end
 
-
 @implementation DAZRootViewControllerRouter
 
+
+#pragma mark - Instance Accessors
+
++ (UIWindow *)keyWindow
+{
+    UIApplication *application = [UIApplication sharedApplication];
+    return application.keyWindow;
+}
 
 #pragma mark - Lifecycle
 
@@ -69,7 +74,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 }
 
 
-#pragma mark - Accessors
+#pragma mark - Custom Accessors
 
 - (UIViewController *)rootViewController
 {    
@@ -87,9 +92,6 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
     }
 }
 
-
-#pragma mark - Custom Mutators
-
 - (void)setRootViewController:(UIViewController *)rootViewController animated:(BOOL)animated
 {
     if (!rootViewController)
@@ -97,7 +99,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
         return;
     }
     
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIWindow *window = [[self class] keyWindow];
     
     if (!animated)
     {
@@ -178,6 +180,7 @@ NSString *const DAZAuthorizationTokenExpiredNotification = @"DAZAuthorizationTok
 - (void)authorizationTokenReceived:(NSNotification *)notification
 {
     self.profile.loggedIn = YES;
+    
     [self setRootViewController:self.rootViewController animated:YES];
 }
 

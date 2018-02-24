@@ -32,7 +32,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
 
 @end
 
-
 @implementation DAZPartyCreationViewControllersAssembly
 
 
@@ -64,7 +63,6 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
                        ];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:[self nextViewController]];
-    
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = NO;
     
@@ -174,8 +172,7 @@ static NSString *const DAZPartyMessageTitle = @"Осталось придума�
                 NSString *title = result;
                 self.party.title = title;
             }
-            
-            if ([self.chainArray[self.currentItem][1] isEqualToString:DAZPartyMessageApartment])
+            else if ([self.chainArray[self.currentItem][1] isEqualToString:DAZPartyMessageApartment])
             {
                 NSString *apartment = result;
                 self.party.apartment = apartment;

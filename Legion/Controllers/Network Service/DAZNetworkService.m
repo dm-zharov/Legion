@@ -38,7 +38,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 
 @end
 
-
 @implementation DAZNetworkService
 
 
@@ -129,7 +128,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 }
 
 @end
-
 
 @implementation DAZNetworkService (Parties)
 
@@ -243,7 +241,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 }
 
 @end
-
 
 @implementation DAZNetworkService (Claims)
 
