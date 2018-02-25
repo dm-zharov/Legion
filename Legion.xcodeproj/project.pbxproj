@@ -285,6 +285,10 @@
 		23AFB4C5201B493D00260C11 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				23EA6679202F143C0083303E /* UIImageView+Cache.h */,
+				23EA667A202F143C0083303E /* UIImageView+Cache.m */,
+				23EA6676202F10D10083303E /* UIImage+Cache.h */,
+				23EA6677202F10D10083303E /* UIImage+Cache.m */,
 				23EA666D202E0B250083303E /* UIViewController+Alerts.h */,
 				23EA666E202E0B250083303E /* UIViewController+Alerts.m */,
 				2303452C202B3214004CF6C8 /* UINavigationBar+Shadow.h */,
@@ -293,10 +297,6 @@
 				2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */,
 				239F48DA2024B64900D13770 /* CAGradientLayer+Gradients.h */,
 				239F48DB2024B64900D13770 /* CAGradientLayer+Gradients.m */,
-				23EA6679202F143C0083303E /* UIImageView+Cache.h */,
-				23EA667A202F143C0083303E /* UIImageView+Cache.m */,
-				23EA6676202F10D10083303E /* UIImage+Cache.h */,
-				23EA6677202F10D10083303E /* UIImage+Cache.m */,
 				23034526202A2422004CF6C8 /* UIImage+Overlay.h */,
 				23034527202A2422004CF6C8 /* UIImage+Overlay.m */,
 				2354FA15202243AA000A97C8 /* NSError+Domains.h */,
@@ -368,10 +368,10 @@
 			children = (
 				23BEA5822016302B000ECFE5 /* AppDelegate.h */,
 				23BEA5832016302B000ECFE5 /* AppDelegate.m */,
+				23AFB4C5201B493D00260C11 /* Categories */,
 				23AFB4CE201BA3FD00260C11 /* Controllers */,
 				23AFB4B7201B35C400260C11 /* ViewControllers */,
 				23AFB4CD201BA26C00260C11 /* TableViewCells */,
-				23AFB4C5201B493D00260C11 /* Categories */,
 				23AFB4C1201B47FC00260C11 /* Views */,
 				23AFB4CC201BA25000260C11 /* Models */,
 				239D696520168F2300672DC0 /* GoogleService-Info.plist */,
