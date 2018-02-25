@@ -11,7 +11,7 @@
 #import "DAZNetworkService.h"
 
 
-typedef void (^URLSessionCompletionBlock)(NSData * data, NSURLResponse *response, NSError *error);
+typedef void (^DAZURLSessionCompletionHandler)(NSData * data, NSURLResponse *response, NSError *error);
 
 static NSString *const DAZServerBaseURL = @"https://us-central1-legion-svc.cloudfunctions.net/";
 
@@ -33,8 +33,8 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 @property (nonatomic, weak) UIApplication *application;
 
 - (void)dataTaskWithFunction:(NSString *)function
-                  dictionary:(NSDictionary * _Nullable)parameters
-            completionHanler:(URLSessionCompletionBlock)completionHandler;
+                  dictionary:(NSDictionary *)parameters
+            completionHanler:(DAZURLSessionCompletionHandler)completionHandler;
 
 @end
 
@@ -81,8 +81,8 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
 #pragma mark - Private
 
 - (void)dataTaskWithFunction:(NSString *)function
-                     dictionary:(NSDictionary * _Nullable)parameters
-               completionHanler:(URLSessionCompletionBlock)completionHandler
+                     dictionary:(NSDictionary *)parameters
+               completionHanler:(DAZURLSessionCompletionHandler)completionHandler
 {
     // Проверка на состояние авторизации
     [[FIRAuth auth].currentUser getIDTokenWithCompletion:^(NSString * _Nullable token, NSError * _Nullable error)

@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 
 
-static void *CachePropertyKey = &CachePropertyKey;
+static void *DAZImageCacheKey;
 
 
 @interface UIImage (Cache_Properties)
@@ -23,12 +23,12 @@ static void *CachePropertyKey = &CachePropertyKey;
 
 + (void)setCh_cache:(NSDictionary *)cache
 {
-    objc_setAssociatedObject(self, CachePropertyKey, [cache copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &DAZImageCacheKey, [cache copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (NSDictionary *)ch_cache
 {
-    return objc_getAssociatedObject(self, CachePropertyKey) ?: @{};
+    return objc_getAssociatedObject(self, &DAZImageCacheKey) ? : @{};
 }
 
 @end
