@@ -7,52 +7,29 @@
 //
 
 #import "UIImage+Cache.h"
-#import <objc/runtime.h>
 
-
-static void *DAZImageCacheKey;
-
-
-@interface UIImage (Cache_Properties)
-
-@property (nonatomic, copy, class) NSDictionary *ch_cache;
-
-@end
-
-@implementation UIImage (Cache_Properties)
-
-+ (void)setCh_cache:(NSDictionary *)cache
-{
-    objc_setAssociatedObject(self, &DAZImageCacheKey, [cache copy], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-+ (NSDictionary *)ch_cache
-{
-    return objc_getAssociatedObject(self, &DAZImageCacheKey) ? : @{};
-}
-
-@end
 
 @implementation UIImage (Cache)
 
-
-#pragma mark - Public Static
-
-+ (void)ch_imageWithContentsOfURL:(NSURL *)url completion:(void (^)(UIImage *))completion
++ (void)ch_imageWithContentsOfURL:(NSURL *)url completion:(void (^)(UIImage *))completion;
 {
     if (!url)
     {
         return;
     }
     
+    static NSDictionary *cache;
+    
+    UIImage *image = cache[url];
+    if (image)
+    {
+        completion(image);
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^{
-        UIImage *image = self.ch_cache[url];
-        
-        if (!image)
-        {
-            image = [self ch_imageForURL:url];
-            self.ch_cache = [self ch_addImage:image forURL:url toCache:self.ch_cache];
-        }
+        UIImage *image = [self ch_imageForURL:url];
+        cache = [self ch_addImage:image forURL:url toCache:cache];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(image);
@@ -64,11 +41,12 @@ static void *DAZImageCacheKey;
 
 + (NSDictionary *)ch_addImage:(UIImage *)image forURL:(NSURL *)url toCache:(NSDictionary *)cache
 {
-    if (!image)
+    if (!url || !image)
     {
         return cache;
     }
     
+    cache = cache ?: @{};
     NSMutableDictionary *mutableCache = [cache mutableCopy];
     mutableCache[url] = image;
     return mutableCache;
