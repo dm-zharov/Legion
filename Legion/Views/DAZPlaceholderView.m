@@ -54,6 +54,28 @@
 }
 
 
+#pragma mark - Custom Accessors
+
+- (void)setTitle:(NSString *)title
+{
+    _titleLabel.text = title;
+}
+
+- (NSString *)title
+{
+    return _titleLabel.text;
+}
+
+- (void)setMessage:(NSString *)message
+{
+    _messageLabel.text = message;
+}
+
+- (NSString *)message
+{
+    return _messageLabel.text;
+}
+
 #pragma mark - UIView
 
 - (void)updateConstraints

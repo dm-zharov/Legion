@@ -11,6 +11,9 @@
 
 @interface DAZPlaceholderView : UIView
 
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *message;
+
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message;
 
 @end
