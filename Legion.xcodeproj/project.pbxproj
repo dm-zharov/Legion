@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		14784893B9F00242DDB4AD1F /* libPods-Legion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F06017E82CF3D563961069EC /* libPods-Legion.a */; };
+		2301FD8020456403003D89FB /* DAZNetworkService+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = 2301FD7F20456403003D89FB /* DAZNetworkService+Debug.m */; };
+		2301FD83204564E0003D89FB /* DAZProfileViewController+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = 2301FD82204564E0003D89FB /* DAZProfileViewController+Debug.m */; };
 		23034528202A2422004CF6C8 /* UIImage+Overlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 23034527202A2422004CF6C8 /* UIImage+Overlay.m */; };
 		2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452A202B2E3B004CF6C8 /* UIColor+Colors.m */; };
 		2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2303452D202B3214004CF6C8 /* UINavigationBar+Shadow.m */; };
@@ -69,6 +71,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2301FD7E20456403003D89FB /* DAZNetworkService+Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DAZNetworkService+Debug.h"; sourceTree = "<group>"; };
+		2301FD7F20456403003D89FB /* DAZNetworkService+Debug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DAZNetworkService+Debug.m"; sourceTree = "<group>"; };
+		2301FD81204564E0003D89FB /* DAZProfileViewController+Debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DAZProfileViewController+Debug.h"; sourceTree = "<group>"; };
+		2301FD82204564E0003D89FB /* DAZProfileViewController+Debug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DAZProfileViewController+Debug.m"; sourceTree = "<group>"; };
 		23034526202A2422004CF6C8 /* UIImage+Overlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Overlay.h"; sourceTree = "<group>"; };
 		23034527202A2422004CF6C8 /* UIImage+Overlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Overlay.m"; sourceTree = "<group>"; };
 		23034529202B2E3B004CF6C8 /* UIColor+Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Colors.h"; sourceTree = "<group>"; };
@@ -193,6 +199,17 @@
 				4B20AB892B9C0AFA090E1453 /* Pods-LegionTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2301FD7720456378003D89FB /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				2301FD7E20456403003D89FB /* DAZNetworkService+Debug.h */,
+				2301FD7F20456403003D89FB /* DAZNetworkService+Debug.m */,
+				2301FD81204564E0003D89FB /* DAZProfileViewController+Debug.h */,
+				2301FD82204564E0003D89FB /* DAZProfileViewController+Debug.m */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		2346B732201E66E40039DF3F /* Authorization Service */ = {
@@ -380,6 +397,7 @@
 				23BEA5942016302C000ECFE5 /* main.m */,
 				232056B020307C680004015C /* Assets.xcassets */,
 				23BEA58B2016302B000ECFE5 /* Legion.xcdatamodeld */,
+				2301FD7720456378003D89FB /* Debug */,
 			);
 			path = Legion;
 			sourceTree = "<group>";
@@ -645,6 +663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2301FD8020456403003D89FB /* DAZNetworkService+Debug.m in Sources */,
 				23EA666F202E0B250083303E /* UIViewController+Alerts.m in Sources */,
 				239F48DF2025FD2A00D13770 /* DAZSelectionScreenBaseViewController.m in Sources */,
 				2303452E202B3214004CF6C8 /* UINavigationBar+Shadow.m in Sources */,
@@ -662,6 +681,7 @@
 				2354FA1A2023F451000A97C8 /* DAZPartyTableViewCell.m in Sources */,
 				23D9D1B22027461D00E25EA9 /* DAZSelectionScreenViewController.m in Sources */,
 				23D9D1AF20273B3E00E25EA9 /* DAZPartyCreationViewControllersAssembly.m in Sources */,
+				2301FD83204564E0003D89FB /* DAZProfileViewController+Debug.m in Sources */,
 				23BEA5952016302C000ECFE5 /* main.m in Sources */,
 				239101D8202C918F001E8DE1 /* DAZClaimTableViewCell.m in Sources */,
 				2303452B202B2E3B004CF6C8 /* UIColor+Colors.m in Sources */,

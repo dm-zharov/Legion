@@ -38,10 +38,6 @@
 
 - (BOOL)isServerReachable;
 
-#ifdef DEBUG
-- (void)setTestData;
-#endif
-
 @end
 
 
