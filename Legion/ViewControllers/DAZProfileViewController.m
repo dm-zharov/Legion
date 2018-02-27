@@ -15,15 +15,8 @@
 #import "UIColor+Colors.h"
 #import "UIViewController+Alerts.h"
 
-#ifdef DEBUG
-#import "DAZNetworkService.h"
-#endif
-
 
 @interface DAZProfileViewController ()
-#ifdef DEBUG
-<UIGestureRecognizerDelegate>
-#endif
 
 @property (nonatomic, weak) UIView *headerView;
 @property (nonatomic, weak) UIView *profileView;
@@ -51,12 +44,7 @@
     
     [self setupHeaderView];
     [self setupFooterView];
-    [self setupSignOutButton];
-    
-#ifdef DEBUG
-    [self setupDebugView];
-#endif
-    
+    [self setupSignOutButton];    
     [self setValuesWithUserProfile];
 }
 
@@ -235,117 +223,6 @@
     {
         self.emailLabel.text = profile.email;
     }
-
-#ifdef DEBUG
-    if (!profile.email)
-    {
-        self.avatarImageView.userInteractionEnabled = NO;
-        [self setupFooterView];
-    }
-#endif
 }
-
-
-#pragma mark - Debug Target Only
-
-#ifdef DEBUG
-- (void)setupDebugView {
-    UILabel *debugTitle = [[UILabel alloc] init];
-    
-    debugTitle.textAlignment = NSTextAlignmentCenter;
-    debugTitle.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBold];
-    debugTitle.textColor = [UIColor whiteColor];
-    debugTitle.text = @"Режим тестирования";
-    
-    [self.footerView addSubview:debugTitle];
-    
-    [debugTitle mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.signOutButton.mas_bottom).with.offset(16);
-        make.left.equalTo(self.footerView).with.offset(16);
-        make.right.equalTo(self.footerView).with.offset(-16);
-        make.centerX.equalTo(self.footerView);
-        
-    }];
-    
-    UILabel *debugMessage = [[UILabel alloc] init];
-    
-    debugMessage.textAlignment = NSTextAlignmentCenter;
-    debugMessage.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
-    debugMessage.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
-    debugMessage.text = @"В данном режиме у вас есть возможность получить выборку тестовых данных "
-                            "с помощью простого пятикратного нажатия по аватарке пользователя!";
-    debugMessage.numberOfLines = 0;
-    
-    [self.footerView addSubview:debugMessage];
-    
-    [debugMessage mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(debugTitle.mas_bottom).with.offset(16);
-        make.left.equalTo(self.footerView).with.offset(16);
-        make.right.equalTo(self.footerView).with.offset(-16);
-        make.centerX.equalTo(debugTitle);
-        
-    }];
-    
-    [self setupGestureRecognizer];
-}
-
-- (void)setupGestureRecognizer
-{
-    UILongPressGestureRecognizer *gestureRecognizer =
-    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(avatarImagePressed:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    gestureRecognizer.delegate = self;
-    gestureRecognizer.minimumPressDuration = 0.0;
-    [self.avatarImageView addGestureRecognizer:gestureRecognizer];
-    
-    self.avatarImageView.userInteractionEnabled = YES;
-    
-    UITapGestureRecognizer *tapGestureRecognizer =
-    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarImageTapped:)];
-    tapGestureRecognizer.numberOfTapsRequired = 5;
-    tapGestureRecognizer.cancelsTouchesInView = NO;
-    tapGestureRecognizer.delegate = self;
-    [self.avatarImageView addGestureRecognizer:tapGestureRecognizer];
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
-- (void)avatarImagePressed:(UILongPressGestureRecognizer *)sender
-{
-    if (sender.state == UIGestureRecognizerStateBegan)
-    {
-        [UIView animateWithDuration:0.05
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                                self.avatarImageView.transform = CGAffineTransformMakeScale(0.95, 0.95);
-                            } completion:nil];
-    }
-    
-    if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled)
-    {
-        [UIView animateWithDuration:0.05
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                                self.avatarImageView.transform = CGAffineTransformIdentity;
-                            } completion:nil];
-    }
-}
-
-- (void)avatarImageTapped:(UITapGestureRecognizer *)sender
-{
-    if (sender.state == UIGestureRecognizerStateRecognized)
-    {
-        [self al_presentAlertViewControllerWithTitle:@"Готово" message:@"Выборка данных получена. Приятного тестирования!"];
-        DAZNetworkService *networkService = [[DAZNetworkService alloc] init];
-        [networkService setTestData];
-    
-        sender.enabled = NO;
-    }
-}
-#endif
 
 @end

@@ -23,6 +23,12 @@
 
 static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell";
 
+static NSString *const DAZPlaceholderViewTitle = @"Запросов нет";
+static NSString *const DAZPlaceholderViewInboxMessage =
+    @"Организуйте вечеринку и управляйте входящими запросами на место проведения здесь!";
+static NSString *const DAZPlaceholderViewOutboxMessage =
+    @"Все отправленные вами запросы на получение адресов тусовок будут отображены здесь";
+
 
 @interface DAZClaimsTableViewController () <DAZProxyServiceClaimsDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -32,11 +38,9 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 @property (nonatomic, weak) UISegmentedControl *segmentedControl;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
+@property (nonatomic, weak) DAZPlaceholderView *placeholderView;
 
 @property (nonatomic, copy) NSArray<NSArray *> *claimsArray;
-@property (nonatomic, copy) NSArray<DAZPlaceholderView *> *placeholdersArray;
-
-@property (nonatomic, assign) NSInteger selectedSegment;
 
 @end
 
@@ -46,7 +50,8 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 
 #pragma mark - Lifecycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [self setupNetworkService];
@@ -55,16 +60,21 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     [self setupSegmentedControl];
     
     [self setupTableView];
-    [self setupPlaceholdersViews];
+    [self setupPlaceholderView];
     
     [self setupRefreshControl];
+    
+    [self.networkService downloadClaims];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self.networkService downloadClaims];
+    if ([self.tableView.refreshControl isRefreshing])
+    {
+        [self.tableView.refreshControl endRefreshing];
+    }
 }
 
 
@@ -87,37 +97,27 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 - (void)setupSegmentedControl
 {
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Отправленные", @"Входящие"]];
-    segmentedControl.selectedSegmentIndex = 0;
     [segmentedControl addTarget:self action:@selector(actionSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+    segmentedControl.selectedSegmentIndex = 0;
     
     self.navigationItem.titleView = segmentedControl;
     
     self.segmentedControl = segmentedControl;
 }
 
-- (void)setupPlaceholdersViews
+- (void)setupPlaceholderView
 {
-    DAZPlaceholderView *outboxPlaceholderView = [[DAZPlaceholderView alloc]
-        initWithTitle:@"Запросов нет" message:@"Все отправленные вами запросы на получение адресов тусовок будут "
-                                                        "отображены здесь"];
-    outboxPlaceholderView.hidden = YES;
-    [self.view addSubview:outboxPlaceholderView];
+    DAZPlaceholderView *placeholderView = [[DAZPlaceholderView alloc]
+        initWithTitle:DAZPlaceholderViewTitle message:DAZPlaceholderViewOutboxMessage];
+    placeholderView.hidden = YES;
     
-    [outboxPlaceholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.tableView addSubview:placeholderView];
+    
+    self.placeholderView = placeholderView;
+    
+    [self.placeholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    DAZPlaceholderView *inboxPlaceholderView = [[DAZPlaceholderView alloc]
-        initWithTitle:@"Запросов нет" message:@"Организуйте вечеринку и управляйте входящими запросами на место "
-                                                        "проведения здесь!"];
-    inboxPlaceholderView.hidden = YES;
-    [self.view addSubview:inboxPlaceholderView];
-    
-    [inboxPlaceholderView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-    self.placeholdersArray = @[outboxPlaceholderView, inboxPlaceholderView];
 }
 
 - (void)setupTableView
@@ -165,18 +165,22 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
     if ([sender isKindOfClass:[UISegmentedControl class]])
     {
         UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-        if (segmentedControl.selectedSegmentIndex == 0)
+        NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
+        
+        if (selectedSegment == 0)
         {
             self.inbox = NO;
             self.tableView.tableFooterView.hidden = YES;
-            self.placeholdersArray[1].hidden = YES;
+            self.placeholderView.message = DAZPlaceholderViewOutboxMessage;
         }
-        else if (segmentedControl.selectedSegmentIndex == 1)
+        else if (selectedSegment == 1)
         {
             self.inbox = YES;
             self.tableView.tableFooterView.hidden = NO;
-            self.placeholdersArray[0].hidden = YES;
+            self.placeholderView.message = DAZPlaceholderViewInboxMessage;
         }
+        
+        self.placeholderView.hidden = YES;
     }
     
     [self.tableView reloadData];
@@ -227,8 +231,15 @@ static NSString *const DAZClaimTableViewCellIdentifier = @"DAZClaimTableViewCell
 {
     NSInteger index = [self isInbox] ? 1 : 0;
     
-    self.tableView.hidden = (self.claimsArray[index].count == 0);
-    self.placeholdersArray[index].hidden = (![self.tableView isHidden]);
+    if (self.claimsArray[index].count == 0)
+    {
+        self.tableView.tableFooterView.hidden = YES;
+        self.placeholderView.hidden = NO;
+    }
+    else
+    {
+        self.placeholderView.hidden = YES;
+    }
     
     return self.claimsArray[index].count;
 }

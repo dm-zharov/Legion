@@ -66,17 +66,6 @@ static NSString *const DAZFunctionDeleteClaim = @"deleteClaim";
     return data ? YES : NO;
 }
 
-#ifdef DEBUG
-- (void)setTestData
-{
-    [self dataTaskWithFunction:@"setTestData"
-                    dictionary:nil
-              completionHanler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                  NSLog(@"Тестовые данные установлены!");
-              }];
-}
-#endif
-
 
 #pragma mark - Private
 
