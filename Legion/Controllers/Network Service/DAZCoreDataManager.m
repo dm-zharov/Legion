@@ -104,7 +104,7 @@
     if ([context hasChanges] && ![context save:&error])
     {
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-        abort();
+        return;
     }
 }
 
