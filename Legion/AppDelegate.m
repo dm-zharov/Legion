@@ -76,10 +76,7 @@
     // Saves changes in the application's managed object context before the application terminates.
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
     // Передача полученной строки с токеном сервису авторизации
     if ([self.window.rootViewController isKindOfClass:[DAZAuthorizationViewController class]])
