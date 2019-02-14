@@ -3773,11 +3773,11 @@
 			<processes>
 				<process name="ConfirmationBiometrics">
 					<enabled>true</enabled>
-					<livenessType>MOVE|BLINK</livenessType>	
+					<livenessType>HEADMOVE|BLINK</livenessType>	
 				</process>
 				<process name="BiometricsTemplateCreate">
 					<enabled>true</enabled>
-					<livenessType>MOVE|BLINK</livenessType>	
+					<livenessType>HEADMOVE|BLINK</livenessType>	
 				</process>
 			</processes>
 		</param>
